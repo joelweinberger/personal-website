@@ -1,0 +1,13 @@
+body {
+    margin:0;
+    padding:100px 0 50px 0;
+    background-color:#fff1db;
+}
+
+.text-center {
+    text-align : center;
+}
+
+html {
+    border : solid white;
+}

@@ -1,0 +1,20 @@
+a.image-link img {
+    border : none;
+}
+
+.index-links a {
+    text-decoration : none;
+    font-size : 75%;
+    color : #000000;
+}
+
+.index-links a:hover {
+    color : #004fff;
+}
+
+div.index-text {
+    margin:0px auto;
+    text-align : center;
+    font-size : 10pt;
+    width : 500px;
+}
