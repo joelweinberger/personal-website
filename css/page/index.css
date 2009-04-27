@@ -12,9 +12,26 @@ a.image-link img {
     color : #004fff;
 }
 
-div.index-text {
+.index-text {
     margin:0px auto;
     text-align : center;
     font-size : 10pt;
     width : 500px;
+}
+
+ul.index-publications-list {
+    font-size : 10pt;
+    padding-left : 0;
+    margin-left : 0;
+    list-style-type : disc;
+}
+
+.paper-title {
+}
+
+.paper-authors {
+}
+
+.paper-conference {
+    font-style : italic;
 }
