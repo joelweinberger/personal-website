@@ -12,6 +12,10 @@
 			  type="text/css"
 			  href="css/generic/header.css" />
 
+        <link rel="stylesheet"
+              type="text/css"
+              href="css/generic/prototype.css" />
+
 		<link rel="stylesheet"
 			  type="text/css"
 			  href="css/page/index.css" />
@@ -34,6 +38,11 @@
 	<div class="content text-center">
 
 	<!-- Begin page content here -->
+
+    <script type="text/javascript" src="lib/prototype.js"></script>
+    <script type="text/javascript" src="lib/scriptaculous.js"></script>
+    <script type="text/javascript" src="lib/effects.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
 
 	<img src="images/joel-ramon-crater.jpg"
 		 alt="Joel at Ramon Crater, Israel"
@@ -67,6 +76,7 @@
         </div>
 
         <li class="index-text">
+            <div id="heapgraph" class="closed">
             <span class="paper-title">
             <a href="papers/2009/barth-weinberger-song.pdf">Cross-Origin JavaScript
             Capability Leaks: Detection, Exploitation, and Defense</a>.
@@ -79,6 +89,30 @@
             <span class="paper-conference">To appear at USENIX Security
             Symposium, 2009.
             </span>
+
+            <div id="actions">
+                <a class="toggle" href="javascript:toggle('heapgraph')">Abstract</a>
+            </div>
+            <!--div class="details" style="display:none" -->
+            <div id="details" class="details">
+            <div>
+            <div class="abstract">
+                We identify a class of Web browser implementation vulnerabilities,
+                \term{cross-origin JavaScript capability leaks}, which occur when
+                the browser leaks a JavaScript pointer from one security origin to another.
+                We devise an algorithm for detecting these vulnerabilities by monitoring the
+                ``points-to'' relation of the JavaScript heap.  Our algorithm
+                finds a number of new vulnerabilities in the open-source WebKit
+                browser engine used by Safari.  We propose an approach to mitigate
+                this class of vulnerabilities by adding access control checks to browser
+                JavaScript engines.  These access control checks are backwards-compatible
+                because they do not alter semantics of the Web platform.  Through an
+                application of the inline cache, we implement these checks with
+                an overhead of $1$--$2\%$ on industry-standard benchmarks.
+            </div>
+            </div>
+            </div>
+            </div>
         </li>
 
         <br />
