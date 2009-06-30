@@ -2,9 +2,13 @@ a.image-link img {
     border: none;
 }
 
+.index-links {
+    text-align: center;
+}
+
 .index-links a {
     text-decoration: none;
-    font-size: 75%;
+    font-size: 85%;
     color: #000000;
 }
 
@@ -16,7 +20,6 @@ a.image-link img {
     margin: 0px auto;
     text-align: left;
     font-size: 10pt;
-    width: 600px;
 }
 
 .index-papers-header {
@@ -31,6 +34,10 @@ ul.index-papers-list {
     padding-left: 0;
     margin-left: 0;
     list-style-type: disc;
+}
+
+.paper {
+    position: relative;
 }
 
 .paper-title {

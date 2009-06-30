@@ -11,20 +11,13 @@ div.header{
 	text-align: center;
 }
 
-div.header>div.headertext{
+div.header > h1 {
+	margin-top: 25px;
+    margin-bottom: 0;
 	font-size: 20pt;
 }
 
-div.header>div.subheadertext{
+div.header > h3 {
+    margin: 0;
 	font-size: 12pt;
-}
-
-div.content{
-	margin-top: 10px;
- 	height: 100%;
-	overflow: auto;
-}
-
-div.headertext{
-	margin-top: 25px;
 }

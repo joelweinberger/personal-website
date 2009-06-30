@@ -1,14 +1,22 @@
-body {
-    margin: 0;
-    padding: 100px 0 50px 0;
-    background-color: #fff1db;
-}
-
-.text-center {
-    text-align: center;
-}
-
 html {
     border: solid white;
     border-bottom: none;
+    overflow-y: scroll;
+}
+
+body {
+    margin: 0px auto;
+    padding: 100px 0 50px 0;
+    background-color: #fff1db;
+    width: 700px;
+}
+
+div.content{
+	margin-top: 10px;
+ 	height: 100%;
+	overflow: auto;
+}
+
+.image-center {
+    text-align: center;
 }

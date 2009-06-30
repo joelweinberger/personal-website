@@ -24,18 +24,14 @@
 	</head>
 
 	<body>
-	<div class="header">
-		<div class="headertext">
-			joel h. w. weinberger
-		</div>
-		<div class="subheadertext">
-			jww (at) cs (dot) berkeley (dot) edu
-		</div>
-		<div class="subheadertext">
-            Soda 311
-		</div>
-	</div>
-	<div class="content text-center">
+
+    <div class="header">
+        <h1>joel h. w. weinberger</h1>
+        <h3>jww (at) cs (dot) berkeley (dot) edu</h3>
+        <h3>Soda 311</h3>
+    </div>
+
+	<div class="content">
 
 	<!-- Begin page content here -->
 
@@ -44,9 +40,11 @@
     <script type="text/javascript" src="lib/effects.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
 
-	<img src="images/joel-ramon-crater.jpg"
-		 alt="Joel at Ramon Crater, Israel"
-		 title="Joel at Ramon Crater, Israel" />
+    <div class="image-center">
+        <img src="images/joel-ramon-crater.jpg"
+             alt="Joel at Ramon Crater, Israel"
+             title="Joel at Ramon Crater, Israel"/>
+    </div>
 
 	<div class="index-text">
 		I am a doctoral student in computer science, primarily interested in
@@ -76,7 +74,7 @@
         </div>
 
         <li class="index-text">
-            <div id="heapgraph" class="closed">
+            <div id="pub1" class="paper closed">
 
             <span class="paper-title">
             <a href="papers/2009/barth-weinberger-song.pdf">Cross-Origin JavaScript
@@ -92,24 +90,27 @@
             </span>
 
             <div id="actions">
-                <a class="toggle" href="javascript:toggle('heapgraph')">Abstract</a>
+                <a class="toggle" href="javascript:toggle('pub1')">Abstract</a>
             </div>
 
             <div class="paper-details" style="display: none;">
-            <div class="paper-abstract">
-                We identify a class of Web browser implementation vulnerabilities,
-                \term{cross-origin JavaScript capability leaks}, which occur when
-                the browser leaks a JavaScript pointer from one security origin to another.
-                We devise an algorithm for detecting these vulnerabilities by monitoring the
-                ``points-to'' relation of the JavaScript heap.  Our algorithm
-                finds a number of new vulnerabilities in the open-source WebKit
-                browser engine used by Safari.  We propose an approach to mitigate
-                this class of vulnerabilities by adding access control checks to browser
-                JavaScript engines.  These access control checks are backwards-compatible
-                because they do not alter semantics of the Web platform.  Through an
-                application of the inline cache, we implement these checks with
-                an overhead of $1$--$2\%$ on industry-standard benchmarks.
-            </div>
+                <div>
+                <div class="paper-abstract">
+                    We identify a class of Web browser implementation vulnerabilities,
+                    cross-origin JavaScript capability leaks, which occur when
+                    the browser leaks a JavaScript pointer from one security origin to
+                    another. We devise an algorithm for detecting these vulnerabilities
+                    by monitoring the &quot;points-to&quot; relation of the JavaScript
+                    heap.  Our algorithm finds a number of new vulnerabilities in the
+                    open-source WebKit browser engine used by Safari.  We propose an
+                    approach to mitigate this class of vulnerabilities by adding access
+                    control checks to browser JavaScript engines.  These access control
+                    checks are backwards-compatible because they do not alter semantics
+                    of the Web platform.  Through an application of the inline cache,
+                    we implement these checks with an overhead of 1&ndash;2% on
+                    industry-standard benchmarks.
+                </div>
+                </div>
             </div>
 
             </div>
@@ -118,6 +119,8 @@
         <br />
 
         <li class="index-text">
+            <div id="pub0" class="paper closed">
+
             <span class="paper-title">
             <a href="papers/2007/gordon-meyerovich-weinberger-krishnamurthi.pdf">
             Composition with Consistent Updates for Abstract State Machines</a>.
@@ -129,6 +132,30 @@
 
             <span class="paper-conference">International ASM Workshop,
             2007.</span>
+
+            <div id="actions">
+                <a class="toggle" href="javascript:toggle('pub0')">Abstract</a>
+            </div>
+
+            <div class="paper-details" style="display: none;">
+                <div>
+                <div class="paper-abstract">
+                    Abstract State Machines (ASMs) offer a formalism for describing
+                    state transitions over relational structures. This makes them
+                    promising for modeling system features such as access control,
+                    especially in an environment where the policy's outcome depends on
+                    the evolving state of the system. The current notions of modularity
+                    for ASMs, however, provide insufficiently strong guarantees of
+                    consistency in the face of parallel update requests. We present a
+                    real-world context that illustrates this problem, discuss desirable
+                    properties for composition in this context, describe an operator
+                    that exhibits these properties, formalize its meaning, and outline
+                    its implementation strategy.
+                </div>
+                </div>
+            </div>
+
+            </div>
         </li>
 
         <div class="index-papers-header">
@@ -136,6 +163,8 @@
         </div>
 
         <li class="index-text">
+            <div id="tech0" class="paper closed">
+
             <span class="paper-title">
             <a
             href="papers/2006/meyerovich-weinberger-gordon-krishnamurthi-tech.pdf">
@@ -146,7 +175,43 @@
             Gordon, and Shriram Krishnamurthi.
             </span>
 
-            <span class="paper-conference">Technical Report, 2006</span>
+            <span class="paper-conference">Technical Report, 2006.</span>
+
+            <div id="actions">
+                <a class="toggle" href="javascript:toggle('tech0')">Abstract</a>
+            </div>
+
+            <div class="paper-details" style="display: none;">
+                <div>
+                <div class="paper-abstract">
+                    We present a model of the security policy for the Web-based
+                    Continue conference management tool. The policy model and
+                    properties are written as ASM Relational Transducers,
+                    which we extend with a module system in order to simplify the
+                    handling of conflicting updates. We assume prior familiarity
+                    with the security policy concerns surrounding Continue. First,
+                    we review the ASM Relational Transducer modeling and property
+                    language. Then we describe the basic structure of our policy
+                    implementation and demonstrate the ability to model useful
+                    properties in the original core ASM language. We exploring the
+                    use of the unmodified modeling language in a security policy
+                    context and describe typical ASM Relational Transducer
+                    complexity concerns and how these minimally impact our
+                    implementation. Next, we discuss difficulties encountered in
+                    representing our policy and properties in the standard ASM
+                    language, including our implementation in the appendices.
+                    Following the description of adapting ASMs for use in security
+                    modeling, we introduce policy modules and a composition operator
+                    to overcome the difficulty of programming in the original
+                    language known as the consistent update problem. Finally, we
+                    describe a reduction from our extended language to the original
+                    language, and prove it satisfies our required correctness
+                    property.
+                </div>
+                </div>
+            </div>
+
+            </div>
         </li>
     </ul>
 
@@ -155,9 +220,11 @@
 	</div>
 
 	<a class="image-link" href="http://www.ci.newark.nj.us/">
-		<img src="images/greetings from newark.jpg"
-			 alt="Greetings from Newark, NJ!"
-			 title="Greetings from Newark, NJ!" />
+        <div class="image-center">
+            <img src="images/greetings from newark.jpg"
+                 alt="Greetings from Newark, NJ!"
+                 title="Greetings from Newark, NJ!" />
+        </div>
 	</a>
 
 	<!-- end page content here -->
