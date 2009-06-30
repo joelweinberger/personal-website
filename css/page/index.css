@@ -42,3 +42,8 @@ ul.index-papers-list {
 .paper-conference {
     font-style: italic;
 }
+
+.paper-details {
+    padding: 0px;
+    margin: 0px;
+}

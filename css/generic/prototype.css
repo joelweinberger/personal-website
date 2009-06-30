@@ -1,13 +1,13 @@
+.toggle {
+    padding-left: 10px;
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
 .closed .toggle {
     background-image: url(images/toggle-closed.png);
-    background-repeat: no-repeat;
 }
 
 .open .toggle {
     background-image: url(images/toggle-open.png);
-    background-repeat: no-repeat;
-}
-
-#details {
-    display: none;
 }
