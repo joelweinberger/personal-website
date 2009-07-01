@@ -46,6 +46,15 @@ ul.index-papers-list {
 .paper-authors {
 }
 
+.paper-authors a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.paper-authors a:hover {
+    text-decoration: underline;
+}
+
 .paper-conference {
     font-style: italic;
 }
