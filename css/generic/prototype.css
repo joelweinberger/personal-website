@@ -2,6 +2,7 @@
     padding-left: 10px;
     background-repeat: no-repeat;
     background-position: center left;
+    text-decoration: none;
 }
 
 .closed .toggle {
