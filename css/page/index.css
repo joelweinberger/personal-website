@@ -37,6 +37,10 @@ ul.index-papers-list {
     list-style-type: disc;
 }
 
+ul.index-papers-list li {
+    margin-bottom: 10px;
+}
+
 .paper {
     position: relative;
 }
