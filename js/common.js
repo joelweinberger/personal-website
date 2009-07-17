@@ -1,4 +1,4 @@
-var toggle = (function () {
+var toggleById = (function () {
     function hide(id) {
         var elmt = $(id);
         var details = $(id).select('.paper-details')[0];
