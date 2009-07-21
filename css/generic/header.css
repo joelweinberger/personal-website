@@ -1,23 +1,33 @@
-div.header{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
+div.header {
+    position: fixed;
+	top: 0px;
+	left: 0px;
+    width: 100%;
+}
+
+div.headerfields {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: auto;
 	height: 100px;
 
 	background: #ffee66;
 	color: black;
 
+    border: solid white;
+    border-bottom: none;
+
 	text-align: center;
 }
 
-div.header > h1 {
+div.headerfields > h1 {
 	margin-top: 25px;
     margin-bottom: 0;
 	font-size: 20pt;
 }
 
-div.header > h3 {
+div.headerfields > h3 {
     margin: 0;
 	font-size: 12pt;
 }
