@@ -9,7 +9,7 @@ a.image-link img {
 
 .index-links a {
     text-decoration: none;
-    font-size: 85%;
+    font-size: 100%;
     color: #000000;
 }
 
@@ -20,11 +20,11 @@ a.image-link img {
 .index-text {
     margin: 0px auto;
     text-align: left;
-    font-size: 10pt;
+    font-size: 100%;
 }
 
 .index-papers-header {
-    font-size: 10pt;
+    font-size: 100%;
     text-align: center;
     margin-top: 13px;
     margin-bottom: 3px;
@@ -32,7 +32,7 @@ a.image-link img {
 }
 
 ul.index-papers-list {
-    font-size: 10pt;
+    font-size: 100%;
     padding-left: 0;
     margin-left: 0;
     list-style-type: none;
