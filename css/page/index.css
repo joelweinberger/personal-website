@@ -53,12 +53,11 @@ ul.index-papers-list li {
 }
 
 .paper-authors a {
-    text-decoration: none;
+    text-decoration: underline;
     color: #000000;
 }
 
 .paper-authors a:hover {
-    text-decoration: underline;
 }
 
 .paper-conference {
