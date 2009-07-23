@@ -1,12 +1,13 @@
 body {
-    background-color: #fff1db;
-    margin: 0px auto;
+    background-color: #999999;
+    margin: 0 auto;
     width: 800px;
+    padding-top: 10px;
 }
 
-div.content{
-    /*background-color:#999999;*/
-    margin-top: 10px;
+div.content {
+    background-color: #cccccc;
+    padding: 10px 20px 0px 20px;
 }
 
 .image-center {
