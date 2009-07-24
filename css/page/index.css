@@ -43,7 +43,6 @@ ul.index-papers-list li {
 }
 
 .paper {
-    position: relative;
 }
 
 .paper-title {
@@ -64,15 +63,14 @@ ul.index-papers-list li {
     font-style: italic;
 }
 
-.paper-details {
-    padding: 0px;
-    margin: 0px;
-}
-
 .paper .toggle {
     color: blue;
 }
 
 .paper .toggle:hover {
     cursor: pointer;
+}
+
+.start-hidden .paper-abstract {
+    display: none;
 }

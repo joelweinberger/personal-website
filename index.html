@@ -16,7 +16,7 @@
 
         <link rel="stylesheet"
               type="text/css"
-              href="css/generic/prototype.css" />
+              href="css/generic/common.css" />
 
 		<link rel="stylesheet"
 			  type="text/css"
@@ -37,9 +37,8 @@
 
 	<!-- Begin page content here -->
 
-    <script type="text/javascript" src="lib/prototype.js"></script>
-    <script type="text/javascript" src="lib/scriptaculous.js"></script>
-    <script type="text/javascript" src="lib/effects.js"></script>
+    <script type="text/javascript" src="lib/mootools.js"></script>
+    <script type="text/javascript" src="lib/mootools-more.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
 
     <div class="image-center">
@@ -93,28 +92,24 @@
             Symposium, 2009.
             </span>
 
-            <div>
-                <span class="toggle" onclick="javascript:toggleById('pub1');">Abstract</span>
+            <div id="pub1-toggle">
+                <script>attachToggle('pub1', 'Abstract')</script>
             </div>
 
-            <div class="paper-details" style="display: none;">
-                <div>
-                <div class="paper-abstract">
-                    We identify a class of Web browser implementation vulnerabilities,
-                    cross-origin JavaScript capability leaks, which occur when
-                    the browser leaks a JavaScript pointer from one security origin to
-                    another. We devise an algorithm for detecting these vulnerabilities
-                    by monitoring the &quot;points-to&quot; relation of the JavaScript
-                    heap.  Our algorithm finds a number of new vulnerabilities in the
-                    open-source WebKit browser engine used by Safari.  We propose an
-                    approach to mitigate this class of vulnerabilities by adding access
-                    control checks to browser JavaScript engines.  These access control
-                    checks are backwards-compatible because they do not alter semantics
-                    of the Web platform.  Through an application of the inline cache,
-                    we implement these checks with an overhead of 1&ndash;2% on
-                    industry-standard benchmarks.
-                </div>
-                </div>
+            <div id="pub1-abstract" class="paper-abstract">
+                We identify a class of Web browser implementation vulnerabilities,
+                cross-origin JavaScript capability leaks, which occur when
+                the browser leaks a JavaScript pointer from one security origin to
+                another. We devise an algorithm for detecting these vulnerabilities
+                by monitoring the &quot;points-to&quot; relation of the JavaScript
+                heap.  Our algorithm finds a number of new vulnerabilities in the
+                open-source WebKit browser engine used by Safari.  We propose an
+                approach to mitigate this class of vulnerabilities by adding access
+                control checks to browser JavaScript engines.  These access control
+                checks are backwards-compatible because they do not alter semantics
+                of the Web platform.  Through an application of the inline cache,
+                we implement these checks with an overhead of 1&ndash;2% on
+                industry-standard benchmarks.
             </div>
 
             </div>
@@ -138,26 +133,22 @@
             <span class="paper-conference">International ASM Workshop,
             2007.</span>
 
-            <div>
-                <span class="toggle" onclick="javascript:toggleById('pub0')">Abstract</span>
+            <div id="pub0-toggle">
+                <script>attachToggle('pub0', 'Abstract')</script>
             </div>
 
-            <div class="paper-details" style="display: none;">
-                <div>
-                <div class="paper-abstract">
-                    Abstract State Machines (ASMs) offer a formalism for describing
-                    state transitions over relational structures. This makes them
-                    promising for modeling system features such as access control,
-                    especially in an environment where the policy's outcome depends on
-                    the evolving state of the system. The current notions of modularity
-                    for ASMs, however, provide insufficiently strong guarantees of
-                    consistency in the face of parallel update requests. We present a
-                    real-world context that illustrates this problem, discuss desirable
-                    properties for composition in this context, describe an operator
-                    that exhibits these properties, formalize its meaning, and outline
-                    its implementation strategy.
-                </div>
-                </div>
+            <div id="pub0-abstract" class="paper-abstract">
+                Abstract State Machines (ASMs) offer a formalism for describing
+                state transitions over relational structures. This makes them
+                promising for modeling system features such as access control,
+                especially in an environment where the policy's outcome depends on
+                the evolving state of the system. The current notions of modularity
+                for ASMs, however, provide insufficiently strong guarantees of
+                consistency in the face of parallel update requests. We present a
+                real-world context that illustrates this problem, discuss desirable
+                properties for composition in this context, describe an operator
+                that exhibits these properties, formalize its meaning, and outline
+                its implementation strategy.
             </div>
 
             </div>
@@ -187,38 +178,34 @@
 
             <span class="paper-conference">Technical Report, 2006.</span>
 
-            <div>
-                <span class="toggle" onclick="javascript:toggleById('tech0')">Abstract</span>
+            <div id="tech0-toggle">
+                <script>attachToggle('tech0', 'Abstract')</script>
             </div>
 
-            <div class="paper-details" style="display: none;">
-                <div>
-                <div class="paper-abstract">
-                    We present a model of the security policy for the Web-based
-                    Continue conference management tool. The policy model and
-                    properties are written as ASM Relational Transducers,
-                    which we extend with a module system in order to simplify the
-                    handling of conflicting updates. We assume prior familiarity
-                    with the security policy concerns surrounding Continue. First,
-                    we review the ASM Relational Transducer modeling and property
-                    language. Then we describe the basic structure of our policy
-                    implementation and demonstrate the ability to model useful
-                    properties in the original core ASM language. We exploring the
-                    use of the unmodified modeling language in a security policy
-                    context and describe typical ASM Relational Transducer
-                    complexity concerns and how these minimally impact our
-                    implementation. Next, we discuss difficulties encountered in
-                    representing our policy and properties in the standard ASM
-                    language, including our implementation in the appendices.
-                    Following the description of adapting ASMs for use in security
-                    modeling, we introduce policy modules and a composition operator
-                    to overcome the difficulty of programming in the original
-                    language known as the consistent update problem. Finally, we
-                    describe a reduction from our extended language to the original
-                    language, and prove it satisfies our required correctness
-                    property.
-                </div>
-                </div>
+            <div id="tech0-abstract" class="paper-abstract">
+                We present a model of the security policy for the Web-based
+                Continue conference management tool. The policy model and
+                properties are written as ASM Relational Transducers,
+                which we extend with a module system in order to simplify the
+                handling of conflicting updates. We assume prior familiarity
+                with the security policy concerns surrounding Continue. First,
+                we review the ASM Relational Transducer modeling and property
+                language. Then we describe the basic structure of our policy
+                implementation and demonstrate the ability to model useful
+                properties in the original core ASM language. We exploring the
+                use of the unmodified modeling language in a security policy
+                context and describe typical ASM Relational Transducer
+                complexity concerns and how these minimally impact our
+                implementation. Next, we discuss difficulties encountered in
+                representing our policy and properties in the standard ASM
+                language, including our implementation in the appendices.
+                Following the description of adapting ASMs for use in security
+                modeling, we introduce policy modules and a composition operator
+                to overcome the difficulty of programming in the original
+                language known as the consistent update problem. Finally, we
+                describe a reduction from our extended language to the original
+                language, and prove it satisfies our required correctness
+                property.
             </div>
 
             </div>
