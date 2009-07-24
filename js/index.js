@@ -18,6 +18,10 @@ var toggleById = function (id) {
     }
 };
 
+/*
+ * This function creates a toggle "button" (actually an anchor) with the given
+ * name and the text specified by "contents".
+ */
 function attachToggle(name, contents) {
     var paper = $(name);
     var elmt = $(name + '-toggle');
@@ -29,6 +33,10 @@ function attachToggle(name, contents) {
     elmt.getElementsByTagName('a')[0].onclick = collapsibleOnClick(name);
 }
 
+/*
+ * For a given abstract name, generates a function for toggling whether that
+ * abstract is collapsed.
+ */
 function collapsibleOnClick(name) {
     var paper = $(name);
     var slidefx;
@@ -40,15 +48,14 @@ function collapsibleOnClick(name) {
             slidefx.hide();
         }
 
-        //slidefx.stop();
-        if(paper.hasClass('closed')) {
-            slidefx.slideIn();
-            paper.removeClass('closed');
-            paper.addClass('open');
-        } else {
-            slidefx.slideOut();
+        slidefx.toggle();
+
+        if(slidefx.open) {
             paper.removeClass('open');
             paper.addClass('closed');
+        } else {
+            paper.removeClass('closed');
+            paper.addClass('open');
         }
     };
 }

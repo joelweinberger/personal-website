@@ -74,3 +74,18 @@ ul.index-papers-list li {
 .start-hidden .paper-abstract {
     display: none;
 }
+
+.toggle {
+    padding-left: 10px;
+    background-repeat: no-repeat;
+    background-position: center left;
+    text-decoration: none;
+}
+
+.closed .toggle {
+    background-image: url(images/toggle-closed.png);
+}
+
+.open .toggle {
+    background-image: url(images/toggle-open.png);
+}
