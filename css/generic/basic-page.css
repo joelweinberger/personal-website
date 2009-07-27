@@ -9,6 +9,17 @@ body {
 div.content {
     background-color: #cccccc;
     padding: 10px 20px 10px 20px;
+
+    /*
+     * border radius properties are going to be in CSS3, but Firefox (-moz) and
+     * Safari (-webkit) have working implementations at this point.
+     */
+    -moz-border-radius-bottomleft: 1em;
+    -moz-border-radius-bottomright: 1em;
+    -webkit-border-radius-bottom-left: 1em;
+    -webkit-border-radius-bottom-right: 1em;
+    border-radius-bottom-left: 1em;
+    border-radius-bottom-right: 1em;
 }
 
 .image-center {
