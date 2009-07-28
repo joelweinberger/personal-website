@@ -13,13 +13,15 @@ div.content {
     /*
      * border radius properties are going to be in CSS3, but Firefox (-moz) and
      * Safari (-webkit) have working implementations at this point.
+     *
+     * Of note, these properties will NOT validate as proper CSS.
      */
     -moz-border-radius-bottomleft: 1em;
     -moz-border-radius-bottomright: 1em;
-    -webkit-border-radius-bottom-left: 1em;
-    -webkit-border-radius-bottom-right: 1em;
-    border-radius-bottom-left: 1em;
-    border-radius-bottom-right: 1em;
+    -webkit-border-bottom-left-radius: 1em;
+    -webkit-border-bottom-right-radius: 1em;
+    border-radius-bottomleft: 1em;
+    border-radius-bottomright: 1em;
 }
 
 .image-center {
