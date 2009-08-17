@@ -14,20 +14,23 @@ function attachToggle(toggle_id, item_id, pub_id, toggle_contents) {
     // the anchor, but it's still there for those who want to use the keyboard
     pub.addClass('initialized');
     toggle.innerHTML = '<a href="javascript:" class="toggle">' + toggle_contents + '</a>';
-    toggle.getElementsByTagName('a')[0].onclick = collapsibleOnClick(toggle_id, item_id, pub_id);
+    toggle.getElementsByTagName('a')[0].onclick = collapsibleOnClick(toggle_id, item_id);
 }
 
 /*
  * For a given abstract name, generates a function for toggling whether that
  * abstract is collapsed.
  */
-function collapsibleOnClick(toggle_id, item_id, pub_id) {
-    var paper = $(pub_id);
+function collapsibleOnClick(toggle_id, item_id) {
+    var toggle;
+    var item;
     var slidefx;
 
     return function() {
         if (!$defined(slidefx)) {
             slidefx = new Fx.Slide(item_id);
+            toggle = $(toggle_id);
+            item = $(item_id);
             /*
              * Some collapsible items are hidden if there is no JavaScript
              * (those with the "hidden" class). Others are only hidden to start
@@ -35,19 +38,19 @@ function collapsibleOnClick(toggle_id, item_id, pub_id) {
              * because we both (a) have JavaScript, and (b) are on the first
              * click, reveal them by removing the classes.
              */
-            $(item_id).removeClass('hidden');
-            $(item_id).removeClass('start-hidden');
+            item.removeClass('hidden');
+            item.removeClass('start-hidden');
             slidefx.hide();
         }
 
         slidefx.toggle();
 
         if(slidefx.open) {
-            paper.removeClass('open');
-            paper.addClass('closed');
+            toggle.removeClass('open');
+            toggle.addClass('closed');
         } else {
-            paper.removeClass('closed');
-            paper.addClass('open');
+            toggle.removeClass('closed');
+            toggle.addClass('open');
         }
     };
 }

@@ -96,10 +96,10 @@ ul.index-papers-list li {
     background-position: center left;
 }
 
-.closed .paper-abstract-toggle .toggle {
+.closed.paper-abstract-toggle .toggle {
     background-image: url(images/toggle-closed.png);
 }
 
-.open .paper-abstract-toggle .toggle {
+.open.paper-abstract-toggle .toggle {
     background-image: url(images/toggle-open.png);
 }
