@@ -69,6 +69,15 @@ ul.index-papers-list li {
 .paper-presentation {
 }
 
+.paper-bibtex {
+  font-family: monospace;
+}
+
+.paper-bibtex-entry {
+    padding-left: 60px;
+    text-indent: -40px;
+}
+
 .paper .toggle {
     color: blue;
 }
@@ -77,21 +86,20 @@ ul.index-papers-list li {
     cursor: pointer;
 }
 
-.start-hidden .paper-abstract {
-    display: none;
-}
-
 .toggle {
-    padding-left: 10px;
-    background-repeat: no-repeat;
-    background-position: center left;
     text-decoration: none;
 }
 
-.closed .toggle {
+.paper-abstract-toggle .toggle {
+    padding-left: 10px;
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
+.closed .paper-abstract-toggle .toggle {
     background-image: url(images/toggle-closed.png);
 }
 
-.open .toggle {
+.open .paper-abstract-toggle .toggle {
     background-image: url(images/toggle-open.png);
 }

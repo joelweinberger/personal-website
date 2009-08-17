@@ -27,3 +27,11 @@ div.content {
 .image-center {
     text-align: center;
 }
+
+.hidden {
+    display: none;
+}
+
+.initialized .start-hidden {
+    display: none;
+}
