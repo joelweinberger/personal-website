@@ -23,12 +23,9 @@ a.image-link img {
     font-size: 100%;
 }
 
-.index-papers-header {
-    font-size: 100%;
-    text-align: center;
+h5.index-papers-header {
     margin-top: 13px;
     margin-bottom: 3px;
-    font-weight: bold;
 }
 
 ul.index-papers-list {
@@ -102,4 +99,8 @@ ul.index-papers-list li {
 
 .open.paper-abstract-toggle .toggle {
     background-image: url(images/toggle-open.png);
+}
+
+h5.index-paragraph-header {
+    margin-bottom: 10px;
 }

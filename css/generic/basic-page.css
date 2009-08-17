@@ -28,6 +28,12 @@ div.content {
     text-align: center;
 }
 
+h5 {
+    font-size: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
 .hidden {
     display: none;
 }
