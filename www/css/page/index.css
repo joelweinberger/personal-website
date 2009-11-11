@@ -43,6 +43,7 @@ ul.index-papers-list li {
 }
 
 .paper-title {
+	font-style: italic;
 }
 
 .paper-authors {

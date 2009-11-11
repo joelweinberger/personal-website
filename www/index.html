@@ -69,7 +69,52 @@
         Refereed Publications
     </h5>
 
-    <ul class="index-papers-list">
+	<ul class="index-papers-list">
+		<li class="index-text">
+			<div id="pub2" class="paper">
+
+			<span class="paper-title">
+				Preventing Capability Leaks in Secure JavaScript Subsets.
+			</span>
+
+			<span class="paper-authors">
+				<a href="http://www.eecs.berkeley.edu/~finifter">Matt Finifter</a>
+				Joel Weinberger, and
+				<a href="http://www.adambarth.com">Adam Barth</a>.
+			</span>
+
+			<span class="paper-conference">
+				To Appear in Proc. of NDSS, 2010.
+			</span>
+
+            <div id="pub2-abstract-toggle" class="paper-abstract-toggle closed">
+                <script type="text/javascript">
+                    attachToggle('pub2-abstract-toggle', 'pub2-abstract', 'pub2', 'Abstract');
+                </script>
+            </div>
+
+            <div id="pub2-abstract" class="paper-abstract start-hidden">
+				Publishers wish to sandbox third-party advertisements to protect
+				themselves from malicious advertisements. One promising
+				approach, used by ADsafe, Dojo Secure, and Jacaranda, sandboxes
+				advertisements by statically verifying that their JavaScript
+				conforms to a safe subset of the language. These systems
+				blacklist known-dangerous properties that would let
+				advertisements escape the sandbox. Unfortunately, this approach
+				does not prevent advertisements from accessing new methods added
+				to the built-in prototype objects by the hosting page. In this
+				paper, we design an algorithm to detect these methods and use our
+				tool to determine experimentally that one-third of the Alexa US
+				top 100 web sites would be exploitable by an ADsafe-verified
+				advertisement. We propose an improved statically verified
+				JavaScript subset that whitelists known-safe properties using
+				namespaces. Our approach maintains the expressiveness and
+				performance of static verification while improving security.
+            </div>
+
+			</div>
+		</li>
+
         <li class="index-text">
             <div id="pub1" class="paper">
 
@@ -90,7 +135,7 @@
 
             <span id="pub1-bibtex-toggle">
                 <script type="text/javascript">
-                    attachToggle('pub1-bibtex-toggle', 'pub1-bibtex', 'pub1', '[BibTeX]')
+                    attachToggle('pub1-bibtex-toggle', 'pub1-bibtex', 'pub1', '[BibTeX]');
                 </script>
             </span>
 
