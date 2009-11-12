@@ -1,0 +1,9 @@
+#contact-header {margin-bottom : 0px;
+                font-size : 14pt;}
+
+.email .email-label {display : inline;
+                     font-weight : bold;
+                     font-size : 12pt}
+.email .email-address {display : inline;
+                       text-align : left;
+                       margin : auto;}
