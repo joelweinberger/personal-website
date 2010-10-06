@@ -1,31 +1,31 @@
 div.header {
-    background-color: #666699;
+	background-color: #666699;
 	color: black;
-  	text-align: center;
-    padding-top: 5px;
-    padding-bottom: 10px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 10px;
 
-    /*
-     * border radius properties are going to be in CSS3, but Firefox (-moz) and
-     * Safari (-webkit) have working implementations at this point.
-     *
-     * Of note, these properties will NOT validate as proper CSS.
-     */
-    -moz-border-radius-topleft: 1em;
-    -moz-border-radius-topright: 1em;
-    -webkit-border-top-left-radius: 1em;
-    -webkit-border-top-right-radius: 1em;
-    border-radius-topleft: 1em;
-    border-radius-topright: 1em;
+	/*
+	 * border radius properties are going to be in CSS3, but Firefox (-moz) and
+	 * Safari (-webkit) have working implementations at this point.
+	 *
+	 * Of note, these properties will NOT validate as proper CSS.
+	 */
+	-moz-border-radius-topleft: 1em;
+	-moz-border-radius-topright: 1em;
+	-webkit-border-top-left-radius: 1em;
+	-webkit-border-top-right-radius: 1em;
+	border-radius-topleft: 1em;
+	border-radius-topright: 1em;
 
 }
 
 div.header > h1 {
-    margin-bottom: 0;
+	margin-bottom: 0;
 	font-size: 175%;
 }
 
 div.header > h3 {
-    margin: 0;
+	margin: 0;
 	font-size: 100%;
 }

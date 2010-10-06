@@ -1,43 +1,43 @@
 body {
-    background-color: #999999;
-    margin: 0 auto;
-    width: 800px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+	background-color: #999999;
+	margin: 0 auto;
+	width: 800px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 div.content {
-    background-color: #cccccc;
-    padding: 10px 20px 10px 20px;
+	background-color: #cccccc;
+	padding: 10px 20px 10px 20px;
 
-    /*
-     * border radius properties are going to be in CSS3, but Firefox (-moz) and
-     * Safari (-webkit) have working implementations at this point.
-     *
-     * Of note, these properties will NOT validate as proper CSS.
-     */
-    -moz-border-radius-bottomleft: 1em;
-    -moz-border-radius-bottomright: 1em;
-    -webkit-border-bottom-left-radius: 1em;
-    -webkit-border-bottom-right-radius: 1em;
-    border-radius-bottomleft: 1em;
-    border-radius-bottomright: 1em;
+	/*
+	 * border radius properties are going to be in CSS3, but Firefox (-moz) and
+	 * Safari (-webkit) have working implementations at this point.
+	 *
+	 * Of note, these properties will NOT validate as proper CSS.
+	 */
+	-moz-border-radius-bottomleft: 1em;
+	-moz-border-radius-bottomright: 1em;
+	-webkit-border-bottom-left-radius: 1em;
+	-webkit-border-bottom-right-radius: 1em;
+	border-radius-bottomleft: 1em;
+	border-radius-bottomright: 1em;
 }
 
 .image-center {
-    text-align: center;
+	text-align: center;
 }
 
 h5 {
-    font-size: 100%;
-    text-align: center;
-    font-weight: bold;
+	font-size: 100%;
+	text-align: center;
+	font-weight: bold;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 .initialized .start-hidden {
-    display: none;
+	display: none;
 }

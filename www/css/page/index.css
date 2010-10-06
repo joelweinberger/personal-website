@@ -1,42 +1,42 @@
 a.image-link img {
-    border: none;
-    margin-top: 10px;
+	border: none;
+	margin-top: 10px;
 }
 
 .index-links {
-    text-align: center;
+	text-align: center;
 }
 
 .index-links a {
-    text-decoration: none;
-    font-size: 100%;
-    color: #000000;
+	text-decoration: none;
+	font-size: 100%;
+	color: #000000;
 }
 
 .index-links a:hover {
-    color: #004fff;
+	color: #004fff;
 }
 
 .index-text {
-    margin: 0px auto;
-    text-align: left;
-    font-size: 100%;
+	margin: 0px auto;
+	text-align: left;
+	font-size: 100%;
 }
 
 h5.index-papers-header {
-    margin-top: 13px;
-    margin-bottom: 3px;
+	margin-top: 13px;
+	margin-bottom: 3px;
 }
 
 ul.index-papers-list {
-    font-size: 100%;
-    padding-left: 0;
-    margin-left: 0;
-    list-style-type: none;
+	font-size: 100%;
+	padding-left: 0;
+	margin-left: 0;
+	list-style-type: none;
 }
 
 ul.index-papers-list li {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .paper {
@@ -50,15 +50,15 @@ ul.index-papers-list li {
 }
 
 .paper-authors a {
-    text-decoration: underline;
-    color: #000000;
+	text-decoration: underline;
+	color: #000000;
 }
 
 .paper-authors a:hover {
 }
 
 .paper-conference {
-    font-style: italic;
+	font-style: italic;
 }
 
 .paper-notes {
@@ -72,36 +72,36 @@ ul.index-papers-list li {
 }
 
 .paper-bibtex-entry {
-    padding-left: 60px;
-    text-indent: -40px;
+	padding-left: 60px;
+	text-indent: -40px;
 }
 
 .paper .toggle {
-    color: blue;
+	color: blue;
 }
 
 .paper .toggle:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .toggle {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .paper-abstract-toggle .toggle {
-    padding-left: 10px;
-    background-repeat: no-repeat;
-    background-position: center left;
+	padding-left: 10px;
+	background-repeat: no-repeat;
+	background-position: center left;
 }
 
 .closed.paper-abstract-toggle .toggle {
-    background-image: url(images/toggle-closed.png);
+	background-image: url(images/toggle-closed.png);
 }
 
 .open.paper-abstract-toggle .toggle {
-    background-image: url(images/toggle-open.png);
+	background-image: url(images/toggle-open.png);
 }
 
 h5.index-paragraph-header {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
