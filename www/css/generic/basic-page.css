@@ -41,3 +41,7 @@ h5 {
 .initialized .start-hidden {
 	display: none;
 }
+
+#homelink {
+	text-align: center;
+}

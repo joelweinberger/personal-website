@@ -1,0 +1,111 @@
+#!/bin/sh
+#
+#    Copyright 2010 Joel Weinberger
+#
+#    This program is free software: you can redistribute it and/or modify it
+#    under the terms of the GNU General Public License as published by the Free
+#    Software Foundation, either version 3 of the License, or (at your option)
+#    any later version.
+#
+#    This program is distributed in the hope that it will be useful, but WITHOUT
+#    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+#    more details.
+#
+#    You should have received a copy of the GNU General Public License along
+#    with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# This script allows for 'clones' of repositories but only specifying some
+# remote branches to clone. This is useful with repositories that have many
+# branches with very different overlap so that cloning all branches is very
+# expensive. For example, if you have a giant code project in branch 'foo', but
+# only want to work on the TeX files in the 'paper' branch, this might be a good
+# option.
+
+set -e
+
+USAGE="git-clone-branches [-t track branch]... [-b checkout branch] [-r remote name] <repository> <directory>"
+
+BRANCHES=""
+CHECKOUT=""
+REMOTENAME="origin"
+
+while getopts ":ht:b:r:" opt; do
+	case $opt in
+		h)
+			echo "usage: $USAGE"
+			echo ""
+			echo "git-clone-branches allows a user to clone only a subset of branches from a"
+			echo "repository. If no branches are specified, defaults to 'master'. If no "
+			echo "checkout branch is specified, the first listed branch is checked out."
+			echo ""
+			echo "-h                    shows this help message"
+			echo "-t <branch name>      specifies a remote branch to clone"
+			echo "-b <branch name>      specifies a branch to checkout after partial clone"
+			echo "-r <remote name>      name to give remote (default is 'origin')"
+			exit 0
+			;;
+		t)
+			BRANCHES="$BRANCHES -t $OPTARG"
+			# if no checkout branch has been specified yet, use this branch as
+			# it must be the first remote branch specified.
+			if [[ ! $CHECKOUT ]]; then
+				CHECKOUT="$OPTARG"
+			fi
+			;;
+		b)
+			CHECKOUT="$OPTARG"
+			;;
+		r)
+			REMOTENAME="$OPTARG"
+			;;
+		:)
+			echo "option -$OPTARG requires an argument" >&2
+			echo "usage: $USAGE" >&2
+			exit 1
+			;;
+		\?)
+			echo "unknown option: -$OPTARG" >&2
+			echo "usage: $USAGE" >&2
+			exit 1
+			;;
+	esac
+done
+
+# If no branches are specified, default to master branch.
+if [[ $BRANCHES == "" ]]; then
+	BRANCHES="-t master"
+
+	# If no checkout branch has been specified, then it should also be set to
+	# master.
+	if [[ ! $CHECKOUT ]]; then
+		CHECKOUT="master"
+	fi
+fi
+
+# Shift the arguments past all of the options
+shift $(($OPTIND - 1))
+
+# Make sure that there are the correct number of non-option arguments.
+if [[ $# != 2 ]]; then
+	echo "You must provide a repository to clone and a directory to clone to." >&2
+	echo "" >&2
+	echo "usage: $USAGE" >&2
+	exit 1
+fi
+
+REPO=$1
+DIR=$2
+
+# Create the requested directory if it doesn't exist.
+if [[ ! -e $DIR ]]; then
+	mkdir $DIR
+fi
+
+# Enter the directory to begin clone. Thanks to 'set -e' magic, this should give
+# a useful message if DIR is not a directory.
+cd $DIR
+
+git init -q
+git remote add -f $REMOTENAME $BRANCHES $REPO
+git checkout $CHECKOUT

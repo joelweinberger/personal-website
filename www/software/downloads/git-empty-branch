@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+#    Copyright 2010 Joel Weinberger
+#
+#    This program is free software: you can redistribute it and/or modify it
+#    under the terms of the GNU General Public License as published by the Free
+#    Software Foundation, either version 3 of the License, or (at your option)
+#    any later version.
+#
+#    This program is distributed in the hope that it will be useful, but WITHOUT
+#    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+#    more details.
+#
+#    You should have received a copy of the GNU General Public License along
+#    with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# This script creates a branch in a git repository with an empty history. This
+# puts the new branch in effectively the same state as the first branch when you
+# create a new, empty repository. Of course, it leaves all of your other
+# branches the same and untouched.
+#
+set -e
+
+USAGE="git-emtpy-branch <new-branch>"
+
+if [ $# != 1 ]; then
+	echo "usage: $USAGE" >&2
+	exit 1
+fi
+
+# Thanks to 'set -e' above, this will exit with a useful error message if we are
+# not in a git repository. Thus, there is no reason to check its output. Another
+# 'set -e' win!
+GITTOPLEVEL=`git rev-parse --show-toplevel`
+cd $GITTOPLEVEL
+
+git symbolic-ref HEAD refs/heads/$1
+rm .git/index
+git clean -fdxq
+
+echo "You probably want to change directories to the top level now:"
+echo $GITTOPLEVEL
