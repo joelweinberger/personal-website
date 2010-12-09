@@ -373,6 +373,87 @@
 
 	<ul class="index-papers-list">
 		<li class="index-text">
+			<div id="tech1" class="paper">
+
+			<span class="paper-title">
+			<a href="papers/2010/felt-finifter-weinberger-wagner.pdf">
+			Diesel: Applying Privilege Separation to Database Access</a>
+			</span>
+
+			<span class="paper-authors">
+				<a href="http://www.eecs.berkeley.edu/~afelt/">Adrienne Porter
+				Felt</a>,
+				<a href="http://www.eecs.berkeley.edu/~finifter/">Matthew
+				Finifter</a>,
+				Joel Weinberger, and
+				<a href="http://www.eecs.berkeley.edu/~daw/">David Wagner</a>.
+			</span>
+
+			<span class="paper-conference">University of California Technical
+			Report EECS-2010-149, 2010.</span>
+
+			<div> <!-- citation div -->
+			<span id="tech1-bibtex-toggle">
+				<script type="text/javascript">
+					attachToggle('tech1-bibtex-toggle', 'tech1-bibtex', 'tech1', '[BibTeX]');
+				</script>
+			</span>
+
+			<div id="tech1-bibtex" class="paper-bibtex hidden">
+				<div>@techreport{Felt:EECS-2010-149,</div>
+				<div class="paper-bibtex-entry">
+					author = {Adrienne Porter Felt and Matthew Finifter and Joel Weinberger and David Wagner},
+				</div>
+				<div class="paper-bibtex-entry">
+					title = {Diesel: Applying Privilege Separation to Database Access},
+				</div>
+				<div class="paper-bibtex-entry">
+				    institution = {EECS Department, University of California, Berkeley},
+				</div>
+				<div class="paper-bibtex-entry">
+					year = {2010},
+				</div>
+				<div class="paper-bibtex-entry">
+					month = {Dec},
+				</div>
+				<div class="paper-bibtex-entry">
+					url = {http://www.eecs.berkeley.edu/Pubs/TechRpts/2010/EECS-2010-149.html},
+				</div>
+				<div class="paper-bibtex-entry">
+					number = {UCB/EECS-2010-149}
+				</div>
+				<div>}</div>
+			</div>
+			</div> <!-- end citation div -->
+
+			<div id="tech1-abstract-toggle" class="paper-abstract-toggle closed">
+				<script type="text/javascript">
+					attachToggle('tech1-abstract-toggle', 'tech1-abstract', 'tech1', 'Abstract');
+				</script>
+			</div>
+
+			<div id="tech1-abstract" class="paper-abstract start-hidden">
+			Database-backed applications typically grant complete database
+			access to every part of the applica- tion. In this scenario, a flaw
+			in one module can expose data that the module never uses for
+			legitimate purposes. Drawing parallels to traditional privilege
+			separation, we argue that database data should be subject to
+			limitations such that each section of code receives access to only
+			the data it needs. We call this data separation. Data separation
+			defends against SQL-based errors including buggy queries and SQL
+			injection attacks and facilitates code review, since a module’s
+			policy makes the extent of its database access explicit to
+			programmers and code reviewers. We design and construct a system
+			called Diesel, which implements data separation by intercepting
+			database queries and applying modules’ restrictions to the
+			queries. We evaluate Diesel on three widely-used applications:
+			Drupal, JForum, and WordPress.
+			</div>
+
+			</div>
+		</li>
+
+		<li class="index-text">
 			<div id="tech0" class="paper">
 
 			<span class="paper-title">
