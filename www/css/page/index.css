@@ -67,15 +67,6 @@ ul.index-papers-list li {
 .paper-presentation {
 }
 
-.paper-bibtex {
-  font-family: monospace;
-}
-
-.paper-bibtex-entry {
-	padding-left: 60px;
-	text-indent: -40px;
-}
-
 .paper .toggle {
 	color: blue;
 }

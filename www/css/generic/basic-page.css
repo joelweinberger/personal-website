@@ -49,3 +49,12 @@ h5 {
 .section-heading {
 	text-align: center;
 }
+
+.bibtex-entry {
+  font-family: monospace;
+}
+
+.bibtex-entry-line {
+	padding-left: 60px;
+	text-indent: -40px;
+}
