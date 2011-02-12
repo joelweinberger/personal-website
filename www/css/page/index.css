@@ -43,7 +43,14 @@ ul.index-papers-list li {
 }
 
 .paper-title {
-	font-style: italic;
+	font-weight: bold;
+}
+
+.paper-title a {
+	text-decoration: none;
+}
+
+.paper-title a:visited {
 }
 
 .paper-authors {
