@@ -7,15 +7,13 @@
  *		
  */
 function attachToggle(item_id, pub_id) {
-	if (pub_id != 'pub2')
-		return;
 	var toggle_id = pub_id + '-' + item_id;
 	var toggle = $(toggle_id);
 	var pub = $(pub_id);
 	var page_request = new Request.HTML({
 		url: toggle.get('href'),
 		method: 'get',
-		onSuccess: function(tree) {
+		onSuccess: function(responseTree) {
 			/*
 			 * Setup the appropriate classes so that the text does not appear
 			 * initially (it starts hidden and is revealed by clicking on the
@@ -26,8 +24,15 @@ function attachToggle(item_id, pub_id) {
 			toggle.setProperty('href', 'javascript:');
 
 			var entry_id = toggle_id + '-entry';
-			$(entry_id).appendChild($$(tree).getElementById(item_id)[0]);
-
+			var new_entry = $$(responseTree).getElementById(item_id)[0];
+			/*
+			 * It is necessary to get rid of the id or else the final document
+			 * will have a bunch of nodes with the same id. In truth, it would
+			 * not even get that far; after injecting the first one, all the
+			 * rest would not even be retrieved with a call to getElementById().
+			 */
+			new_entry.set('id', '');
+			new_entry.inject($(entry_id), 'bottom');
 			toggle.addEvent('click', collapsibleOnClick(toggle_id, entry_id));
 		}
 	});
