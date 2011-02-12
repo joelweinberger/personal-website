@@ -6,7 +6,7 @@
  *		name: the name of the publication (acts as a prefix)
  *		
  */
-function attachToggle(toggle_id, item_id, pub_id, toggle_contents) {
+function attachToggle(item_id, pub_id) {
 	if (item_id != 'pub2-abstract')
 		return;
 
@@ -16,11 +16,18 @@ function attachToggle(toggle_id, item_id, pub_id, toggle_contents) {
 		url: 'info/' + item_id + '.html',
 		method: 'get',
 		onSuccess: function(tree) {
+			/*
+			 * Setup the appropriate classes so that the text does not appear
+			 * initially (it starts hidden and is revealed by clicking on the
+			 * toggle).
+			 */
+			pub.addClass('initialized');
 			toggle.addClass('toggle');
+			toggle.setProperty('href', 'javascript:');
+
 			var abstract_text = $$(tree).getElementById('abstract')[0].get('text');
 			$(item_id + '-text').appendText(abstract_text);
-			pub.addClass('initialized');
-			toggle.setProperty('href', 'javascript:');
+
 			toggle.addEvent('click', collapsibleOnClick(item_id, item_id + '-text'));
 		}
 	});
