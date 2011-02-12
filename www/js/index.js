@@ -13,7 +13,7 @@ function attachToggle(item_id, pub_id) {
 	var toggle = $(toggle_id);
 	var pub = $(pub_id);
 	var page_request = new Request.HTML({
-		url: 'info/' + toggle_id + '.html',
+		url: toggle.get('href'),
 		method: 'get',
 		onSuccess: function(tree) {
 			/*
