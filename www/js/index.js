@@ -7,14 +7,25 @@
  *		
  */
 function attachToggle(toggle_id, item_id, pub_id, toggle_contents) {
-	var pub = $(pub_id);
-	var toggle = $(toggle_id);
+	if (item_id != 'pub2-abstract')
+		return;
 
-	// add anchor at runtime in JS so that users without JavaScript don't see
-	// the anchor, but it's still there for those who want to use the keyboard
-	pub.addClass('initialized');
-	toggle.innerHTML = '<a href="javascript:" class="toggle">' + toggle_contents + '</a>';
-	toggle.getElementsByTagName('a')[0].onclick = collapsibleOnClick(toggle_id, item_id);
+	var toggle = $(item_id);
+	var pub = $(pub_id);
+	var page_request = new Request.HTML({
+		url: 'info/' + item_id + '.html',
+		method: 'get',
+		onSuccess: function(tree) {
+			toggle.addClass('toggle');
+			var abstract_text = $$(tree).getElementById('abstract')[0].get('text');
+			$(item_id + '-text').appendText(abstract_text);
+			pub.addClass('initialized');
+			toggle.setProperty('href', 'javascript:');
+			toggle.addEvent('click', collapsibleOnClick(item_id, item_id + '-text'));
+		}
+	});
+
+	page_request.send();
 }
 
 /*
