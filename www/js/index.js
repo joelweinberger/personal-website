@@ -7,13 +7,13 @@
  *		
  */
 function attachToggle(item_id, pub_id) {
-	if (item_id != 'pub2-abstract')
+	if (pub_id != 'pub2')
 		return;
-
-	var toggle = $(item_id);
+	var toggle_id = pub_id + '-' + item_id;
+	var toggle = $(toggle_id);
 	var pub = $(pub_id);
 	var page_request = new Request.HTML({
-		url: 'info/' + item_id + '.html',
+		url: 'info/' + toggle_id + '.html',
 		method: 'get',
 		onSuccess: function(tree) {
 			/*
@@ -25,10 +25,10 @@ function attachToggle(item_id, pub_id) {
 			toggle.addClass('toggle');
 			toggle.setProperty('href', 'javascript:');
 
-			var abstract_text = $$(tree).getElementById('abstract')[0].get('text');
-			$(item_id + '-text').appendText(abstract_text);
+			var entry_id = toggle_id + '-entry';
+			$(entry_id).appendChild($$(tree).getElementById(item_id)[0]);
 
-			toggle.addEvent('click', collapsibleOnClick(item_id, item_id + '-text'));
+			toggle.addEvent('click', collapsibleOnClick(toggle_id, entry_id));
 		}
 	});
 

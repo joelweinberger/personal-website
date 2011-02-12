@@ -88,17 +88,17 @@ ul.index-papers-list li {
 	text-decoration: none;
 }
 
-.paper-abstract-toggle .toggle {
+.icon.toggle {
 	padding-left: 10px;
 	background-repeat: no-repeat;
 	background-position: center left;
 }
 
-.closed.paper-abstract-toggle .toggle {
+.closed.icon.toggle {
 	background-image: url(images/toggle-closed.png);
 }
 
-.open.paper-abstract-toggle .toggle {
+.open.icon.toggle {
 	background-image: url(images/toggle-open.png);
 }
 
