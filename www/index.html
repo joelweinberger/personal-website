@@ -182,7 +182,7 @@
 				<a id="pub2-abstract" class="icon closed" href="abstracts/pub2.html">Abstract</a>
 				<div id="pub2-abstract-entry" class="start-hidden"></div>
 				<script type="text/javascript">
-					//attachToggle('abstract', 'pub2');
+					attachToggle('abstract', 'pub2');
 				</script>
 			</div>
 			</div> <!-- end abstract div -->
@@ -241,26 +241,12 @@
 			<!-- end presentation div -->
 
 			<div> <!-- abstract div -->
-			<div id="pub1-abstract-toggle" class="paper-abstract-toggle closed">
+			<div class="paper-abstract">
+				<a id="pub1-abstract" class="icon closed" href="abstracts/pub1.html">Abstract</a>
+				<div id="pub1-abstract-entry" class="start-hidden"></div>
 				<script type="text/javascript">
-					//attachToggle('pub1-abstract-toggle', 'pub1-abstract', 'pub1', 'Abstract');
+					attachToggle('abstract', 'pub1');
 				</script>
-			</div>
-
-			<div id="pub1-abstract" class="paper-abstract start-hidden">
-				We identify a class of Web browser implementation vulnerabilities,
-				cross-origin JavaScript capability leaks, which occur when
-				the browser leaks a JavaScript pointer from one security origin to
-				another. We devise an algorithm for detecting these vulnerabilities
-				by monitoring the &quot;points-to&quot; relation of the JavaScript
-				heap.  Our algorithm finds a number of new vulnerabilities in the
-				open-source WebKit browser engine used by Safari.  We propose an
-				approach to mitigate this class of vulnerabilities by adding access
-				control checks to browser JavaScript engines.  These access control
-				checks are backwards-compatible because they do not alter semantics
-				of the Web platform.  Through an application of the inline cache,
-				we implement these checks with an overhead of 1&ndash;2% on
-				industry-standard benchmarks.
 			</div>
 			</div> <!-- end abstract div -->
 
@@ -305,24 +291,12 @@
 			</div> <!-- end citation div -->
 
 			<div> <!-- abstract div -->
-			<div id="pub0-abstract-toggle" class="paper-abstract-toggle closed">
+			<div class="paper-abstract">
+				<a id="pub0-abstract" class="icon closed" href="abstracts/pub0.html">Abstract</a>
+				<div id="pub0-abstract-entry" class="start-hidden"></div>
 				<script type="text/javascript">
-					//attachToggle('pub0-abstract-toggle', 'pub0-abstract', 'pub0', 'Abstract');
+					attachToggle('abstract', 'pub0');
 				</script>
-			</div>
-
-			<div id="pub0-abstract" class="paper-abstract start-hidden">
-				Abstract State Machines (ASMs) offer a formalism for describing
-				state transitions over relational structures. This makes them
-				promising for modeling system features such as access control,
-				especially in an environment where the policy's outcome depends on
-				the evolving state of the system. The current notions of modularity
-				for ASMs, however, provide insufficiently strong guarantees of
-				consistency in the face of parallel update requests. We present a
-				real-world context that illustrates this problem, discuss desirable
-				properties for composition in this context, describe an operator
-				that exhibits these properties, formalize its meaning, and outline
-				its implementation strategy.
 			</div>
 			</div> <!-- end abstract div -->
 
@@ -365,29 +339,15 @@
 			</span>
 			</div> <!-- end citation div -->
 
-			<div id="tech1-abstract-toggle" class="paper-abstract-toggle closed">
+			<div> <!-- abstract div -->
+			<div class="paper-abstract">
+				<a id="tech1-abstract" class="icon closed" href="abstracts/tech1.html">Abstract</a>
+				<div id="tech1-abstract-entry" class="start-hidden"></div>
 				<script type="text/javascript">
-					//attachToggle('tech1-abstract-toggle', 'tech1-abstract', 'tech1', 'Abstract');
+					attachToggle('abstract', 'tech1');
 				</script>
 			</div>
-
-			<div id="tech1-abstract" class="paper-abstract start-hidden">
-			Database-backed applications typically grant complete database
-			access to every part of the applica- tion. In this scenario, a flaw
-			in one module can expose data that the module never uses for
-			legitimate purposes. Drawing parallels to traditional privilege
-			separation, we argue that database data should be subject to
-			limitations such that each section of code receives access to only
-			the data it needs. We call this data separation. Data separation
-			defends against SQL-based errors including buggy queries and SQL
-			injection attacks and facilitates code review, since a module’s
-			policy makes the extent of its database access explicit to
-			programmers and code reviewers. We design and construct a system
-			called Diesel, which implements data separation by intercepting
-			database queries and applying modules’ restrictions to the
-			queries. We evaluate Diesel on three widely-used applications:
-			Drupal, JForum, and WordPress.
-			</div>
+			</div> <!-- end abstract div -->
 
 			</div> <!-- end tech div -->
 		</li>
@@ -421,37 +381,15 @@
 			</span>
 			</div> <!-- end citation div -->
 
-			<div id="tech0-abstract-toggle" class="paper-abstract-toggle closed">
+			<div> <!-- abstract div -->
+			<div class="paper-abstract">
+				<a id="tech0-abstract" class="icon closed" href="abstracts/tech0.html">Abstract</a>
+				<div id="tech0-abstract-entry" class="start-hidden"></div>
 				<script type="text/javascript">
-					//attachToggle('tech0-abstract-toggle', 'tech0-abstract', 'tech0', 'Abstract');
+					attachToggle('abstract', 'tech0');
 				</script>
 			</div>
-
-			<div id="tech0-abstract" class="paper-abstract start-hidden">
-				We present a model of the security policy for the Web-based
-				Continue conference management tool. The policy model and
-				properties are written as ASM Relational Transducers,
-				which we extend with a module system in order to simplify the
-				handling of conflicting updates. We assume prior familiarity
-				with the security policy concerns surrounding Continue. First,
-				we review the ASM Relational Transducer modeling and property
-				language. Then we describe the basic structure of our policy
-				implementation and demonstrate the ability to model useful
-				properties in the original core ASM language. We exploring the
-				use of the unmodified modeling language in a security policy
-				context and describe typical ASM Relational Transducer
-				complexity concerns and how these minimally impact our
-				implementation. Next, we discuss difficulties encountered in
-				representing our policy and properties in the standard ASM
-				language, including our implementation in the appendices.
-				Following the description of adapting ASMs for use in security
-				modeling, we introduce policy modules and a composition operator
-				to overcome the difficulty of programming in the original
-				language known as the consistent update problem. Finally, we
-				describe a reduction from our extended language to the original
-				language, and prove it satisfies our required correctness
-				property.
-			</div>
+			</div> <!-- end abstract div -->
 
 			</div> <!-- end tech div -->
 		</li>
