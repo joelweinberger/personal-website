@@ -107,3 +107,7 @@ h5.index-paragraph-header {
 .paper-citeseer a {
 	text-decoration: none;
 }
+
+.paper-bibtex-toggle {
+	display: inline;
+}
