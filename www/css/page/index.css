@@ -111,3 +111,7 @@ h5.index-paragraph-header {
 .paper-bibtex-toggle {
 	display: inline;
 }
+
+.paper-extended a {
+	text-decoration: none;
+}
