@@ -16,7 +16,7 @@
  */
 
 /*
- * rhino jslint_wrap.js jslintfile [options]... [files]...
+ * rhino jslint-rhino-wrap.js jslintfile [options]... [files]...
  *
  * The user *must* specify a JSLint file as the JSLint library. It is probably
  * useful to write a shell script that wraps around this and always specifies
