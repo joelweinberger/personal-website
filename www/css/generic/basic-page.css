@@ -58,3 +58,7 @@ h5 {
 	padding-left: 60px;
 	text-indent: -40px;
 }
+
+.code {
+	font-family: monospace;
+}
