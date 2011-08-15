@@ -62,3 +62,7 @@ h5 {
 .code {
 	font-family: monospace;
 }
+
+.strike {
+	text-decoration: line-through;
+}
