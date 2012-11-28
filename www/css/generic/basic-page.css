@@ -24,8 +24,13 @@ div.content {
 	border-radius-bottomright: 1em;
 }
 
-.image-center {
+.center-elt {
 	text-align: center;
+}
+
+.image-left {
+	float: left;
+	margin-right: 20px;
 }
 
 h5 {
@@ -65,4 +70,8 @@ h5 {
 
 .strike {
 	text-decoration: line-through;
+}
+
+.no-dec-link {
+	text-decoration: none;
 }
