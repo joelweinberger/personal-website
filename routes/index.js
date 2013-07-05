@@ -14,7 +14,9 @@ exports.index = function(req, res) {
       'js/index.js',
       'lib/mootools.js',
       'lib/mootools-more.js'
-    ]
+    ],
+    header: 'jww (at) joelweinberger (dot) us',
+    nohomelink: true
   });
 };
 
@@ -23,7 +25,9 @@ exports.calendar = function(req, res) {
     title: 'Joel H. W. Weinberger -- Calendar',
     extracss: [
       'css/page/calendar.css'
-    ]
+    ],
+    nocontent: true,
+    nohomelink: true
   });
 };
 
@@ -65,6 +69,7 @@ exports.publications = function(req, res) {
       'css/generic/header.css',
       'css/page/index.css'
     ],
+    header: 'publications',
     papers: pubs['papers'],
     techs: pubs['techs']
   });
@@ -82,6 +87,7 @@ exports.wedding = function(req, res) {
       'js/index.js',
       'lib/mootools.js',
       'lib/mootools-more.js'
-    ]
+    ],
+    header: 'wedding',
   });
 };
