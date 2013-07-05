@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
 
     <!-- start extra meta -->
     {{#each extrameta}}
     <meta name="{{{this.description}}}" content="{{{this.content}}}"></meta>
     {{/each}}
     <!-- end extra meta -->
-
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/generic/basic-page.css" />
-
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/generic/header.css" />
 
     <!-- start extra CSS -->
     {{#each extracss}}
@@ -29,7 +21,7 @@
     {{/each}}
     <!-- end extra JavaScript -->
 
-    <title>Joel H. W. Weinberger -- {{title}}</title>
+    <title>{{title}}</title>
   </head>
 
   <body>

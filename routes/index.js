@@ -1,7 +1,9 @@
 exports.index = function(req, res) {
   res.render('index', {
-    title: 'jww',
+    title: 'Joel H. W. Weinberger -- jww',
     extracss: [
+      'css/generic/basic-page.css',
+      'css/generic/header.css',
       'css/page/index.css'
     ],
     extrascripts: [
@@ -13,5 +15,10 @@ exports.index = function(req, res) {
 };
 
 exports.calendar = function(req, res) {
-  res.render('calendar');
+  res.render('calendar', {
+    title: 'Joel\'s Public Calendar',
+    extracss: [
+      'css/page/calendar.css'
+    ]
+  });
 };
