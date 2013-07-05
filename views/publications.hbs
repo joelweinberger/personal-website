@@ -339,16 +339,20 @@
     </span>
 
     <span class="paper-authors">
-      {{#eachauthor this.authors}}<a href="{{escapeAttr this.homepage}}">{{this.name}}</a>{{/eachauthor}}
+      {{#eachauthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachauthor}}
     </span>
 
-    <span class="paper-conference">{{this.conference}}</span>
+    {{#if this.conference}}
+    <span class="paper-conference">{{this.conference}}</span>.
     </div> <!-- end paper info div -->
+    {{/if}}
 
     <div> <!-- citation div -->
+    {{#if this.citeseer}}
     <span class="paper-citeseer">
       <a href="{{this.citeseer}}">[CiteSeer]</a>
     </span>
+    {{/if}}
 
     <div id="pub{{@index}}-bibtex-toggle" class="paper-bibtex-toggle">
       <a id="pub{{@index}}-bibtex" href="bibtexs/pub{{@index}}.html">[BibTeX]</a>
@@ -461,45 +465,51 @@
     </div> <!-- end tech div -->
   </li>
 
+  {{#each techs}}
   <li class="index-text">
-    <div id="tech0" class="paper"> <!-- tech div -->
+    <div id="tech{{@index}}" class="paper"> <!-- tech div -->
 
+    <div> <!-- paper info div -->
     <span class="paper-title">
-    <a href="papers/2006/meyerovich-weinberger-gordon-krishnamurthi-tech.pdf">
-    ASM Relational Transducer Security Policies</a>.
+    <a href="{{this.pdf}}">{{this.title}}.</a>
     </span>
 
     <span class="paper-authors">
-      <a href="http://www.eecs.berkeley.edu/~lmeyerov/">Leo Meyerovich</a>,
-      Joel Weinberger,
-      <a href="http://www.cs.washington.edu/homes/csgordon/">Colin
-      Gordon</a>, and
-      <a href="http://www.cs.brown.edu/~sk/">Shriram Krishnamurthi</a>.
+      {{#eachauthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachauthor}}
     </span>
 
-    <span class="paper-conference">Brown University Technical Report
-    CS-06-12, 2006.</span>
+    {{#if this.conference}}
+    <span class="paper-conference">{{this.conference}}</span>.
+    </div> <!-- end paper info div -->
+    {{/if}}
 
     <div> <!-- citation div -->
-    <div id="tech0-bibtex-toggle" class="paper-bibtex-toggle">
-      <a id="tech0-bibtex" href="bibtexs/tech0.html">[BibTeX]</a>
-      <div id="tech0-bibtex-entry" class="start-hidden"></div>
+    {{#if this.citeseer}}
+    <span class="paper-citeseer">
+      <a href="{{this.citeseer}}">[CiteSeer]</a>
+    </span>
+    {{/if}}
+
+    <div id="tech{{@index}}-bibtex-toggle" class="paper-bibtex-toggle">
+      <a id="tech{{@index}}-bibtex" href="bibtexs/tech{{@index}}.html">[BibTeX]</a>
+      <div id="tech{{@index}}-bibtex-entry" class="start-hidden"></div>
       <script type="text/javascript">
-        attachToggle('bibtex', 'tech0');
+        attachToggle('bibtex', 'tech{{@index}}');
       </script>
     </div>
     </div> <!-- end citation div -->
 
     <div> <!-- abstract div -->
     <div class="paper-abstract">
-      <a id="tech0-abstract" class="icon closed" href="abstracts/tech0.html">Abstract</a>
-      <div id="tech0-abstract-entry" class="start-hidden"></div>
+      <a id="tech{{@index}}-abstract" class="icon closed" href="abstracts/tech{{@index}}.html">Abstract</a>
+      <div id="tech{{@index}}-abstract-entry" class="start-hidden"></div>
       <script type="text/javascript">
-        attachToggle('abstract', 'tech0');
+        attachToggle('abstract', 'tech{{@index}}');
       </script>
     </div>
     </div> <!-- end abstract div -->
 
     </div> <!-- end tech div -->
   </li>
+  {{/each}}
 </ul>

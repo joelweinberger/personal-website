@@ -4,6 +4,9 @@
       "name": "Colin Gordon",
       "homepage": "http://www.cs.washington.edu/homes/csgordon/"
     },
+    "jww": {
+      "name": "Joel Weinberger"
+    },
     "lmeyerov": {
       "name": "Leo Meyerovich",
       "homepage": "http://www.eecs.berkeley.edu/~lmeyerov/"
@@ -17,11 +20,17 @@
     {
       "title": "Composition with Consistent Updates for Abstract State Machines",
       "pdf": "papers/2007/gordon-meyerovich-weinberger-krishnamurthi.pdf",
-      "authors": [ "cgordon", "lmeyerov", "shriram" ],
+      "authors": [ "cgordon", "lmeyerov", "jww", "shriram" ],
       "conference": "In Proc. of the International ASM Workshop, 2007",
       "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.87.4909"
     }
   ],
   "techs": [
+    {
+      "title": "ASM Relational Transducer Security Policies",
+      "pdf": "papers/2006/meyerovich-weinberger-gordon-krishnamurthi-tech.pdf",
+      "authors": [ "lmeyerov", "jww", "cgordon", "shriram" ],
+      "conference": "Brown University Technical Report CS-06-12, 2006"
+    }
   ]
 }
