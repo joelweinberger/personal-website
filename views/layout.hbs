@@ -3,6 +3,12 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 
+    <!-- start extra meta -->
+    {{#each extrameta}}
+    <meta name="{{{this.description}}}" content="{{{this.content}}}"></meta>
+    {{/each}}
+    <!-- end extra meta -->
+
     <link rel="stylesheet"
         type="text/css"
         href="css/generic/basic-page.css" />
@@ -11,14 +17,36 @@
         type="text/css"
         href="css/generic/header.css" />
 
-    <link rel="stylesheet"
-        type="text/css"
-        href="css/page/index.css" />
+    <!-- start extra CSS -->
+    {{#each extracss}}
+    <link rel="stylesheet" type="text/css" href="{{{this}}}"></link>
+    {{/each}}
+    <!-- end extra CSS -->
 
-    <title>Joel H. W. Weinberger -- jww</title>
+    <!-- start extra JavaScript -->
+    {{#each extrascripts}}
+    <script type="text/javascript" src="{{{this}}}"></script>
+    {{/each}}
+    <!-- end extra JavaScript -->
+
+    <title>Joel H. W. Weinberger -- {{title}}</title>
   </head>
 
   <body>
     {{{body}}}
   </body>
+
+  <!-- begin Google Analytics -->
+  <!-- script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+
+  <script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-12698994-1");
+    pageTracker._trackPageview();
+  } catch(err) {}
+  </script -->
+  <!-- end Google Analytics -->
 </html>
