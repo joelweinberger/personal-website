@@ -16,9 +16,20 @@ exports.index = function(req, res) {
 
 exports.calendar = function(req, res) {
   res.render('calendar', {
-    title: 'Joel\'s Public Calendar',
+    title: 'Joel H. W. Weinberger -- Calendar',
     extracss: [
       'css/page/calendar.css'
+    ]
+  });
+};
+
+exports.wedding = function(req, res) {
+  res.render('wedding', {
+    title: 'Joel H. W. Weinberger -- Wedding',
+    extracss: [
+      'css/generic/basic-page.css',
+      'css/generic/header.css',
+      'css/page/index.css'
     ]
   });
 };
