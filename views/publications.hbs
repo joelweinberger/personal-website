@@ -342,55 +342,50 @@
     </div> <!-- end pub div -->
   </li>
 
+  {{#each papers}}
   <li class="index-text">
-    <div id="pub0" class="paper"> <!-- pub div -->
+    <div id="pub{{@index}}" class="paper"> <!-- pub div -->
 
     <div> <!-- paper info div -->
     <span class="paper-title">
-    <a href="papers/2007/gordon-meyerovich-weinberger-krishnamurthi.pdf">
-    Composition with Consistent Updates for Abstract State Machines</a>.
+    <a href="{{this.pdf}}">{{this.title}}.</a>
     </span>
 
     <span class="paper-authors">
-      <a href="http://www.cs.washington.edu/homes/csgordon/">Colin
-      Gordon</a>,
-      <a href="http://www.eecs.berkeley.edu/~lmeyerov/">Leo Meyerovich</a>,
-      Joel Weinberger, and
-      <a href="http://www.cs.brown.edu/~sk/">Shriram Krishnamurthi</a>.
+      {{#eachauthor this.authors}}<a href="{{escapeAttr this.homepage}}">{{this.name}}</a>{{/eachauthor}}
     </span>
 
-    <span class="paper-conference">In Proc. of the International ASM Workshop,
-    2007.</span>
+    <span class="paper-conference">{{this.conference}}</span>
     </div> <!-- end paper info div -->
 
     <div> <!-- citation div -->
     <span class="paper-citeseer">
-      <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.87.4909">
-        [CiteSeer]
-      </a>
+      <a href="{{this.citeseer}}">[CiteSeer]</a>
     </span>
 
-    <div id="pub0-bibtex-toggle" class="paper-bibtex-toggle">
-      <a id="pub0-bibtex" href="bibtexs/pub0.html">[BibTeX]</a>
-      <div id="pub0-bibtex-entry" class="start-hidden"></div>
+    <div id="pub{{@index}}-bibtex-toggle" class="paper-bibtex-toggle">
+      <a id="pub{{@index}}-bibtex" href="bibtexs/pub{{@index}}.html">[BibTeX]</a>
+      <div id="pub{{@index}}-bibtex-entry" class="start-hidden"></div>
       <script type="text/javascript">
-        attachToggle('bibtex', 'pub0');
+        attachToggle('bibtex', 'pub{{@index}}');
       </script>
     </div>
     </div> <!-- end citation div -->
 
     <div> <!-- abstract div -->
     <div class="paper-abstract">
-      <a id="pub0-abstract" class="icon closed" href="abstracts/pub0.html">Abstract</a>
-      <div id="pub0-abstract-entry" class="start-hidden"></div>
+      <a id="pub{{@index}}-abstract" class="icon closed" href="abstracts/pub{{@index}}.html">Abstract</a>
+      <div id="pub{{@index}}-abstract-entry" class="start-hidden"></div>
       <script type="text/javascript">
-        attachToggle('abstract', 'pub0');
+        attachToggle('abstract', 'pub{{@index}}');
       </script>
     </div>
     </div> <!-- end abstract div -->
 
     </div> <!-- end pub div -->
   </li>
+  {{/each}}
+
 </ul>
 
 <h5 class="index-papers-header">

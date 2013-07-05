@@ -1,3 +1,7 @@
+var pubs = require('../pubs.json')
+  , hbs = require('express-hbs')
+  , sanitize = require('sanitizer');
+
 exports.index = function(req, res) {
   res.render('index', {
     title: 'Joel H. W. Weinberger -- jww',
@@ -23,6 +27,36 @@ exports.calendar = function(req, res) {
   });
 };
 
+hbs.registerHelper('escapeAttr', function(attr) {
+  return new hbs.SafeString(sanitize.escape(attr));
+});
+
+hbs.registerHelper('eachauthor', function(context, options) {
+  var ret = "";
+  var i;
+  var getBody = function(i) {
+    return options.fn(pubs['authors'][context[i]]);
+  };
+
+  if (context.length === 1) {
+    return new hbs.SafeString(getBody(0));
+  }
+
+  if (context.length === 2) {
+    return new hbs.SafeString(getBody(0) + " and " + getBody(1) + ".");
+  }
+
+  for (i = 0; i < context.length; i++) {
+    if (i + 1 !== context.length) {
+      ret = ret + getBody(i) + ", ";
+    } else {
+      ret = ret + " and " + getBody(i) + ".";
+    }
+  }
+
+  return new hbs.SafeString(ret);
+});
+
 exports.publications = function(req, res) {
   res.render('publications', {
     title: 'Joel H. W. Weinberger -- Publications',
@@ -31,6 +65,8 @@ exports.publications = function(req, res) {
       'css/generic/header.css',
       'css/page/index.css'
     ],
+    papers: pubs['papers'],
+    techs: pubs['techs']
   });
 };
 

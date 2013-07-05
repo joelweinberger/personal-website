@@ -1,0 +1,27 @@
+{
+  "authors": {
+    "cgordon": {
+      "name": "Colin Gordon",
+      "homepage": "http://www.cs.washington.edu/homes/csgordon/"
+    },
+    "lmeyerov": {
+      "name": "Leo Meyerovich",
+      "homepage": "http://www.eecs.berkeley.edu/~lmeyerov/"
+    },
+    "shriram": {
+      "name": "Shriram Krishnamurthi",
+      "homepage": "http://www.cs.brown.edu/~sk/"
+    }
+  },
+  "papers": [
+    {
+      "title": "Composition with Consistent Updates for Abstract State Machines",
+      "pdf": "papers/2007/gordon-meyerovich-weinberger-krishnamurthi.pdf",
+      "authors": [ "cgordon", "lmeyerov", "shriram" ],
+      "conference": "In Proc. of the International ASM Workshop, 2007",
+      "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.87.4909"
+    }
+  ],
+  "techs": [
+  ]
+}
