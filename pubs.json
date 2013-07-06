@@ -4,16 +4,32 @@
       "name": "Colin Gordon",
       "homepage": "http://www.cs.washington.edu/homes/csgordon/"
     },
+    "jchen": {
+      "name": "Juan Chen",
+      "homepage": "http://research.microsoft.com/en-us/people/juanchen/"
+    },
     "jww": {
       "name": "Joel Weinberger"
+    },
+    "livshits": {
+      "name": "Ben Livshits",
+      "homepage": "http://research.microsoft.com/en-us/um/people/livshits/"
     },
     "lmeyerov": {
       "name": "Leo Meyerovich",
       "homepage": "http://www.eecs.berkeley.edu/~lmeyerov/"
     },
+    "schlesinger": {
+      "name": "Cole Schlesinger",
+      "homepage": "http://www.cs.princeton.edu/~cschlesi/"
+    },
     "shriram": {
       "name": "Shriram Krishnamurthi",
       "homepage": "http://www.cs.brown.edu/~sk/"
+    },
+    "swamy": {
+      "name": "Nikhil Swamy",
+      "homepage": "http://research.microsoft.com/en-us/people/nswamy/"
     }
   },
   "papers": [
@@ -26,6 +42,18 @@
     }
   ],
   "techs": [
+    {
+      "title": "Thesis: Analysis and Enforcement of Web Application Security Policies",
+      "pdf": "papers/2012/weinberger-thesis.pdf",
+      "authors": [ "jww" ],
+      "conference": "University of California, Berkeley, Thesis, 2012"
+    },
+    {
+      "title": "Monadic Refinement Types for Verifying JavaScript Programs",
+      "pdf": "papers/2012/swamy-weinberger-chen-livshits-schlesinger.pdf",
+      "authors": [ "swamy", "jww", "jchen", "livshits", "schlesinger" ],
+      "conference": "Microsoft Research Technical Report, 2012"
+    },
     {
       "title": "ASM Relational Transducer Security Policies",
       "pdf": "papers/2006/meyerovich-weinberger-gordon-krishnamurthi-tech.pdf",

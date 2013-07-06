@@ -69,6 +69,11 @@ exports.publications = function(req, res) {
       'css/generic/header.css',
       'css/page/index.css'
     ],
+    extrascripts: [
+      'js/index.js',
+      'lib/mootools.js',
+      'lib/mootools-more.js'
+    ],
     header: 'publications',
     papers: pubs['papers'],
     techs: pubs['techs']
