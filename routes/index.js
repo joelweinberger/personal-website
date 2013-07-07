@@ -24,8 +24,11 @@ exports.index = function(req, res) {
 };
 
 exports.ajax = function(req, res) {
-  console.log('ajax! ' + req.params[0]);
-  res.sendfile('public/' + req.params[0]);
+  res.render('abstract', {
+    layout: false,
+    nosectionheading: true,
+    abstract: abstracts[0]
+  });
 };
 
 exports.abstracts = function(req, res) {
