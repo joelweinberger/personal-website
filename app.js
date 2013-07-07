@@ -1,5 +1,5 @@
 var express = require('express')
-  , hbs = require('express-hbs')
+  , hbs = require('hbs')
   , http = require('http')
   , path = require('path')
   , routes = require('./routes');
@@ -7,10 +7,7 @@ var express = require('express')
 var app = express();
 
 // Hook in express-hbs and tell it where known directories reside
-app.engine('hbs', hbs.express3({
-    partialsDir: __dirname + '/views/',
-    defaultLayout: __dirname + '/views/layout.hbs'
-}));
+app.set('view engine', 'hbs');
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -30,7 +27,10 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/ajax/*', routes.ajax);
+app.get('/ajax/abstracts/pub*', routes.ajaxAbstracts);
+app.get('/ajax/abstracts/tech*', routes.ajaxAbstracts);
+app.get('/ajax/bibtexs/pub*', routes.ajaxBibtexs);
+app.get('/ajax/bibtexs/tech*', routes.ajaxBibtexs);
 app.get('/abstracts/*', routes.abstracts);
 app.get('/bibtexs/*', routes.bibtexs);
 app.get('/index', routes.index);

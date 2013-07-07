@@ -1,7 +1,8 @@
 var pubs = require('../pubs.json')
   , abstracts = require('../abstracts.json')
   , bibtexs = require('../bibtexs.json')
-  , hbs = require('express-hbs')
+  , hbs = require('hbs')
+  , handlebars = hbs.handlebars
   , marked = require('marked')
   , sanitize = require('sanitizer');
 
@@ -23,11 +24,19 @@ exports.index = function(req, res) {
   });
 };
 
-exports.ajax = function(req, res) {
+exports.ajaxAbstracts = function(req, res) {
   res.render('abstract', {
     layout: false,
     nosectionheading: true,
-    abstract: abstracts[0]
+    abstract: abstracts[req.params[0]]
+  });
+};
+
+exports.ajaxBibtexs = function(req, res) {
+  res.render('bibtex', {
+    layout: false,
+    nosectionheading: true,
+    bibtex: bibtexs[req.params[0]]
   });
 };
 
@@ -65,6 +74,21 @@ exports.calendar = function(req, res) {
     nohomelink: true
   });
 };
+
+hbs.registerHelper('eachReverse', function(context, options) {
+  var ret = "", i, data;
+
+  for (i = context.length - 1; i >= 0; i--) {
+    if (options.data) {
+      data = handlebars.createFrame(options.data || {});
+      data.index = i;
+    }
+
+    ret = ret + options.fn(context[i], { data: data});
+  }
+
+  return ret;
+});
 
 hbs.registerHelper('escapeAttr', function(attr) {
   return new hbs.SafeString(sanitize.escape(attr));

@@ -62,39 +62,11 @@
   },
   "papers": [
     {
-      "title": "Verifying Higher-order Programs with the Dijkstra Monad",
-      "pdf": "papers/2013/swamy-weinberger-schlesinger-chen-livshits.pdf",
-      "authors": [ "swamy", "jww", "schlesinger", "jchen", "livshits" ],
-      "conference": "In Proc. of Programming Language Design and Implementation (PLDI), 2013"
-    },
-    {
-      "title": "A Systematic Analysis of XSS Sanitization in Web Application Frameworks",
-      "pdf": "papers/2011/weinberger-saxena-akhawe-etc.pdf",
-      "authors": [ "jww", "saxena", "devdatta", "mfinifter", "dawnsong" ],
-      "conference": "In Proc. of 16th European Symposium on Research in Computer Security (ESORICS), 2011",
-      "presentation": "ESORICS presentation [slides](files/2011/weinberger-saxena-akhawe-etc-presentation.pptx) (with notes)."
-    },
-    {
-      "title": "Towards Client-side HTML Security Policies",
-      "pdf": "papers/2011/weinberger-barth-song.pdf",
-      "authors": [ "jww", "abarth", "dawnsong" ], 
-      "conference": "In Proc. of the Workshop on Hot Topics in Security (HotSec), 2011",
-      "presentation": "HotSec presentation [slides](files/2011/weinberger-barth-song-presentation.ppt) (with notes)."
-    },
-    {
-      "title": "Diesel: Applying Privilege Separation to Database Access",
-      "pdf": "papers/2011/felt-finifter-weinberger-wagner.pdf",
-      "authors": [ "felt", "mfinifter", "jww", "daw" ],
-      "conference": "In Proc. of ACM Symposium on Information, Computer and Communications Security (ASIACCS), 2011",
-      "extended": "papers/2010/felt-finifter-weinberger-wagner-tech.pdf"
-    },
-    {
-      "title": "Preventing Capability Leaks in Secure JavaScript Subests",
-      "pdf": "papers/2010/finifter-weinberger-barth.pdf",
-      "authors": [ "mfinifter", "jww", "abarth" ],
-      "conference": "In Proc. of Network and Distributed System Security Symposium (NDSS), 2010",
-      "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.154.8237",
-      "notes": "Visit the [project page](http://webblaze.cs.berkeley.edu/2010/blancura/) for code and more information."
+      "title": "Composition with Consistent Updates for Abstract State Machines",
+      "pdf": "papers/2007/gordon-meyerovich-weinberger-krishnamurthi.pdf",
+      "authors": [ "cgordon", "lmeyerov", "jww", "shriram" ],
+      "conference": "In Proc. of the International ASM Workshop, 2007",
+      "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.87.4909"
     },
     {
       "title": "Cross-Origin JavaScript Capability Leaks: Detection, Exploitation, and Defense",
@@ -106,19 +78,47 @@
       "presentation": "USENIX presentation [slides](files/2009/barth-weinberger-song-presentation.pdf) (with notes)."
     },
     {
-      "title": "Composition with Consistent Updates for Abstract State Machines",
-      "pdf": "papers/2007/gordon-meyerovich-weinberger-krishnamurthi.pdf",
-      "authors": [ "cgordon", "lmeyerov", "jww", "shriram" ],
-      "conference": "In Proc. of the International ASM Workshop, 2007",
-      "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.87.4909"
+      "title": "Preventing Capability Leaks in Secure JavaScript Subests",
+      "pdf": "papers/2010/finifter-weinberger-barth.pdf",
+      "authors": [ "mfinifter", "jww", "abarth" ],
+      "conference": "In Proc. of Network and Distributed System Security Symposium (NDSS), 2010",
+      "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.154.8237",
+      "notes": "Visit the [project page](http://webblaze.cs.berkeley.edu/2010/blancura/) for code and more information."
+    },
+    {
+      "title": "Diesel: Applying Privilege Separation to Database Access",
+      "pdf": "papers/2011/felt-finifter-weinberger-wagner.pdf",
+      "authors": [ "felt", "mfinifter", "jww", "daw" ],
+      "conference": "In Proc. of ACM Symposium on Information, Computer and Communications Security (ASIACCS), 2011",
+      "extended": "papers/2010/felt-finifter-weinberger-wagner-tech.pdf"
+    },
+    {
+      "title": "Towards Client-side HTML Security Policies",
+      "pdf": "papers/2011/weinberger-barth-song.pdf",
+      "authors": [ "jww", "abarth", "dawnsong" ], 
+      "conference": "In Proc. of the Workshop on Hot Topics in Security (HotSec), 2011",
+      "presentation": "HotSec presentation [slides](files/2011/weinberger-barth-song-presentation.ppt) (with notes)."
+    },
+    {
+      "title": "A Systematic Analysis of XSS Sanitization in Web Application Frameworks",
+      "pdf": "papers/2011/weinberger-saxena-akhawe-etc.pdf",
+      "authors": [ "jww", "saxena", "devdatta", "mfinifter", "dawnsong" ],
+      "conference": "In Proc. of 16th European Symposium on Research in Computer Security (ESORICS), 2011",
+      "presentation": "ESORICS presentation [slides](files/2011/weinberger-saxena-akhawe-etc-presentation.pptx) (with notes)."
+    },
+    {
+      "title": "Verifying Higher-order Programs with the Dijkstra Monad",
+      "pdf": "papers/2013/swamy-weinberger-schlesinger-chen-livshits.pdf",
+      "authors": [ "swamy", "jww", "schlesinger", "jchen", "livshits" ],
+      "conference": "In Proc. of Programming Language Design and Implementation (PLDI), 2013"
     }
   ],
   "techs": [
     {
-      "title": "Thesis: Analysis and Enforcement of Web Application Security Policies",
-      "pdf": "papers/2012/weinberger-thesis.pdf",
-      "authors": [ "jww" ],
-      "conference": "University of California, Berkeley, Thesis, 2012"
+      "title": "ASM Relational Transducer Security Policies",
+      "pdf": "papers/2006/meyerovich-weinberger-gordon-krishnamurthi-tech.pdf",
+      "authors": [ "lmeyerov", "jww", "cgordon", "shriram" ],
+      "conference": "Brown University Technical Report CS-06-12, 2006"
     },
     {
       "title": "Monadic Refinement Types for Verifying JavaScript Programs",
@@ -127,10 +127,10 @@
       "conference": "Microsoft Research Technical Report, 2012"
     },
     {
-      "title": "ASM Relational Transducer Security Policies",
-      "pdf": "papers/2006/meyerovich-weinberger-gordon-krishnamurthi-tech.pdf",
-      "authors": [ "lmeyerov", "jww", "cgordon", "shriram" ],
-      "conference": "Brown University Technical Report CS-06-12, 2006"
+      "title": "Thesis: Analysis and Enforcement of Web Application Security Policies",
+      "pdf": "papers/2012/weinberger-thesis.pdf",
+      "authors": [ "jww" ],
+      "conference": "University of California, Berkeley, Thesis, 2012"
     }
   ]
 }

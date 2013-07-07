@@ -3,7 +3,7 @@
 </h5>
 
 <ul class="index-papers-list">
-  {{#each papers}}
+  {{#eachReverse papers}}
   <li class="index-text">
     <div id="pub{{@index}}" class="paper"> <!-- pub div -->
 
@@ -38,7 +38,7 @@
     {{/if}}
 
     <div id="pub{{@index}}-bibtex-toggle" class="paper-bibtex-toggle">
-      <a id="pub{{@index}}-bibtex" href="bibtexs/pub{{@index}}.html">[BibTeX]</a>
+      <a id="pub{{@index}}-bibtex" href="bibtexs/pub{{@index}}">[BibTeX]</a>
       <div id="pub{{@index}}-bibtex-entry" class="start-hidden"></div>
       <script type="text/javascript">
         attachToggle('bibtex', 'pub{{@index}}');
@@ -64,7 +64,7 @@
 
     <div> <!-- abstract div -->
     <div class="paper-abstract">
-      <a id="pub{{@index}}-abstract" class="icon closed" href="abstracts/pub{{@index}}.html">Abstract</a>
+      <a id="pub{{@index}}-abstract" class="icon closed" href="abstracts/pub{{@index}}">Abstract</a>
       <div id="pub{{@index}}-abstract-entry" class="start-hidden"></div>
       <script type="text/javascript">
         attachToggle('abstract', 'pub{{@index}}');
@@ -74,7 +74,7 @@
 
     </div> <!-- end pub div -->
   </li>
-  {{/each}}
+  {{/eachReverse}}
 
 </ul>
 
@@ -113,7 +113,7 @@
     {{/if}}
 
     <div id="tech{{@index}}-bibtex-toggle" class="paper-bibtex-toggle">
-      <a id="tech{{@index}}-bibtex" href="bibtexs/tech{{@index}}.html">[BibTeX]</a>
+      <a id="tech{{@index}}-bibtex" href="bibtexs/tech{{@index}}">[BibTeX]</a>
       <div id="tech{{@index}}-bibtex-entry" class="start-hidden"></div>
       <script type="text/javascript">
         attachToggle('bibtex', 'tech{{@index}}');
@@ -123,7 +123,7 @@
 
     <div> <!-- abstract div -->
     <div class="paper-abstract">
-      <a id="tech{{@index}}-abstract" class="icon closed" href="abstracts/tech{{@index}}.html">Abstract</a>
+      <a id="tech{{@index}}-abstract" class="icon closed" href="abstracts/tech{{@index}}">Abstract</a>
       <div id="tech{{@index}}-abstract-entry" class="start-hidden"></div>
       <script type="text/javascript">
         attachToggle('abstract', 'tech{{@index}}');
