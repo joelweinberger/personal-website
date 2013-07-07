@@ -24,44 +24,52 @@ exports.index = function(req, res) {
   });
 };
 
-exports.ajaxAbstracts = function(req, res) {
-  res.render('abstract', {
-    layout: false,
-    nosectionheading: true,
-    abstract: abstracts[req.params[0]]
-  });
+exports.ajaxAbstracts = function(pubType) {
+  return function(req, res) {
+    res.render('abstract', {
+      layout: false,
+      nosectionheading: true,
+      abstract: abstracts[pubType][req.params[0]]
+    });
+  };
 };
 
-exports.ajaxBibtexs = function(req, res) {
-  res.render('bibtex', {
-    layout: false,
-    nosectionheading: true,
-    bibtex: bibtexs[req.params[0]]
-  });
+exports.ajaxBibtexs = function(pubType) {
+  return function(req, res) {
+    res.render('bibtex', {
+      layout: false,
+      nosectionheading: true,
+      bibtex: bibtexs[pubType][req.params[0]]
+    });
+  };
 };
 
-exports.abstracts = function(req, res) {
-  res.render('abstract', {
-    title: 'Joel H. W. Weinberger -- Paper Abstract',
-    extracss: [
-      '/css/generic/basic-page.css',
-      '/css/generic/header.css'
-    ],
-    header: 'abstract',
-    abstract: abstracts[0]
-  });
+exports.abstracts = function(pubType) {
+  return function(req, res) {
+    res.render('abstract', {
+      title: 'Joel H. W. Weinberger -- Paper Abstract',
+      extracss: [
+        '/css/generic/basic-page.css',
+        '/css/generic/header.css'
+      ],
+      header: 'abstract',
+      abstract: abstracts[pubType][req.params[0]]
+    });
+  };
 };
 
-exports.bibtexs = function(req, res) {
-  res.render('bibtex', {
-    title: 'Joel H. W. Weinberger -- Paper BibTeX',
-    extracss: [
-      '/css/generic/basic-page.css',
-      '/css/generic/header.css'
-    ],
-    header: 'bibtex',
-    bibtex: bibtexs[0]
-  });
+exports.bibtexs = function(pubType) {
+  return function(req, res) {
+    res.render('bibtex', {
+      title: 'Joel H. W. Weinberger -- Paper BibTeX',
+      extracss: [
+        '/css/generic/basic-page.css',
+        '/css/generic/header.css'
+      ],
+      header: 'bibtex',
+      bibtex: bibtexs[pubType][req.params[0]]
+    });
+  };
 };
 
 exports.calendar = function(req, res) {
@@ -121,7 +129,7 @@ hbs.registerHelper('eachauthor', function(context, options) {
   };
 
   if (context.length === 1) {
-    return new hbs.SafeString(getBody(0));
+    return new hbs.SafeString(getBody(0) + ".");
   }
 
   if (context.length === 2) {

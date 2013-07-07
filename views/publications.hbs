@@ -83,7 +83,7 @@
 </h5>
 
 <ul class="index-papers-list">
-  {{#each techs}}
+  {{#eachReverse techs}}
   <li class="index-text">
     <div id="tech{{@index}}" class="paper"> <!-- tech div -->
 
@@ -133,5 +133,5 @@
 
     </div> <!-- end tech div -->
   </li>
-  {{/each}}
+  {{/eachReverse}}
 </ul>

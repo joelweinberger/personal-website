@@ -27,12 +27,14 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/ajax/abstracts/pub*', routes.ajaxAbstracts);
-app.get('/ajax/abstracts/tech*', routes.ajaxAbstracts);
-app.get('/ajax/bibtexs/pub*', routes.ajaxBibtexs);
-app.get('/ajax/bibtexs/tech*', routes.ajaxBibtexs);
-app.get('/abstracts/*', routes.abstracts);
-app.get('/bibtexs/*', routes.bibtexs);
+app.get('/ajax/abstracts/pub*', routes.ajaxAbstracts('papers'));
+app.get('/ajax/abstracts/tech*', routes.ajaxAbstracts('techs'));
+app.get('/ajax/bibtexs/pub*', routes.ajaxBibtexs('papers'));
+app.get('/ajax/bibtexs/tech*', routes.ajaxBibtexs('techs'));
+app.get('/abstracts/pub*', routes.abstracts('papers'));
+app.get('/abstracts/tech*', routes.abstracts('techs'));
+app.get('/bibtexs/pub*', routes.bibtexs);
+app.get('/bibtexs/tech*', routes.bibtexs);
 app.get('/index', routes.index);
 app.get('/calendar', routes.calendar);
 app.get('/publications', routes.publications);

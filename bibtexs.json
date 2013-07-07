@@ -1,67 +1,99 @@
-[
-  {
-    "title": "Composition with Consistent Updates for Abstract State Machines",
-    "proceedings": "gordon07asm",
-    "authors": [
-      "Colin Gordon",
-      "Leo Meyerovich",
-      "Joel Weinberger",
-      "Shriram Krishnamurthi"
-    ],
-    "textitle": "Composition with Consistent Updates for Abstract State Machines",
-    "booktitle": "Proc. of the International ASM Workshop, 2007",
-    "year": "2007"
-  },
-  {
-    "title": "Cross-Origin JavaScript Capability Leaks: Detection, Exploitation, and Defense",
-    "proceedings": "barth09heapgraph",
-    "authors": [
-      "Adam Barth",
-      "Joel Weinberger",
-      "Dawn Song"
-    ],
-    "textitle": "Cross-Origin {JavaScript} Capability Leaks: {Detection}, Exploitation, and Defense",
-    "booktitle": "Proc. of the 18th USENIX Security Symposium (USENIX Security 2009)",
-    "year": "2009"
-  },
-  {
-    "title": "Preventing Capability Leaks in Secure JavaScript Subsets",
-    "proceedings": "finifter10jssafesubsets",
-    "authors": [ "Matthew Finifter", "Joel Weinberger", "Adam Barth" ],
-    "textitle": "Preventing Capability Leaks in Secure {JavaScript} Subsets",
-    "booktitle": "Proc. of Network and Distributed System Security Symposium, 2010",
-    "year": "2010"
-  },
-  {
-    "title": "Diesel: Applying Privilege Separation to Database Access",
-    "proceedings": "felt11diesel",
-    "authors": [ "Adrienne Felt", "Matthew Finifter", "Joel Weinberger", "David Wagner" ],
-    "textitle": "Diesel: Applying Privilege Separation to Database Access",
-    "booktitle": "Proc. of ACM Symposium on Information, Computer and Communications Security (ASIACCS), 2011",
-    "year": "2011"
-  },
-  {
-    "title": "Towards Client-side HTML Security Policies",
-    "proceedings": "weinberger11policies",
-    "authors": [ "Joel Weinberger", "Adam Barth", "Dawn Song" ],
-    "textitle": "Towards Client-side {HTML} Security Policies",
-    "booktitle": "Proc. of 6th USENIX Workshop on Hot Topics in Security",
-    "year": "2011"
-  },
-  {
-    "title": "Towards Client-side HTML Security Policies",
-    "proceedings": "weinberger11sanitize",
-    "authors": [ "Joel Weinberger", "Prateek Saxena", "Devdatta Akhawe", "Matthew Finifter", "Richard Shin", "Dawn Song" ],
-    "textitle": "A Systematic Analysis of {XSS} Sanitization in Web Application Frameworks",
-    "booktitle": "Proc. of 16th European Symposium on Research in Computer Security (ESORICS)",
-    "year": "2011"
-  },
-  {
-    "title": "Verifying Higher-order Programs with the Dijkstra Monad",
-    "proceedings": "swamy-weinberger-dijkstra",
-    "authors": [ "Nikhil Swamy", "Joel Weinberger", "Cole Schlesinger", "Juan Chen", "Ben Livshits" ],
-    "textitle": "Verifying Higher-order Programs with the Dijkstra Monad",
-    "booktitle": "Proc. of 34th Programming Language Design and Implementation (PLDI)",
-    "year": "2013"
-  }
-]
+{
+"papers": [
+    {
+      "title": "Composition with Consistent Updates for Abstract State Machines",
+      "proceedings": "gordon07asm",
+      "authors": [
+        "Colin Gordon",
+        "Leo Meyerovich",
+        "Joel Weinberger",
+        "Shriram Krishnamurthi"
+      ],
+      "textitle": "Composition with Consistent Updates for Abstract State Machines",
+      "booktitle": "Proc. of the International ASM Workshop, 2007",
+      "year": "2007"
+    },
+    {
+      "title": "Cross-Origin JavaScript Capability Leaks: Detection, Exploitation, and Defense",
+      "proceedings": "barth09heapgraph",
+      "authors": [
+        "Adam Barth",
+        "Joel Weinberger",
+        "Dawn Song"
+      ],
+      "textitle": "Cross-Origin {JavaScript} Capability Leaks: {Detection}, Exploitation, and Defense",
+      "booktitle": "Proc. of the 18th USENIX Security Symposium (USENIX Security 2009)",
+      "year": "2009"
+    },
+    {
+      "title": "Preventing Capability Leaks in Secure JavaScript Subsets",
+      "proceedings": "finifter10jssafesubsets",
+      "authors": [ "Matthew Finifter", "Joel Weinberger", "Adam Barth" ],
+      "textitle": "Preventing Capability Leaks in Secure {JavaScript} Subsets",
+      "booktitle": "Proc. of Network and Distributed System Security Symposium, 2010",
+      "year": "2010"
+    },
+    {
+      "title": "Diesel: Applying Privilege Separation to Database Access",
+      "proceedings": "felt11diesel",
+      "authors": [ "Adrienne Felt", "Matthew Finifter", "Joel Weinberger", "David Wagner" ],
+      "textitle": "Diesel: Applying Privilege Separation to Database Access",
+      "booktitle": "Proc. of ACM Symposium on Information, Computer and Communications Security (ASIACCS), 2011",
+      "year": "2011"
+    },
+    {
+      "title": "Towards Client-side HTML Security Policies",
+      "proceedings": "weinberger11policies",
+      "authors": [ "Joel Weinberger", "Adam Barth", "Dawn Song" ],
+      "textitle": "Towards Client-side {HTML} Security Policies",
+      "booktitle": "Proc. of 6th USENIX Workshop on Hot Topics in Security",
+      "year": "2011"
+    },
+    {
+      "title": "Towards Client-side HTML Security Policies",
+      "proceedings": "weinberger11sanitize",
+      "authors": [ "Joel Weinberger", "Prateek Saxena", "Devdatta Akhawe", "Matthew Finifter", "Richard Shin", "Dawn Song" ],
+      "textitle": "A Systematic Analysis of {XSS} Sanitization in Web Application Frameworks",
+      "booktitle": "Proc. of 16th European Symposium on Research in Computer Security (ESORICS)",
+      "year": "2011"
+    },
+    {
+      "title": "Verifying Higher-order Programs with the Dijkstra Monad",
+      "proceedings": "swamy-weinberger-dijkstra",
+      "authors": [ "Nikhil Swamy", "Joel Weinberger", "Cole Schlesinger", "Juan Chen", "Ben Livshits" ],
+      "textitle": "Verifying Higher-order Programs with the Dijkstra Monad",
+      "booktitle": "Proc. of 34th Programming Language Design and Implementation (PLDI)",
+      "year": "2013"
+    }
+  ],
+  "techs": [
+    {
+      "title": "ASM Relational Transducer Security Policies",
+      "proceedings": "Meyerovich:CS-05-12",
+      "authors": [ "Leo Meyerovich", "Joel Weinberger", "Colin Gordon", "Shriram Krishnamurth" ],
+      "textitle": "{ASM} Relational Transducer Security Policies",
+      "institution": "CS Department, Brown University",
+      "year": "2006",
+      "url": "http://www.cs.brown.edu/research/pubs/techreports/reports/CS-06-12.html",
+      "number": "CS-06-12"
+    },
+    {
+      "title": "Monadic Refinement Types for Verifying JavaScript Programs",
+      "proceedings": "Swamy-Weinberger:tech2012",
+      "authors": [ "Nikhil Swamy", "Joel Weinberger", "Juan Chen", "Ben Livshits", "Cole Schlesinger" ],
+      "textitle": "Monadic Refinement Types for Verifying JavaScript Programs",
+      "institution": "Microsoft Research",
+      "year": "2012",
+      "url": "http://research.microsoft.com/en-us/um/people/nswamy/papers/js2fs-icfp12-submitted-version.pdf"
+    },
+    {
+      "title": "Analysis and Enforcement of Web Application Security Policies",
+      "proceedings": "weinberger:thesis2012",
+      "authors": [ "Joel Weinberger" ],
+      "textitle": "Analysis and Enforcement of Web Application Security Policies",
+      "institution": "University of California, Berkeley",
+      "year": "2012",
+      "url": "http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-232.pdf"
+    }
+  ]
+}

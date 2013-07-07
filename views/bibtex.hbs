@@ -13,12 +13,29 @@
   <div class="bibtex-entry-line">
     title = { {{this.bibtex.title}} },
   </div>
+  {{#if this.bibtex.booktitle}}
   <div class="bibtex-entry-line">
     booktitle = { {{this.bibtex.booktitle}} },
   </div>
+  {{/if}}
+  {{#if this.bibtex.institution}}
   <div class="bibtex-entry-line">
-    year = { this.bibtex.year },
+    institution = { {{this.bibtex.institution}} },
   </div>
+  {{/if}}
+  <div class="bibtex-entry-line">
+    year = { {{this.bibtex.year}} },
+  </div>
+  {{#if this.bibtex.url}}
+  <div class="bibtex-entry-line">
+    url = { {{this.bibtex.url}} },
+  </div>
+  {{/if}}
+  {{#if this.bibtex.number}}
+  <div class="bibtex-entry-line">
+    number = { {{this.bibtex.number}} },
+  </div>
+  {{/if}}
   <div>}</div>
 </div>
 </div>
