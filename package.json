@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "3.1.0",
     "express-hbs": "*",
+    "marked": "*",
     "sanitizer": "*"
   }
 }

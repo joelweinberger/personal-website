@@ -1,5 +1,6 @@
 var pubs = require('../pubs.json')
   , hbs = require('express-hbs')
+  , marked = require('marked')
   , sanitize = require('sanitizer');
 
 exports.index = function(req, res) {
@@ -33,6 +34,10 @@ exports.calendar = function(req, res) {
 
 hbs.registerHelper('escapeAttr', function(attr) {
   return new hbs.SafeString(sanitize.escape(attr));
+});
+
+hbs.registerHelper('markdown', function(content) {
+  return new hbs.SafeString(marked(content, { sanitize: true }));
 });
 
 hbs.registerHelper('eachauthor', function(context, options) {

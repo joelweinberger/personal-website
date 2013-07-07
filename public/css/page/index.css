@@ -71,7 +71,15 @@ ul.index-papers-list li {
 .paper-notes {
 }
 
+div.paper-notes p {
+  display: inline;
+}
+
 .paper-presentation {
+}
+
+div.paper-presentation p {
+  display: inline;
 }
 
 .paper .toggle {

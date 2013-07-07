@@ -1,8 +1,28 @@
 {
   "authors": {
+    "abarth": {
+      "name": "Adam Barth",
+      "homepage": "http://www.adambarth.com"
+    },
     "cgordon": {
       "name": "Colin Gordon",
       "homepage": "http://www.cs.washington.edu/homes/csgordon/"
+    },
+    "daw": {
+      "name": "David Wagner",
+      "homepage": "http://www.eecs.berkeley.edu/~daw/"
+    },
+    "dawnsong": {
+      "name": "Dawn Song",
+      "homepage": "http://www.eecs.berkeley.edu/~dawnsong/"
+    },
+    "devdatta": {
+      "name": "Devdatta Akhawe",
+      "homepage": "http://www.eecs.berkeley.edu/~devdatta/"
+    },
+    "felt": {
+      "name": "Adrienne Felt",
+      "homepage": "http://www.eecs.berkeley.edu/~afelt"
     },
     "jchen": {
       "name": "Juan Chen",
@@ -19,6 +39,14 @@
       "name": "Leo Meyerovich",
       "homepage": "http://www.eecs.berkeley.edu/~lmeyerov/"
     },
+    "mfinifter": {
+      "name": "Matthew Finifter",
+      "homepage": "http://www.eecs.berkeley.edu/~finifter/"
+    },
+    "saxena": {
+      "name": "Prateek Saxena",
+      "homepage": "http://www.comp.nus.edu.sg/~prateeks/"
+    },
     "schlesinger": {
       "name": "Cole Schlesinger",
       "homepage": "http://www.cs.princeton.edu/~cschlesi/"
@@ -33,6 +61,50 @@
     }
   },
   "papers": [
+    {
+      "title": "Verifying Higher-order Programs with the Dijkstra Monad",
+      "pdf": "papers/2013/swamy-weinberger-schlesinger-chen-livshits.pdf",
+      "authors": [ "swamy", "jww", "schlesinger", "jchen", "livshits" ],
+      "conference": "In Proc. of Programming Language Design and Implementation (PLDI), 2013"
+    },
+    {
+      "title": "A Systematic Analysis of XSS Sanitization in Web Application Frameworks",
+      "pdf": "papers/2011/weinberger-saxena-akhawe-etc.pdf",
+      "authors": [ "jww", "saxena", "devdatta", "mfinifter", "dawnsong" ],
+      "conference": "In Proc. of 16th European Symposium on Research in Computer Security (ESORICS), 2011",
+      "presentation": "ESORICS presentation [slides](files/2011/weinberger-saxena-akhawe-etc-presentation.pptx) (with notes)."
+    },
+    {
+      "title": "Towards Client-side HTML Security Policies",
+      "pdf": "papers/2011/weinberger-barth-song.pdf",
+      "authors": [ "jww", "abarth", "dawnsong" ], 
+      "conference": "In Proc. of the Workshop on Hot Topics in Security (HotSec), 2011",
+      "presentation": "HotSec presentation [slides](files/2011/weinberger-barth-song-presentation.ppt) (with notes)."
+    },
+    {
+      "title": "Diesel: Applying Privilege Separation to Database Access",
+      "pdf": "papers/2011/felt-finifter-weinberger-wagner.pdf",
+      "authors": [ "felt", "mfinifter", "jww", "daw" ],
+      "conference": "In Proc. of ACM Symposium on Information, Computer and Communications Security (ASIACCS), 2011",
+      "extended": "papers/2010/felt-finifter-weinberger-wagner-tech.pdf"
+    },
+    {
+      "title": "Preventing Capability Leaks in Secure JavaScript Subests",
+      "pdf": "papers/2010/finifter-weinberger-barth.pdf",
+      "authors": [ "mfinifter", "jww", "abarth" ],
+      "conference": "In Proc. of Network and Distributed System Security Symposium (NDSS), 2010",
+      "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.154.8237",
+      "notes": "Visit the [project page](http://webblaze.cs.berkeley.edu/2010/blancura/) for code and more information."
+    },
+    {
+      "title": "Cross-Origin JavaScript Capability Leaks: Detection, Exploitation, and Defense",
+      "pdf": "papers/2009/barth-weinberger-song.pdf",
+      "authors": [ "abarth", "jww", "dawnsong" ],
+      "conference": "In Proc. of USENIX Security Symposium, 2009.",
+      "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.153.1883",
+      "notes": "Visit the [project page](http://webblaze.cs.berkeley.edu/2009/heapgraph/) for code and more information.",
+      "presentation": "USENIX presentation [slides](files/2009/barth-weinberger-song-presentation.pdf) (with notes)."
+    },
     {
       "title": "Composition with Consistent Updates for Abstract State Machines",
       "pdf": "papers/2007/gordon-meyerovich-weinberger-krishnamurthi.pdf",
