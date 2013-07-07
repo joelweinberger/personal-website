@@ -121,7 +121,7 @@ hbs.registerHelper('bibtexauthors', function(authors) {
   return new hbs.SafeString(ret);
 });
 
-hbs.registerHelper('eachauthor', function(context, options) {
+hbs.registerHelper('eachAuthor', function(context, options) {
   var ret = "";
   var i;
   var getBody = function(i) {
@@ -156,8 +156,8 @@ exports.publications = function(req, res) {
       '/css/page/index.css'
     ],
     extrascripts: [
-      '/js/index.js',
-      '/lib/jquery.min.js'
+      '/lib/jquery.min.js',
+      '/js/index.js'
     ],
     header: 'publications',
     papers: pubs['papers'],

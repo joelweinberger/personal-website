@@ -17,7 +17,7 @@
     </span>
 
     <span class="paper-authors">
-      {{#eachauthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachauthor}}
+      {{#eachAuthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachAuthor}}
     </span>
 
     {{#if this.conference}}
@@ -37,12 +37,9 @@
     </span>
     {{/if}}
 
-    <div id="pub{{@index}}-bibtex-toggle" class="paper-bibtex-toggle">
+    <div id="pub{{@index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="pub{{@index}}">
       <a id="pub{{@index}}-bibtex" href="bibtexs/pub{{@index}}">[BibTeX]</a>
       <div id="pub{{@index}}-bibtex-entry" class="start-hidden"></div>
-      <script type="text/javascript">
-        attachToggle('bibtex', 'pub{{@index}}');
-      </script>
     </div>
     </div> <!-- end citation div -->
 
@@ -64,11 +61,8 @@
 
     <div> <!-- abstract div -->
     <div class="paper-abstract">
-      <a id="pub{{@index}}-abstract" class="icon closed" href="abstracts/pub{{@index}}">Abstract</a>
+      <a id="pub{{@index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/pub{{@index}}" data-pub="pub{{@index}}">Abstract</a>
       <div id="pub{{@index}}-abstract-entry" class="start-hidden"></div>
-      <script type="text/javascript">
-        attachToggle('abstract', 'pub{{@index}}');
-      </script>
     </div>
     </div> <!-- end abstract div -->
 
@@ -97,7 +91,7 @@
     </span>
 
     <span class="paper-authors">
-      {{#eachauthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachauthor}}
+      {{#eachAuthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachAuthor}}
     </span>
 
     {{#if this.conference}}
@@ -112,22 +106,16 @@
     </span>
     {{/if}}
 
-    <div id="tech{{@index}}-bibtex-toggle" class="paper-bibtex-toggle">
+    <div id="tech{{@index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="tech{{@index}}">
       <a id="tech{{@index}}-bibtex" href="bibtexs/tech{{@index}}">[BibTeX]</a>
       <div id="tech{{@index}}-bibtex-entry" class="start-hidden"></div>
-      <script type="text/javascript">
-        attachToggle('bibtex', 'tech{{@index}}');
-      </script>
     </div>
     </div> <!-- end citation div -->
 
     <div> <!-- abstract div -->
     <div class="paper-abstract">
-      <a id="tech{{@index}}-abstract" class="icon closed" href="abstracts/tech{{@index}}">Abstract</a>
+      <a id="tech{{@index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/tech{{@index}}" data-pub="tech{{@index}}">Abstract</a>
       <div id="tech{{@index}}-abstract-entry" class="start-hidden"></div>
-      <script type="text/javascript">
-        attachToggle('abstract', 'tech{{@index}}');
-      </script>
     </div>
     </div> <!-- end abstract div -->
 

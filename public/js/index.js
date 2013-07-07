@@ -42,3 +42,16 @@ function attachToggle(item_id, pub_id) {
     });
   });
 }
+
+/*
+ * On document ready, find all of the bibtex and abstract toggles and attach a
+ * click toggle to each.
+ */
+$(document).ready(function() {
+  $(".paper-bibtex-toggle").each(function() {
+    attachToggle("bibtex", $(this).attr("data-pub"));
+  });
+  $(".paper-abstract-toggle").each(function() {
+    attachToggle("abstract", $(this).attr("data-pub"));
+  });
+});
