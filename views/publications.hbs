@@ -9,7 +9,11 @@
 
     <div> <!-- paper info div -->
     <span class="paper-title">
+    {{#if this.pdf}}
     <a href="{{this.pdf}}">{{this.title}}.</a>
+    {{else}}
+    {{this.title}}
+    {{/if}}
     </span>
 
     <span class="paper-authors">
@@ -85,7 +89,11 @@
 
     <div> <!-- paper info div -->
     <span class="paper-title">
+    {{#if this.pdf}}
     <a href="{{this.pdf}}">{{this.title}}.</a>
+    {{else}}
+    {{this.title}}
+    {{/if}}
     </span>
 
     <span class="paper-authors">
