@@ -1,0 +1,22 @@
+<h3 class="section-heading">
+  {{this.bibtex.title}}
+</h3>
+
+<div>
+<div id="bibtex" class="bibtex-entry">
+  <div>@inproceedings{ {{this.bibtex.proceedings}},</div>
+  <div class="bibtex-entry-line">
+    author = { {{bibtexauthors this.bibtex.authors}} }
+  </div>
+  <div class="bibtex-entry-line">
+    title = { {{this.bibtex.title}} },
+  </div>
+  <div class="bibtex-entry-line">
+    booktitle = { {{this.bibtex.booktitle}} },
+  </div>
+  <div class="bibtex-entry-line">
+    year = { this.bibtex.year },
+  </div>
+  <div>}</div>
+</div>
+</div>

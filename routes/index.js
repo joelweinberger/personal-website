@@ -41,6 +41,15 @@ exports.abstracts = function(req, res) {
 };
 
 exports.bibtexs = function(req, res) {
+  res.render('bibtex', {
+    title: 'Joel H. W. Weinberger -- Paper BibTeX',
+    extracss: [
+      '/css/generic/basic-page.css',
+      '/css/generic/header.css'
+    ],
+    header: 'bibtex',
+    bibtex: bibtexs[0]
+  });
 };
 
 exports.calendar = function(req, res) {
@@ -60,6 +69,21 @@ hbs.registerHelper('escapeAttr', function(attr) {
 
 hbs.registerHelper('markdown', function(content) {
   return new hbs.SafeString(marked(content, { sanitize: true }));
+});
+
+hbs.registerHelper('bibtexauthors', function(authors) {
+  var ret = "";
+  var i;
+
+  for (i = 0; i < authors.length; i++) {
+    ret = ret + authors[i];
+
+    if (i + 1 !== authors.length) {
+      ret = ret + ' and ';
+    }
+  }
+
+  return new hbs.SafeString(ret);
 });
 
 hbs.registerHelper('eachauthor', function(context, options) {
