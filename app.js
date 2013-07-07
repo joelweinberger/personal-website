@@ -30,6 +30,9 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.get('/ajax/*', routes.ajax);
+app.get('/abstracts/*', routes.abstracts);
+app.get('/bibtexs/*', routes.bibtexs);
 app.get('/index', routes.index);
 app.get('/calendar', routes.calendar);
 app.get('/publications', routes.publications);

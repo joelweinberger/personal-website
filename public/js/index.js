@@ -7,24 +7,36 @@
  *		
  */
 function attachToggle(item_id, pub_id) {
-	var toggle_id = pub_id + '-' + item_id;
-	var toggle = $(toggle_id);
-	var pub = $(pub_id);
-	var page_request = new Request.HTML({
-		url: toggle.get('href'),
-		method: 'get',
-		async: false,
-		onSuccess: function(responseTree, responseElements) {
-			/*
-			 * Setup the appropriate classes so that the text does not appear
-			 * initially (it starts hidden and is revealed by clicking on the
-			 * toggle).
-			 */
-			pub.addClass('initialized');
-			toggle.addClass('toggle');
-			toggle.setProperty('href', 'javascript:');
+  return;
+  var toggle_id = pub_id + '-' + item_id;
+  var toggle = $('#' + toggle_id);
+  var pub = $('#' + pub_id);
 
-			var entry_id = toggle_id + '-entry';
+  $.get('ajax/' + toggle.attr('href'), function(data) {
+    /*
+     * Setup the appropriate classes so that the text does not appear
+     * initially (it starts hidden and is revealed by clicking on the
+     * toggle).
+     */
+    var entry_id = toggle_id + '-entry';
+    pub.addClass('initialized');
+    toggle.addClass('toggle');
+    toggle.attr('href', 'javascript:');
+
+    $('#' + entry_id).html(data);
+
+    toggle.click(collapsibleOnClick(toggle_id));
+  });
+}
+
+function collapsibleOnClick(toggle_id) {
+  var entry_id = toggle_id + '-entry';
+  return function() {
+    console.log('clicked! ' + toggle_id + ' ' + entry_id);
+  };
+}
+
+function attachToggle2(item_id, pub_id) {
 			/*
 			 * This is relatively convoluted, but here's the idea.
 			 * $$(responseTree) returns an array of the top-level elements in
@@ -43,17 +55,13 @@ function attachToggle(item_id, pub_id) {
 			new_entry.set('id', '');
 			$(entry_id).grab(new_entry, 'bottom');
 			toggle.addEvent('click', collapsibleOnClick(toggle_id, entry_id));
-		}
-	});
-
-	page_request.send();
 }
 
 /*
  * For a given abstract name, generates a function for toggling whether that
  * abstract is collapsed.
  */
-function collapsibleOnClick(toggle_id, item_id) {
+function collapsibleOnClick2(toggle_id, item_id) {
 	var toggle;
 	var item;
 	var slidefx;

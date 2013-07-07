@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Composition with Consistent Updates for Abstract State Machines",
+    "proceedings": "gordon07asm",
+    "authors": [
+      "Colin Gordon",
+      "Leo Meyerovich",
+      "Joel Weinberger",
+      "Shriram Krishnamurthi"
+    ],
+    "booktitle": "Proc. of the International ASM Workshop, 2007",
+    "year": "2007"
+  }
+]

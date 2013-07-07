@@ -1,0 +1,6 @@
+[
+  {
+    "title": "Composition with Consistent Updates for Abstract State Machines",
+    "abstract": "Abstract State Machines (ASMs) offer a formalism for describing state transitions over relational structures. This makes them promising for modeling system features such as access control, especially in an environment where the policy's outcome depends on the evolving state of the system. The current notions of modularity for ASMs, however, provide insufficiently strong guarantees of consistency in the face of parallel update requests. We present a real-world context that illustrates this problem, discuss desirable properties for composition in this context, describe an operator that exhibits these properties, formalize its meaning, and outline its implementation strategy."
+  }
+]
