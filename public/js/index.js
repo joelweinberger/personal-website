@@ -24,7 +24,7 @@ function attachToggle(item_id, pub_id) {
         content;
     pub.addClass('initialized');
     toggle.addClass('toggle');
-    toggle.attr('href', '#');
+    toggle.removeAttr('href');
 
     content = $('#' + entry_id).html(data);
 
