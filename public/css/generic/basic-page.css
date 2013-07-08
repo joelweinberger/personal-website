@@ -75,3 +75,7 @@ h5 {
 .no-dec-link {
 	text-decoration: none;
 }
+
+div.abstract p {
+  display: inline;
+}
