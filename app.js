@@ -1,6 +1,7 @@
 var express = require('express')
   , hbs = require('hbs')
   , hbsext = require('./hbsext')
+  , helmet = require('helmet')
   , http = require('http')
   , path = require('path')
   , routes = require('./routes');
@@ -19,6 +20,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
+  app.use(helmet.csp());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
