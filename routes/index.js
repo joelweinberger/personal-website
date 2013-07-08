@@ -1,6 +1,5 @@
 "use strict";
 var pubs = require('../pubs.json')
-  , abstracts = require('../abstracts.json')
   , bibtexs = require('../bibtexs.json');
 
 exports.index = function(req, res) {
@@ -21,7 +20,7 @@ exports.ajaxAbstracts = function(pubType) {
     res.render('abstract', {
       layout: false,
       nosectionheading: true,
-      abstract: abstracts[pubType][req.params[0]]
+      abstract: pubs[pubType][req.params[0]]
     });
   };
 };
@@ -45,7 +44,7 @@ exports.abstracts = function(pubType) {
         '/css/generic/header.css'
       ],
       header: 'abstract',
-      abstract: abstracts[pubType][req.params[0]]
+      abstract: pubs[pubType][req.params[0]]
     });
   };
 };
