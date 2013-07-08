@@ -32,7 +32,7 @@ hbs.registerHelper('bibtexauthors', function(authors) {
   var ret = "", i;
 
   for (i = 0; i < authors.length; i++) {
-    ret = ret + authors[i];
+    ret = ret + pubs.authors[authors[i]].name;
 
     if (i + 1 !== authors.length) {
       ret = ret + ' and ';
