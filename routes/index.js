@@ -1,10 +1,6 @@
 var pubs = require('../pubs.json')
   , abstracts = require('../abstracts.json')
-  , bibtexs = require('../bibtexs.json')
-  , hbs = require('hbs')
-  , handlebars = hbs.handlebars
-  , marked = require('marked')
-  , sanitize = require('sanitizer');
+  , bibtexs = require('../bibtexs.json');
 
 exports.index = function(req, res) {
   res.render('index', {
@@ -77,70 +73,6 @@ exports.calendar = function(req, res) {
     nohomelink: true
   });
 };
-
-hbs.registerHelper('eachReverse', function(context, options) {
-  var ret = "", i, data;
-
-  for (i = context.length - 1; i >= 0; i--) {
-    if (options.data) {
-      data = handlebars.createFrame(options.data || {});
-      data.index = i;
-    }
-
-    ret = ret + options.fn(context[i], { data: data});
-  }
-
-  return ret;
-});
-
-hbs.registerHelper('escapeAttr', function(attr) {
-  return new hbs.SafeString(sanitize.escape(attr));
-});
-
-hbs.registerHelper('markdown', function(content) {
-  return new hbs.SafeString(marked(content, { sanitize: true }));
-});
-
-hbs.registerHelper('bibtexauthors', function(authors) {
-  var ret = "";
-  var i;
-
-  for (i = 0; i < authors.length; i++) {
-    ret = ret + authors[i];
-
-    if (i + 1 !== authors.length) {
-      ret = ret + ' and ';
-    }
-  }
-
-  return new hbs.SafeString(ret);
-});
-
-hbs.registerHelper('eachAuthor', function(context, options) {
-  var ret = "";
-  var i;
-  var getBody = function(i) {
-    return options.fn(pubs['authors'][context[i]]);
-  };
-
-  if (context.length === 1) {
-    return new hbs.SafeString(getBody(0) + ".");
-  }
-
-  if (context.length === 2) {
-    return new hbs.SafeString(getBody(0) + " and " + getBody(1) + ".");
-  }
-
-  for (i = 0; i < context.length; i++) {
-    if (i + 1 !== context.length) {
-      ret = ret + getBody(i) + ", ";
-    } else {
-      ret = ret + " and " + getBody(i) + ".";
-    }
-  }
-
-  return new hbs.SafeString(ret);
-});
 
 exports.publications = function(req, res) {
   res.render('publications', {

@@ -1,5 +1,6 @@
 var express = require('express')
   , hbs = require('hbs')
+  , hbsext = require('./hbsext')
   , http = require('http')
   , path = require('path')
   , routes = require('./routes');
