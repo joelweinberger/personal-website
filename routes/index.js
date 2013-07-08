@@ -1,6 +1,5 @@
 "use strict";
-var pubs = require('../pubs.json')
-  , bibtexs = require('../bibtexs.json');
+var pubs = require('../pubs.json');
 
 exports.index = function(req, res) {
   res.render('index', {
@@ -30,7 +29,7 @@ exports.ajaxBibtexs = function(pubType) {
     res.render('bibtex', {
       layout: false,
       nosectionheading: true,
-      bibtex: bibtexs[pubType][req.params[0]]
+      bibtex: pubs[pubType][req.params[0]]
     });
   };
 };
@@ -58,7 +57,7 @@ exports.bibtexs = function(pubType) {
         '/css/generic/header.css'
       ],
       header: 'bibtex',
-      bibtex: bibtexs[pubType][req.params[0]]
+      bibtex: pubs[pubType][req.params[0]]
     });
   };
 };
