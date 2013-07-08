@@ -1,7 +1,7 @@
 "use strict";
 var express = require('express')
   , hbs = require('hbs')
-  , hbsext = require('./hbsext')
+  , hbs_ext = require('./hbs-ext')
   , helmet = require('helmet')
   , http = require('http')
   , path = require('path')
