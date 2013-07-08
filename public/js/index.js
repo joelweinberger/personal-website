@@ -1,3 +1,6 @@
+"use strict";
+var $, document;
+
 /*
  * This function creates a toggle "button" (actually an anchor) with the given
  * name and the text specified by "contents".
@@ -7,9 +10,9 @@
  *		
  */
 function attachToggle(item_id, pub_id) {
-  var toggle_id = pub_id + '-' + item_id;
-  var toggle = $('#' + toggle_id);
-  var pub = $('#' + pub_id);
+  var toggle_id = pub_id + '-' + item_id,
+      toggle = $('#' + toggle_id),
+      pub = $('#' + pub_id);
 
   $.get('ajax/' + toggle.attr('href'), function(data) {
     /*
@@ -17,11 +20,11 @@ function attachToggle(item_id, pub_id) {
      * initially (it starts hidden and is revealed by clicking on the
      * toggle).
      */
-    var entry_id = toggle_id + '-entry';
-    var content;
+    var entry_id = toggle_id + '-entry',
+        content;
     pub.addClass('initialized');
     toggle.addClass('toggle');
-    toggle.attr('href', 'javascript:');
+    toggle.attr('href', '#');
 
     content = $('#' + entry_id).html(data);
 
@@ -47,11 +50,13 @@ function attachToggle(item_id, pub_id) {
  * On document ready, find all of the bibtex and abstract toggles and attach a
  * click toggle to each.
  */
-$(document).ready(function() {
-  $(".paper-bibtex-toggle").each(function() {
-    attachToggle("bibtex", $(this).attr("data-pub"));
+(function() {
+  $(document).ready(function() {
+    $(".paper-bibtex-toggle").each(function() {
+      attachToggle("bibtex", $(this).attr("data-pub"));
+    });
+    $(".paper-abstract-toggle").each(function() {
+      attachToggle("abstract", $(this).attr("data-pub"));
+    });
   });
-  $(".paper-abstract-toggle").each(function() {
-    attachToggle("abstract", $(this).attr("data-pub"));
-  });
-});
+}());

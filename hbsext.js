@@ -1,3 +1,4 @@
+"use strict";
 var hbs = require('hbs')
   , marked = require('marked')
   , pubs = require('./pubs.json')
@@ -28,8 +29,7 @@ hbs.registerHelper('markdown', function(content) {
 });
 
 hbs.registerHelper('bibtexauthors', function(authors) {
-  var ret = "";
-  var i;
+  var ret = "", i;
 
   for (i = 0; i < authors.length; i++) {
     ret = ret + authors[i];
@@ -43,11 +43,11 @@ hbs.registerHelper('bibtexauthors', function(authors) {
 });
 
 hbs.registerHelper('eachAuthor', function(context, options) {
-  var ret = "";
-  var i;
-  var getBody = function(i) {
-    return options.fn(pubs['authors'][context[i]]);
-  };
+  var ret = "",
+    i,
+    getBody = function(i) {
+      return options.fn(pubs.authors[context[i]]);
+    };
 
   if (context.length === 1) {
     return new hbs.SafeString(getBody(0) + ".");

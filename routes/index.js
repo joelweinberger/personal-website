@@ -1,3 +1,4 @@
+"use strict";
 var pubs = require('../pubs.json')
   , abstracts = require('../abstracts.json')
   , bibtexs = require('../bibtexs.json');
@@ -87,8 +88,8 @@ exports.publications = function(req, res) {
       '/js/index.js'
     ],
     header: 'publications',
-    papers: pubs['papers'],
-    techs: pubs['techs']
+    papers: pubs.papers,
+    techs: pubs.techs
   });
 };
 
