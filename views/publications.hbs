@@ -1,125 +1,125 @@
-<h5 class="index-papers-header">
-  Refereed Publications
-</h5>
-
-<ul class="index-papers-list">
-  {{#eachReverse papers}}
-  <li class="index-text">
-    <div id="pub{{@index}}" class="paper"> <!-- pub div -->
-
-    <div> <!-- paper info div -->
-    <span class="paper-title">
-    {{#if this.pdf}}
-    <a href="{{this.pdf}}">{{this.title}}.</a>
-    {{else}}
-    {{this.title}}
-    {{/if}}
-    </span>
-
-    <span class="paper-authors">
-      {{#eachAuthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachAuthor}}
-    </span>
-
-    {{#if this.conference}}
-    <span class="paper-conference">{{this.conference}}</span>.
-    </div> <!-- end paper info div -->
-    {{/if}}
-
-    <div> <!-- citation div -->
-    {{#if this.extended}}
-    <span class="paper-extended">
-      <a href="{{escapeAttr this.extended}}">[Extended Version]</a>
-    </span>
-    {{/if}}
-    {{#if this.citeseer}}
-    <span class="paper-citeseer">
-      <a href="{{escapeAttr this.citeseer}}">[CiteSeer]</a>
-    </span>
-    {{/if}}
-
-    <div id="pub{{@index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="pub{{@index}}">
-      <a id="pub{{@index}}-bibtex" href="bibtexs/pub{{@index}}">[BibTeX]</a>
-      <div id="pub{{@index}}-bibtex-entry" class="start-hidden"></div>
-    </div>
-    </div> <!-- end citation div -->
-
-    {{#if this.notes}}
-    <!-- paper notes div -->
-    <div class="paper-notes">
-      {{markdown this.notes}}
-    </div>
-    <!-- end paper notes div -->
-
-    {{/if}}
-    {{#if this.presentation}}
-    <!-- presentation div -->
-    <div class="paper-presentation">
-      {{markdown this.presentation}}
-    </div>
-    <!-- end presentation div -->
-    {{/if}}
-
-    <div> <!-- abstract div -->
-    <div class="paper-abstract">
-      <a id="pub{{@index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/pub{{@index}}" data-pub="pub{{@index}}">Abstract</a>
-      <div id="pub{{@index}}-abstract-entry" class="start-hidden"></div>
-    </div>
-    </div> <!-- end abstract div -->
-
-    </div> <!-- end pub div -->
-  </li>
-  {{/eachReverse}}
-
-</ul>
-
-<h5 class="index-papers-header">
-  Non-Refereed Papers
-</h5>
-
-<ul class="index-papers-list">
-  {{#eachReverse techs}}
-  <li class="index-text">
-    <div id="tech{{@index}}" class="paper"> <!-- tech div -->
-
-    <div> <!-- paper info div -->
-    <span class="paper-title">
-    {{#if this.pdf}}
-    <a href="{{this.pdf}}">{{this.title}}.</a>
-    {{else}}
-    {{this.title}}
-    {{/if}}
-    </span>
-
-    <span class="paper-authors">
-      {{#eachAuthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachAuthor}}
-    </span>
-
-    {{#if this.conference}}
-    <span class="paper-conference">{{this.conference}}</span>.
-    </div> <!-- end paper info div -->
-    {{/if}}
-
-    <div> <!-- citation div -->
-    {{#if this.citeseer}}
-    <span class="paper-citeseer">
-      <a href="{{this.citeseer}}">[CiteSeer]</a>
-    </span>
-    {{/if}}
-
-    <div id="tech{{@index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="tech{{@index}}">
-      <a id="tech{{@index}}-bibtex" href="bibtexs/tech{{@index}}">[BibTeX]</a>
-      <div id="tech{{@index}}-bibtex-entry" class="start-hidden"></div>
-    </div>
-    </div> <!-- end citation div -->
-
-    <div> <!-- abstract div -->
-    <div class="paper-abstract">
-      <a id="tech{{@index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/tech{{@index}}" data-pub="tech{{@index}}">Abstract</a>
-      <div id="tech{{@index}}-abstract-entry" class="start-hidden"></div>
-    </div>
-    </div> <!-- end abstract div -->
-
-    </div> <!-- end tech div -->
-  </li>
-  {{/eachReverse}}
-</ul>
+    <h5 class="index-papers-header">
+      Refereed Publications
+    </h5>
+    
+    <ul class="index-papers-list">
+      {{#eachReverse papers}}
+      <li class="index-text">
+        <div id="pub{{@index}}" class="paper"> <!-- pub div -->
+    
+        <div> <!-- paper info div -->
+        <span class="paper-title">
+        {{#if this.pdf}}
+        <a href="{{this.pdf}}">{{this.title}}.</a>
+        {{else}}
+        {{this.title}}
+        {{/if}}
+        </span>
+    
+        <span class="paper-authors">
+          {{#eachAuthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachAuthor}}
+        </span>
+    
+        {{#if this.conference}}
+        <span class="paper-conference">{{this.conference}}</span>.
+        </div> <!-- end paper info div -->
+        {{/if}}
+    
+        <div> <!-- citation div -->
+        {{#if this.extended}}
+        <span class="paper-extended">
+          <a href="{{escapeAttr this.extended}}">[Extended Version]</a>
+        </span>
+        {{/if}}
+        {{#if this.citeseer}}
+        <span class="paper-citeseer">
+          <a href="{{escapeAttr this.citeseer}}">[CiteSeer]</a>
+        </span>
+        {{/if}}
+    
+        <div id="pub{{@index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="pub{{@index}}">
+          <a id="pub{{@index}}-bibtex" href="bibtexs/pub{{@index}}">[BibTeX]</a>
+          <div id="pub{{@index}}-bibtex-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end citation div -->
+    
+        {{#if this.notes}}
+        <!-- paper notes div -->
+        <div class="paper-notes">
+          {{markdown this.notes}}
+        </div>
+        <!-- end paper notes div -->
+    
+        {{/if}}
+        {{#if this.presentation}}
+        <!-- presentation div -->
+        <div class="paper-presentation">
+          {{markdown this.presentation}}
+        </div>
+        <!-- end presentation div -->
+        {{/if}}
+    
+        <div> <!-- abstract div -->
+        <div class="paper-abstract">
+          <a id="pub{{@index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/pub{{@index}}" data-pub="pub{{@index}}">Abstract</a>
+          <div id="pub{{@index}}-abstract-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end abstract div -->
+    
+        </div> <!-- end pub div -->
+      </li>
+      {{/eachReverse}}
+    
+    </ul>
+    
+    <h5 class="index-papers-header">
+      Non-Refereed Papers
+    </h5>
+    
+    <ul class="index-papers-list">
+      {{#eachReverse techs}}
+      <li class="index-text">
+        <div id="tech{{@index}}" class="paper"> <!-- tech div -->
+    
+        <div> <!-- paper info div -->
+        <span class="paper-title">
+        {{#if this.pdf}}
+        <a href="{{this.pdf}}">{{this.title}}.</a>
+        {{else}}
+        {{this.title}}
+        {{/if}}
+        </span>
+    
+        <span class="paper-authors">
+          {{#eachAuthor this.authors}}{{#if this.homepage}}<a href="{{escapeAttr this.homepage}}">{{/if}}{{this.name}}{{#if this.homepage}}</a>{{/if}}{{/eachAuthor}}
+        </span>
+    
+        {{#if this.conference}}
+        <span class="paper-conference">{{this.conference}}</span>.
+        </div> <!-- end paper info div -->
+        {{/if}}
+    
+        <div> <!-- citation div -->
+        {{#if this.citeseer}}
+        <span class="paper-citeseer">
+          <a href="{{this.citeseer}}">[CiteSeer]</a>
+        </span>
+        {{/if}}
+    
+        <div id="tech{{@index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="tech{{@index}}">
+          <a id="tech{{@index}}-bibtex" href="bibtexs/tech{{@index}}">[BibTeX]</a>
+          <div id="tech{{@index}}-bibtex-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end citation div -->
+    
+        <div> <!-- abstract div -->
+        <div class="paper-abstract">
+          <a id="tech{{@index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/tech{{@index}}" data-pub="tech{{@index}}">Abstract</a>
+          <div id="tech{{@index}}-abstract-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end abstract div -->
+    
+        </div> <!-- end tech div -->
+      </li>
+      {{/eachReverse}}
+    </ul>

@@ -3,23 +3,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
 
-    <!-- start extra meta -->
     {{#each extrameta}}
     <meta name="{{{this.description}}}" content="{{{this.content}}}"></meta>
     {{/each}}
-    <!-- end extra meta -->
 
-    <!-- start extra CSS -->
     {{#each extracss}}
     <link rel="stylesheet" type="text/css" href="{{{this}}}"></link>
     {{/each}}
-    <!-- end extra CSS -->
 
-    <!-- start extra JavaScript -->
     {{#each extrascripts}}
     <script type="text/javascript" src="{{{this}}}"></script>
     {{/each}}
-    <!-- end extra JavaScript -->
 
     <title>{{title}}</title>
   </head>
@@ -32,23 +26,10 @@
     </div>
     {{/if}}
 
-    {{#unless this.nocontent}}
-    <div class="content">
-
-    <!-- Begin page content here -->
-    {{/unless}}
-
+    {{#unless this.nocontent}}<div class="content">{{/unless}}
     {{{body}}}
-
-    {{#unless this.nohomelink}}
-    <div id="homelink"><a href="/index">[home]</a></div>
-    {{/unless}}
-
-    {{#unless this.nocontent}}
-    <!-- end page content here -->
-
-    </div>
-    {{/unless}}
+    {{#unless this.nohomelink}}<div id="homelink"><a href="/index">[home]</a></div>{{/unless}}
+    {{#unless this.nocontent}}</div>{{/unless}}
   </body>
 
   <!-- begin Google Analytics -->
