@@ -111,6 +111,5 @@ exports.blog = function(req, res) {
   if (req.params.length > 0) {
     path += req.params[0];
   }
-  console.log('path = ' + path);
   res.redirect('http://blog.joelweinberger.us' + path);
 };
