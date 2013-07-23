@@ -102,3 +102,15 @@ exports.wedding = function(req, res) {
     header: 'wedding',
   });
 };
+
+// For legacy reasons (namely, the original blog), we need to redirect links
+// frotm the original blog path to the new blog path so that old permalinks
+// still work.
+exports.blog = function(req, res) {
+  var path = '/';
+  if (req.params.length > 0) {
+    path += req.params[0];
+  }
+  console.log('path = ' + path);
+  res.redirect('http://blog.joelweinberger.us' + path);
+};
