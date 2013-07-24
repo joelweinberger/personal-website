@@ -21,6 +21,12 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
+
+  helmet.csp.policy({
+    defaultPolicy: {
+      'default-src': ["'self'", "https://*.google.com"],
+    }
+  });
   app.use(helmet.csp());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
