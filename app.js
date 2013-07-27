@@ -2,7 +2,6 @@
 var express = require('express')
   , hbs = require('hbs')
   , hbs_ext = require('./hbs-ext')
-  , helmet = require('helmet')
   , http = require('http')
   , path = require('path')
   , routes = require('./routes');
