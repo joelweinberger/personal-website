@@ -33,10 +33,18 @@ app.get('/ajax/abstracts/pub*', routes.ajaxAbstracts('papers'));
 app.get('/ajax/abstracts/tech*', routes.ajaxAbstracts('techs'));
 app.get('/ajax/bibtexs/pub*', routes.ajaxBibtexs('papers'));
 app.get('/ajax/bibtexs/tech*', routes.ajaxBibtexs('techs'));
+// Order matters for these. We need the .html matches first so that it will
+// remove the html in once matched.
+app.get('/abstracts/pub*.html', routes.abstracts('papers'));
 app.get('/abstracts/pub*', routes.abstracts('papers'));
+app.get('/abstracts/tech*.html', routes.abstracts('techs'));
 app.get('/abstracts/tech*', routes.abstracts('techs'));
+
+app.get('/bibtexs/pub*.html', routes.bibtexs('papers'));
 app.get('/bibtexs/pub*', routes.bibtexs('papers'));
+app.get('/bibtexs/tech*.html', routes.bibtexs('techs'));
 app.get('/bibtexs/tech*', routes.bibtexs('techs'));
+
 app.get('/index', routes.index);
 app.get('/calendar', routes.calendar);
 app.get('/publications', routes.publications);

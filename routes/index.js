@@ -34,8 +34,26 @@ exports.ajaxBibtexs = function(pubType) {
   };
 };
 
+function pubError(res, type) {
+  res.render('pubError', {
+    title: 'Joel H. W. Weinberger -- Unknown Publication',
+    extracss: [
+      '/css/generic/basic-page.css',
+      '/css/generic/header.css'
+    ],
+    header: type,
+    type: type
+  });
+}
+
 exports.abstracts = function(pubType) {
   return function(req, res) {
+    var pub = pubs[pubType][req.params[0]];
+    if (!pub) {
+      pubError(res, 'abstract');
+      return;
+    }
+
     res.render('abstract', {
       title: 'Joel H. W. Weinberger -- Paper Abstract',
       extracss: [
@@ -43,13 +61,19 @@ exports.abstracts = function(pubType) {
         '/css/generic/header.css'
       ],
       header: 'abstract',
-      abstract: pubs[pubType][req.params[0]]
+      abstract: pub
     });
   };
 };
 
 exports.bibtexs = function(pubType) {
   return function(req, res) {
+    var pub = pubs[pubType][req.params[0]];
+    if (!pub) {
+      pubError(res, 'bibtex');
+      return;
+    }
+
     res.render('bibtex', {
       title: 'Joel H. W. Weinberger -- Paper BibTeX',
       extracss: [
@@ -57,7 +81,7 @@ exports.bibtexs = function(pubType) {
         '/css/generic/header.css'
       ],
       header: 'bibtex',
-      bibtex: pubs[pubType][req.params[0]]
+      bibtex: pub
     });
   };
 };
