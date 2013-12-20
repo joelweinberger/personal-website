@@ -13,11 +13,19 @@ var app = express();
 // Hook in express-hbs and tell it where known directories reside
 app.set('view engine', 'hbs');
 
+function requireHTTPS(req, res, next) {
+  if (!req.secure) {
+    return res.redirect('https://' + req.host + ':' + app.get('https_port') + req.url);
+  }
+  next();
+}
+
 app.configure(function(){
-  app.set('http_port', process.env.HTTP_PORT || 3000);
-  app.set('https_port', process.env.HTTPS_PORT || 3001);
+  app.set('https_port', process.env.HTTPS_PORT || 3000);
+  app.set('http_port', process.env.HTTP_PORT || 3001);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
+  app.use(requireHTTPS);
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -60,8 +68,10 @@ var options = {
   cert: fs.readFileSync('./cert/ssl.crt')
 };
 
-http.createServer(app).listen(app.get('http_port'));
-console.log("Express server listening to HTTP on port " + app.get('http_port'));
-
+// The main application is exclusively served over HTTPS.
 https.createServer(options, app).listen(app.get('https_port'));
 console.log("Express server listening to HTTPS on port " + app.get('https_port'));
+
+// The HTTP server only exists to redirect to the HTTPS server.
+http.createServer(app).listen(app.get('http_port'));
+console.log("Express server listening to HTTP on port " + app.get('http_port'));
