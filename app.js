@@ -1,24 +1,25 @@
 "use strict";
 var express = require('express')
+  , fs = require('fs')
   , hbs = require('hbs')
   , hbs_ext = require('./hbs-ext')
   , http = require('http')
   , https = require('https')
   , path = require('path')
-  , fs = require('fs')
   , routes = require('./routes');
 
-var app = express();
-
-// Hook in express-hbs and tell it where known directories reside
-app.set('view engine', 'hbs');
-
+// Middleware that redirects HTTP to HTTPS
 function requireHTTPS(req, res, next) {
   if (!req.secure) {
     return res.redirect('https://' + req.host + ':' + app.get('https_port') + req.url);
   }
   next();
 }
+
+var app = express();
+
+// Hook in express-hbs and tell it where known directories reside
+app.set('view engine', 'hbs');
 
 app.configure(function(){
   app.set('https_port', process.env.HTTPS_PORT || 3000);
