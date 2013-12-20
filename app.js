@@ -3,7 +3,9 @@ var express = require('express')
   , hbs = require('hbs')
   , hbs_ext = require('./hbs-ext')
   , http = require('http')
+  , https = require('https')
   , path = require('path')
+  , fs = require('fs')
   , routes = require('./routes');
 
 var app = express();
@@ -12,7 +14,8 @@ var app = express();
 app.set('view engine', 'hbs');
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('http_port', process.env.HTTP_PORT || 3000);
+  app.set('https_port', process.env.HTTPS_PORT || 3001);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
   app.use(express.logger('dev'));
@@ -51,6 +54,14 @@ app.get('/wedding', routes.wedding);
 app.get('/blog', routes.blog);
 app.get('/blog/*', routes.blog);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
-});
+var options = {
+  ca: fs.readFileSync('./cert/sub.class1.server.ca.pem'),
+  key: fs.readFileSync('./cert/ssl.key'),
+  cert: fs.readFileSync('./cert/ssl.crt')
+};
+
+http.createServer(app).listen(app.get('http_port'));
+console.log("Express server listening to HTTP on port " + app.get('http_port'));
+
+https.createServer(options, app).listen(app.get('https_port'));
+console.log("Express server listening to HTTPS on port " + app.get('https_port'));
