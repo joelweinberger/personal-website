@@ -8,11 +8,15 @@ var express = require('express')
   , path = require('path')
   , routes = require('./routes');
 
-// Middleware that redirects HTTP to HTTPS
-function requireHTTPS(req, res, next) {
+// Enforce HSTS by redirecting HTTP to HTTPS and adding an HSTS header.
+function requireHSTS(req, res, next) {
+  // HTTP case
   if (!req.secure) {
     return res.redirect('https://' + req.host + ':' + app.get('https_port') + req.url);
   }
+
+  // HTTPS case
+  res.header('Strict-Transport-Security', 'max-age=604800');
   next();
 }
 
@@ -26,7 +30,7 @@ app.configure(function(){
   app.set('http_port', process.env.HTTP_PORT || 3001);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
-  app.use(requireHTTPS);
+  app.use(requireHSTS);
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
