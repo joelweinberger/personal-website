@@ -17,6 +17,10 @@ a.image-link img {
 	color: #004fff;
 }
 
+.index-small {
+  font-size: 10pt;
+}
+
 .index-text {
 	margin: 0px auto;
 	text-align: left;
