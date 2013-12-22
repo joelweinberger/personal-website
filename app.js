@@ -3,22 +3,27 @@ var express = require('express')
   , fs = require('fs')
   , hbs = require('hbs')
   , hbs_ext = require('./hbs-ext')
+  , hood = require('hood')
   , http = require('http')
   , https = require('https')
   , path = require('path')
   , routes = require('./routes');
 
-// Enforce HSTS by redirecting HTTP to HTTPS and adding an HSTS header.
-function requireHSTS(req, res, next) {
+// Redirect HTTP to HTTPS
+function requireHTTPS(req, res, next) {
   // HTTP case
   if (!req.secure) {
     return res.redirect('https://' + req.host + ':' + app.get('https_port') + req.url);
   }
 
   // HTTPS case
-  res.header('Strict-Transport-Security', 'max-age=604800');
   next();
 }
+
+// For the calendar, we frame-src google.com
+var hood_policy = {
+  csp: "default-src 'self'; frame-src *.google.com;"
+};
 
 var app = express();
 
@@ -30,7 +35,8 @@ app.configure(function(){
   app.set('http_port', process.env.HTTP_PORT || 3001);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
-  app.use(requireHSTS);
+  app.use(requireHTTPS);
+  app.use(hood(hood_policy));
   app.use(express.favicon('public/img/lock.ico'));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
