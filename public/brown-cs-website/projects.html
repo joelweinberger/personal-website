@@ -8,102 +8,6 @@
 
         <LINK rel="stylesheet" type="text/css" href="css/projects-style.css">
 
-        <SCRIPT type="text/javascript">
-            imageNames = new Array ()
-
-            imageNames[0] = new String ()
-            imageNames[0] = "mirror balls"
-
-            imageNames[1] = new String ()
-            imageNames[1] = "cheese balls"
-
-            imageNames[2] = new String ()
-            imageNames[2] = "objects"
-
-            imageNames[3] = new String ()
-            imageNames[3] = "shadow"
-
-            imageNames[4] = new String ()
-            imageNames[4] = "chess"
-
-            imageNames[5] = new String ()
-            imageNames[5] = "kern1"
-
-            imageNames[6] = new String ()
-            imageNames[6] = "kern2"
-
-            imageNames[7] = new String ()
-            imageNames[7] = "kern3"
-
-            imageNames[8] = new String ()
-            imageNames[8] = "kern4"
-        
-            if (document.images) {
-                previewImages = new Array ()
-
-                for (i in imageNames) {
-                    previewImages= new Image (400, 400)
-                    previewImages[i].src = "images/small_" + imageNames[i] + ".jpg"
-                    previewImages[i].title = imageNames[i]
-                }
-            }
-
-            function changePic (picNum, imgId) {
-                currentPreview.className = "not-selected-image"
-                currentPreview = document.getElementById ("img" + picNum)
-                currentPreview.className = "selected-image"
-
-                var image = document.getElementById (imgId)
-                image.src = "images/" + imageNames[picNum] + ".jpg"
-                image.title =  imageNames[picNum]
-                image.alt = imageNames[picNum]
-            }
-            
-
-            function getPosX (obj) {
-                var curleft = 0;
-                if (obj.offsetParent) {
-                    while (obj.offsetParent) {
-                        curleft += obj.offsetLeft
-                        obj = obj.offsetParent
-                    }
-                }
-                else if (obj.x) {
-                    curleft += obj.x
-                }
-
-                return curleft;
-            }
-            
-
-            function getPosY (obj) {
-                var curtop = 0;
-                if (obj.offsetParent) {
-                    while (obj.offsetParent) {
-                        curtop += obj.offsetTop
-                        obj = obj.offsetParent
-                    }
-                }
-                else if (obj.y) {
-                    curtop += obj.y
-                }
-
-                return curtop;
-            }
-
-            function morphPic (picNum, event) {
-                var x = event.clientX
-                var y = event.clientY
-                var box = document.getElementById ("text-box")
-                var image = document.getElementById ("img" + picNum).offsetLeft
-
-                box.value = getPosX (image)
-
-                lastX = x
-                lastY = y
-            }
-        </SCRIPT>
-
         <TITLE>Projects</TITLE>
     </HEAD><BODY>
         <!-- START navbar -->
@@ -180,41 +84,37 @@
         <DIV class="image-display">
             <UL class="image-nav">
                 <LI>
-                    <IMG src="images/small_mirror balls.jpg" title="mirror balls" alt="mirror balls" id="img0" class="selected-image" onclick="changePic (0, &#39;mainImg&#39;)" onmousemove="morphPic (0, event)">
+                    <IMG src="images/small_mirror balls.jpg" title="mirror balls" alt="mirror balls" id="img0" class="selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_cheese balls.jpg" title="cheese balls" alt="cheese balls" id="img1" class="not-selected-image" onclick="changePic (1, &#39;mainImg&#39;)">
+                    <IMG src="images/small_cheese balls.jpg" title="cheese balls" alt="cheese balls" id="img1" class="not-selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_objects.jpg" title="objects" alt="objects" id="img2" class="not-selected-image" onclick="changePic (2, &#39;mainImg&#39;)">
+                    <IMG src="images/small_objects.jpg" title="objects" alt="objects" id="img2" class="not-selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_shadow.jpg" title="shadow" alt="shadow" id="img3" class="not-selected-image" onclick="changePic (3, &#39;mainImg&#39;)">
+                    <IMG src="images/small_shadow.jpg" title="shadow" alt="shadow" id="img3" class="not-selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_chess.jpg" title="chess" alt="chess" id="img4" class="not-selected-image" onclick="changePic (4, &#39;mainImg&#39;)">
+                    <IMG src="images/small_chess.jpg" title="chess" alt="chess" id="img4" class="not-selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_kern1.jpg" title="kern1" alt="kern1" id="img5" class="not-selected-image" onclick="changePic (5, &#39;mainImg&#39;)">
+                    <IMG src="images/small_kern1.jpg" title="kern1" alt="kern1" id="img5" class="not-selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_kern2.jpg" title="kern2" alt="kern2" id="img6" class="not-selected-image" onclick="changePic (6, &#39;mainImg&#39;)">
+                    <IMG src="images/small_kern2.jpg" title="kern2" alt="kern2" id="img6" class="not-selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_kern3.jpg" title="kern3" alt="kern3" id="img7" class="not-selected-image" onclick="changePic (7, &#39;mainImg&#39;)">
+                    <IMG src="images/small_kern3.jpg" title="kern3" alt="kern3" id="img7" class="not-selected-image">
                 </LI>
                 <LI>
-                    <IMG src="images/small_kern4.jpg" title="kern4" alt="kern4" id="img8" class="not-selected-image" onclick="changePic (8, &#39;mainImg&#39;)">
+                    <IMG src="images/small_kern4.jpg" title="kern4" alt="kern4" id="img8" class="not-selected-image">
                 </LI>
             </UL>
 
             <IMG id="mainImg" src="images/mirror balls.jpg" title="mirror balls" alt="mirror balls">
         </DIV>
 
-        <SCRIPT type="text/javascript">
-            currentPreview = document.getElementById ("img0")
-            currentPreview.className = "selected-image"
-        </SCRIPT>
-    
+        <SCRIPT type="text/javascript" src="projects.js"></SCRIPT>
 
 </BODY></HTML>

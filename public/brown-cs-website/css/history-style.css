@@ -10,21 +10,6 @@
 <meta name="Author"    content="John Bazik, jsb@cs.brown.edu">
 <meta name="Generator" content="WML 2.0.11 (19-Aug-2006)">
 <meta name="Modified"  content="2008-12-17 17:42:34">
-<style type="text/css" media="screen">
-	@import url("/css/3col-default.css");
-</style>
-<style type="text/css" media="print">
-	@import url("/css/3col-print.css");
-</style>
-<style type="text/css" media="screen">
-	@import url("/css/2-column.css");
-</style>
-<style type="text/css" media="screen">
-	@import url("/css/cs.css");
-</style>
-<style type="text/css" media="screen">
-	@import url("/css/inonly.css");
-</style>
 <link rel="stylesheet" type="text/css" href="/css/csdept.css">
 <base href="http://www.cs.brown.edu/error.html">
 <meta name="MSSmartTagsPreventParsing" content="TRUE">
@@ -131,14 +116,5 @@ The requested URL was not found on this server.
 Search provided by
 <a href="http://www.google.com">Google</a></p>
 </div>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-6395715-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
 </body>
 </html>
