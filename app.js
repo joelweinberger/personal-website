@@ -3,7 +3,6 @@ var express = require('express')
   , fs = require('fs')
   , hbs = require('hbs')
   , hbs_ext = require('./hbs-ext')
-  , hood = require('hood')
   , http = require('http')
   , https = require('https')
   , path = require('path')
@@ -21,9 +20,11 @@ function requireHTTPS(req, res, next) {
 }
 
 // For the calendar, we frame-src google.com
-var hood_policy = {
-  csp: "default-src 'self'; frame-src *.google.com;"
-};
+var csp = "default-src 'self'; frame-src *.google.com";
+function contentSecurityPolicy(req, res, next) {
+  res.setHeader("Content-Security-Policy: " + csp + "\n");
+  return next();
+}
 
 var app = express();
 
@@ -36,7 +37,7 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
   app.use(requireHTTPS);
-  app.use(hood(hood_policy));
+  app.use(contentSecurityPolicy);
   app.use(express.favicon('public/img/lock.ico'));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
