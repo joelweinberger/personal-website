@@ -12,7 +12,7 @@ var express = require('express')
 function requireHTTPS(req, res, next) {
   // HTTP case
   if (!req.secure) {
-    return res.redirect('https://' + req.host + ':' + app.get('https_port') + req.url);
+    return res.redirect('https://' + req.host + ':' + app.get('https_port') + req.url + "\n");
   }
 
   // HTTPS case
@@ -24,6 +24,11 @@ var csp = "default-src 'self'; frame-src *.google.com";
 function contentSecurityPolicy(req, res, next) {
   res.setHeader("Content-Security-Policy: " + csp + "\n");
   return next();
+}
+
+function strictTransportSecurity(req, res, next) {
+  res.setHeader("Strict-Transport-Security: max-age=7776000\n");
+  next();
 }
 
 var app = express();
@@ -38,6 +43,7 @@ app.configure(function(){
   app.set('view engine', 'hbs');
   app.use(requireHTTPS);
   app.use(contentSecurityPolicy);
+  app.use(strictTransportSecurity);
   app.use(express.favicon('public/img/lock.ico'));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
