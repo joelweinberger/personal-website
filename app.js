@@ -22,16 +22,17 @@ function requireHTTPS(req, res, next) {
 // For the calendar, we frame-src google.com
 var csp = "default-src 'self'; frame-src *.google.com";
 function contentSecurityPolicy(req, res, next) {
-  res.setHeader("Content-Security-Policy: " + csp + "\n");
+  res.setHeader("Content-Security-Policy", csp);
   return next();
 }
 
 function strictTransportSecurity(req, res, next) {
-  res.setHeader("Strict-Transport-Security: max-age=7776000\n");
+  res.setHeader("Strict-Transport-Security", "max-age=7776000");
   next();
 }
 
 var app = express();
+app.disable('x-powered-by');
 
 // Hook in express-hbs and tell it where known directories reside
 app.set('view engine', 'hbs');
