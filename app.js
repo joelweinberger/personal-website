@@ -26,8 +26,11 @@ function contentSecurityPolicy(req, res, next) {
   return next();
 }
 
+// max-age must be something rather large so that it outlasts browser updates.
+// Firefox seems to be the current upper bound of 18 weeks, so set max-age to
+// 20 weeks (in seconds), just because.
 function strictTransportSecurity(req, res, next) {
-  res.setHeader("Strict-Transport-Security", "max-age=7776000");
+  res.setHeader("Strict-Transport-Security", "max-age=12096000");
   next();
 }
 
