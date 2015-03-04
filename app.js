@@ -88,8 +88,13 @@ app.get('/blog/*', routes.blog);
 var options = {
   ca: fs.readFileSync('./cert/sub.class1.server.ca.pem'),
   key: fs.readFileSync('./cert/ssl.key'),
-  cert: fs.readFileSync('./cert/ssl.crt')
+  cert: fs.readFileSync('./cert/ssl.crt'),
+  secureProtocol: "TLSv1_method",
+  ciphers: "ECDHE-RSA-AES256-SHA384:AES256-SHA256:RC4-SHA:RC4:HIGH:!MD5:!aNULL:!EDH:!AESGCM",
+  honorCipherOrder: true
 };
+
+options.agent = new https.Agent(options);
 
 // The main application is exclusively served over HTTPS.
 https.createServer(options, app).listen(app.get('https_port'));
