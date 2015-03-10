@@ -1,4 +1,3 @@
 *.swp
 /cert
-/node_modules
 /untracked

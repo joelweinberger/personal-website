@@ -1,4 +1,4 @@
-The website of Joel H. W. Weinberger.
+The website of Joel H. W. Weinberger, Go Edition!
 
 The public/img/lock.ico favicon is used under a Creative Commons
 Attribution-Share Alike 3.0 Unported license, courtesy of Wikimedia user

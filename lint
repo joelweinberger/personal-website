@@ -1,6 +1,0 @@
-#!/bin/sh
-
-FILE=$1
-shift;
-
-./node_modules/jslint/bin/jslint.js --node --nomen --plusplus --white $@ $FILE
