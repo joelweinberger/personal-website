@@ -29,22 +29,35 @@ type Page struct {
 	Title        string
 }
 
-func basicHandle(w http.ResponseWriter, r *http.Request) {
-	p := &Page{ExtraCSS: []string{"/css/generic/basic-page.css",
-		"/css/generic/header.css",
-		"/css/page/index.css"},
+var pages map[string]*Page = map[string]*Page{
+	"index.html": &Page{
+		ExtraCSS: []string{
+			"/css/generic/basic-page.css",
+			"/css/generic/header.css",
+			"/css/page/index.css",
+		},
 		ExtraMeta:    []MetaTag{},
 		ExtraScripts: []string{},
 		Header:       "jww (at) joelweinberger (dot) us",
 		NoContent:    false,
 		NoHomeLink:   true,
-		Title:        "Joel H. W. Weinberger -- jww"}
-	t, _ := template.ParseFiles("layout.html", "body.html")
-	err := t.Execute(w, p)
+		Title:        "Joel H. W. Weinberger -- jww",
+	},
+}
 
-	if err != nil {
-		fmt.Println(err)
-		return
+func basicHandle(w http.ResponseWriter, r *http.Request) {
+}
+
+func generateHandle(page string) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		body_template := "templates/" + page
+		t, _ := template.ParseFiles("templates/layout.html", body_template)
+		err := t.Execute(w, pages[page])
+
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 }
 
@@ -74,8 +87,9 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http_port := "8000"
 	request_mux = requestMapper{
-		"/":      basicHandle,
-		"/index": basicHandle}
+		"/":      generateHandle("index.html"),
+		"/index": generateHandle("index.html"),
+	}
 
 	server := http.Server{
 		Addr:    ":" + http_port,
