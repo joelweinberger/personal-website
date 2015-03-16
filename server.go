@@ -30,6 +30,17 @@ type Page struct {
 }
 
 var pages map[string]*Page = map[string]*Page{
+	"calendar.html": &Page{
+		ExtraCSS: []string{
+			"/css/page/calendar.css",
+		},
+		ExtraMeta:    []MetaTag{},
+		ExtraScripts: []string{},
+		Header:       "",
+		NoContent:    true,
+		NoHomeLink:   true,
+		Title:        "Joel H. W. Weinberger -- Calendar",
+	},
 	"index.html": &Page{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
@@ -87,8 +98,9 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http_port := "8000"
 	request_mux = requestMapper{
-		"/":      generateHandle("index.html"),
-		"/index": generateHandle("index.html"),
+		"/":         generateHandle("index.html"),
+		"/index":    generateHandle("index.html"),
+		"/calendar": generateHandle("calendar.html"),
 	}
 
 	server := http.Server{
