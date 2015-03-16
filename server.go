@@ -54,12 +54,25 @@ var pages map[string]*Page = map[string]*Page{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- jww",
 	},
+	"wedding.html": &Page{
+		ExtraCSS: []string{
+			"/css/generic/basic-page.css",
+			"/css/generic/header.css",
+			"/css/page/index.css",
+		},
+		ExtraMeta:    []MetaTag{},
+		ExtraScripts: []string{},
+		Header:       "wedding",
+		NoContent:    false,
+		NoHomeLink:   false,
+		Title:        "Joel H. W. Weinberger -- Wedding",
+	},
 }
 
 func basicHandle(w http.ResponseWriter, r *http.Request) {
 }
 
-func generateHandle(page string) func(http.ResponseWriter, *http.Request) {
+func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body_template := "templates/" + page
 		t, _ := template.ParseFiles("templates/layout.html", body_template)
@@ -98,9 +111,10 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http_port := "8000"
 	request_mux = requestMapper{
-		"/":         generateHandle("index.html"),
-		"/index":    generateHandle("index.html"),
-		"/calendar": generateHandle("calendar.html"),
+		"/":         generateBasicHandle("index.html"),
+		"/index":    generateBasicHandle("index.html"),
+		"/calendar": generateBasicHandle("calendar.html"),
+		"/wedding":  generateBasicHandle("wedding.html"),
 	}
 
 	server := http.Server{
