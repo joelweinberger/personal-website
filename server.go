@@ -69,9 +69,6 @@ var pages map[string]*Page = map[string]*Page{
 	},
 }
 
-func basicHandle(w http.ResponseWriter, r *http.Request) {
-}
-
 func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body_template := "templates/" + page
@@ -133,10 +130,11 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http_port := "8000"
 	request_mux = requestMapper{
-		"/":         generateBasicHandle("index.html"),
-		"/index":    generateBasicHandle("index.html"),
-		"/calendar": generateBasicHandle("calendar.html"),
-		"/wedding":  generateBasicHandle("wedding.html"),
+		"/":             generateBasicHandle("index.html"),
+		"/calendar":     generateBasicHandle("calendar.html"),
+		"/index":        generateBasicHandle("index.html"),
+		"/publications": generateBasicHandle("publications.html"),
+		"/wedding":      generateBasicHandle("wedding.html"),
 	}
 
 	server := http.Server{
