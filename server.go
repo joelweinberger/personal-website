@@ -120,8 +120,8 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// possible. That is, this call treats the Path as if it is at root, and
 		// removes anything that would go beyond root.
 		path = filepath.Clean(path)
-		fmt.Println("Serving static file ./public" + path)
-		http.ServeFile(w, r, "./public"+path)
+		fmt.Println("Serving static file ./static" + path)
+		http.ServeFile(w, r, "./static"+path)
 	} else {
 		handle(w, r)
 	}
