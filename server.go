@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"path/filepath"
-	//"io"
 	"net/http"
+	"path/filepath"
+	"strings"
 )
 
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
@@ -85,12 +85,34 @@ func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+func generateRedirectHandle(dst string) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		path := strings.TrimPrefix(r.URL.Path, "/blog")
+		fmt.Println("Redirecting to ", dst+path)
+		http.Redirect(w, r, dst+path, 301)
+	}
+}
+
+var blogRedirectHandle func(http.ResponseWriter, *http.Request) = generateRedirectHandle("http://blog.joelweinberger.us")
+
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if handle, ok := request_mux[r.URL.String()]; !ok {
 		path := r.URL.Path
-		// This should never be the case, so this should probably be an assert,
-		// but just in case something wacky occurs, return a 404 if the URL is
-		// not an absolute path.
+
+		// For legacy reasons (namely, the original blog), we need to redirect
+		// links from the original blog path to the new blog path so that old
+		// permalinks still work.
+		if strings.Index(path+"/", "/blog/") == 0 {
+			blogRedirectHandle(w, r)
+			return
+		}
+
+		// All other cases are static files that need to be loaded from the
+		// ./static directory.
+
+		// The following should never be the case, so this should probably be an
+		// assert, but just in case something wacky occurs, return a 404 if the
+		// URL is not an absolute path.
 		if !filepath.IsAbs(path) {
 			http.NotFound(w, r)
 			return
