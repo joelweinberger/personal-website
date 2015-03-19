@@ -69,11 +69,11 @@ var pages map[string]*Page = map[string]*Page{
 	},
 }
 
+var templates map[string]*template.Template
+
 func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body_template := "templates/" + page
-		t, _ := template.ParseFiles("templates/layout.html", body_template)
-		err := t.Execute(w, pages[page])
+		err := templates[page].Execute(w, pages[page])
 
 		if err != nil {
 			fmt.Println(err)
@@ -135,6 +135,11 @@ func main() {
 		"/index":        generateBasicHandle("index.html"),
 		"/publications": generateBasicHandle("publications.html"),
 		"/wedding":      generateBasicHandle("wedding.html"),
+	}
+
+	templates = make(map[string]*template.Template)
+	for name, _ := range pages {
+		templates[name] = template.Must(template.ParseFiles("templates/layout.html", "templates/"+name))
 	}
 
 	server := http.Server{
