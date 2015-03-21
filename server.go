@@ -49,13 +49,13 @@ type Paper struct {
 }
 
 type PubPage struct {
-	Page
+	BasicPage
 	Papers      []Paper
 	TechReports []Paper
 }
 
 var pages map[string]Page = map[string]Page{
-	"calendar.html": BasicPage{
+	"calendar.html": &BasicPage{
 		ExtraCSS: []string{
 			"/css/page/calendar.css",
 		},
@@ -66,7 +66,7 @@ var pages map[string]Page = map[string]Page{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- Calendar",
 	},
-	"index.html": BasicPage{
+	"index.html": &BasicPage{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
 			"/css/generic/header.css",
@@ -79,8 +79,8 @@ var pages map[string]Page = map[string]Page{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- jww",
 	},
-	"publications.html": PubPage{
-		Page: BasicPage{
+	"publications.html": &PubPage{
+		BasicPage: BasicPage{
 			ExtraCSS: []string{
 				"/css/generic/basic-page.css",
 				"/css/generic/header.css",
@@ -110,7 +110,7 @@ var pages map[string]Page = map[string]Page{
 		},
 		TechReports: []Paper{},
 	},
-	"wedding.html": BasicPage{
+	"wedding.html": &BasicPage{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
 			"/css/generic/header.css",
@@ -198,10 +198,11 @@ func main() {
 		"/wedding":      generateBasicHandle("wedding.html"),
 	}
 
-	funcMap := template.FuncMap{"markdown": markdowner}
 	templates = make(map[string]*template.Template)
+	funcMap := template.FuncMap{"markdown": markdowner}
+	layout := template.Must(template.ParseFiles("templates/layout.html")).Funcs(funcMap)
 	for name, _ := range pages {
-		templates[name] = template.Must(template.New("page.html").Funcs(funcMap).ParseFiles("templates/layout.html", "templates/"+name))
+		templates[name] = template.Must(template.Must(layout.Clone()).ParseFiles("templates/" + name))
 	}
 
 	server := http.Server{
