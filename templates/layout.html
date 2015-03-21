@@ -27,7 +27,7 @@
 	{{end}}
 
 	{{with not .NoContent}}<div class="content">{{end}}
-    {{template "body"}}
+    {{template "body" .}}
 	{{with not .NoHomeLink}}<div id="homelink"><a href="/index">[home]</a></div>{{end}}
 	{{with not .NoContent}}</div>{{end}}
   </body>
