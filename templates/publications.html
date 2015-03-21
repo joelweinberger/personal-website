@@ -1,0 +1,127 @@
+    {{define "body"}}
+	<h5 class="index-papers-header">
+      Refereed Publications
+    </h5>
+    
+    <ul class="index-papers-list">
+      {{range $index, $paper := .Papers}}
+      <li class="index-text">
+        <div id="pub{{$index}}" class="paper"> <!-- pub div -->
+    
+        <div> <!-- paper info div -->
+        <span class="paper-title">
+        {{if $paper.Path}}
+        <a href="{{$paper.Path}}">{{$paper.Title}}.</a>
+        {{else}}
+		{{$paper.Title}}
+        {{end}}
+        </span>
+    
+        <span class="paper-authors">
+		  {{range $paper.Authors}}{{if .Homepage}}<a href="{{.Homepage}}">{{end}}{{.Name}}{{if .Homepage}}</a>{{end}}{{end}}
+        </span>
+    
+        {{if $paper.Conference}}
+        <span class="paper-conference">{{$paper.Conference}}</span>.
+        </div> <!-- end paper info div -->
+        {{end}}
+    
+        <div> <!-- citation div -->
+        {{if $paper.Extended}}
+        <span class="paper-extended">
+          <a href="{{$paper.Extended}}">[Extended Version]</a>
+        </span>
+        {{end}}
+        {{if $paper.Citeseer}}
+        <span class="paper-citeseer">
+          <a href="{{$paper.Citeseer}}">[CiteSeer]</a>
+        </span>
+        {{end}}
+    
+        <div id="pub{{$index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="pub{{$index}}">
+          <a id="pub{{$index}}-bibtex" href="bibtexs/pub{{$index}}">[BibTeX]</a>
+          <div id="pub{{$index}}-bibtex-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end citation div -->
+    
+        {{if $paper.Notes}}
+        <!-- paper notes div -->
+        <div class="paper-notes">
+          {{markdown $paper.Notes}}
+        </div>
+        <!-- end paper notes div -->
+		{{end}}
+    
+        {{if $paper.Presentation}}
+        <!-- presentation div -->
+        <div class="paper-presentation">
+          {{markdown $paper.Presentation}}
+        </div>
+        <!-- end presentation div -->
+        {{end}}
+    
+        <div> <!-- abstract div -->
+        <div class="paper-abstract">
+          <a id="pub{{$index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/pub{{$index}}" data-pub="pub{{$index}}">Abstract</a>
+          <div id="pub{{$index}}-abstract-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end abstract div -->
+    
+        </div> <!-- end pub div -->
+      </li>
+      {{end}}
+    
+    </ul>
+    
+    <h5 class="index-papers-header">
+      Non-Refereed Papers
+    </h5>
+    
+    <ul class="index-papers-list">
+	  {{range $index, $paper := .TechReports}}
+      <li class="index-text">
+        <div id="tech{{$index}}" class="paper"> <!-- tech div -->
+    
+        <div> <!-- paper info div -->
+        <span class="paper-title">
+        {{if $paper.Path}}
+        <a href="{{$paper.Path}}">{{$paper.Title}}.</a>
+        {{else}}
+        {{$paper.Title}}
+        {{end}}
+        </span>
+    
+        <span class="paper-authors">
+		  {{range $paper.Authors}}{{if .Homepage}}<a href="{{.Homepage}}">{{end}}{{.Name}}{{if .Homepage}}</a>{{end}}{{end}}
+        </span>
+    
+        {{if $paper.Conference}}
+        <span class="paper-conference">{{$paper.Conference}}</span>.
+        </div> <!-- end paper info div -->
+        {{end}}
+    
+        <div> <!-- citation div -->
+        {{if $paper.Citeseer}}
+        <span class="paper-citeseer">
+          <a href="{{$paper.Citeseer}}">[CiteSeer]</a>
+        </span>
+        {{end}}
+    
+        <div id="tech{{$index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="tech{{$index}}">
+          <a id="tech{{$index}}-bibtex" href="bibtexs/tech{{$index}}">[BibTeX]</a>
+          <div id="tech{{$index}}-bibtex-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end citation div -->
+    
+        <div> <!-- abstract div -->
+        <div class="paper-abstract">
+          <a id="tech{{$index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/tech{{$index}}" data-pub="tech{{$index}}">Abstract</a>
+          <div id="tech{{$index}}-abstract-entry" class="start-hidden"></div>
+        </div>
+        </div> <!-- end abstract div -->
+    
+        </div> <!-- end tech div -->
+      </li>
+      {{end}}
+    </ul>
+	{{end}}

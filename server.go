@@ -19,7 +19,9 @@ type MetaTag struct {
 	Description string
 }
 
-type Page struct {
+type Page interface{}
+
+type BasicPage struct {
 	ExtraCSS     []string
 	ExtraMeta    []MetaTag
 	ExtraScripts []string
@@ -29,8 +31,31 @@ type Page struct {
 	Title        string
 }
 
-var pages map[string]*Page = map[string]*Page{
-	"calendar.html": &Page{
+type Author struct {
+	Homepage string
+	Name     string
+}
+
+type Paper struct {
+	Authors      []Author
+	Citeseer     string
+	Conference   string
+	Extended     string
+	Homepage     string
+	Notes        string
+	Path         string
+	Presentation string
+	Title        string
+}
+
+type PubPage struct {
+	Page
+	Papers      []Paper
+	TechReports []Paper
+}
+
+var pages map[string]Page = map[string]Page{
+	"calendar.html": BasicPage{
 		ExtraCSS: []string{
 			"/css/page/calendar.css",
 		},
@@ -41,7 +66,7 @@ var pages map[string]*Page = map[string]*Page{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- Calendar",
 	},
-	"index.html": &Page{
+	"index.html": BasicPage{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
 			"/css/generic/header.css",
@@ -54,7 +79,38 @@ var pages map[string]*Page = map[string]*Page{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- jww",
 	},
-	"wedding.html": &Page{
+	"publications.html": PubPage{
+		Page: BasicPage{
+			ExtraCSS: []string{
+				"/css/generic/basic-page.css",
+				"/css/generic/header.css",
+				"/css/page/index.css",
+			},
+			ExtraMeta: []MetaTag{},
+			ExtraScripts: []string{
+				"/lib/jquery.min.js",
+				"/js/index.js",
+			},
+			Header:     "publications",
+			NoContent:  false,
+			NoHomeLink: false,
+			Title:      "Joel H. W. Weinberger -- Publications",
+		},
+		Papers: []Paper{
+			Paper{
+				Authors:      []Author{Author{Homepage: "", Name: "Joel"}},
+				Citeseer:     "",
+				Conference:   "USENIX somethearuther",
+				Extended:     "",
+				Notes:        "",
+				Path:         "test.pdf",
+				Presentation: "",
+				Title:        "hullo",
+			},
+		},
+		TechReports: []Paper{},
+	},
+	"wedding.html": BasicPage{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
 			"/css/generic/header.css",
@@ -127,6 +183,11 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// TODO: Fill this in with actual markdown conversion
+func markdowner(args ...interface{}) template.HTML {
+	return template.HTML("foobar")
+}
+
 func main() {
 	http_port := "8000"
 	request_mux = requestMapper{
@@ -137,9 +198,10 @@ func main() {
 		"/wedding":      generateBasicHandle("wedding.html"),
 	}
 
+	funcMap := template.FuncMap{"markdown": markdowner}
 	templates = make(map[string]*template.Template)
 	for name, _ := range pages {
-		templates[name] = template.Must(template.ParseFiles("templates/layout.html", "templates/"+name))
+		templates[name] = template.Must(template.New("page.html").Funcs(funcMap).ParseFiles("templates/layout.html", "templates/"+name))
 	}
 
 	server := http.Server{
