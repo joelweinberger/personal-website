@@ -1,10 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"net/http"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -37,15 +41,21 @@ type Author struct {
 }
 
 type Paper struct {
-	Authors      []Author
+	Abstract     string
+	Authors      []string
+	Booktitle    string
 	Citeseer     string
 	Conference   string
 	Extended     string
 	Homepage     string
 	Notes        string
 	Path         string
+	Pdf          string
 	Presentation string
+	Proceedings  string
+	Texttitle    string
 	Title        string
+	Year         string
 }
 
 type PubPage struct {
@@ -55,6 +65,17 @@ type PubPage struct {
 }
 
 var pages map[string]Page = map[string]Page{
+	"abstract.html": &BasicPage{
+		ExtraCSS: []string{
+			"/css/page/basic-page.css",
+			"/css/page/header.css",
+		},
+		ExtraMeta:    []MetaTag{},
+		ExtraScripts: []string{},
+		Header:       "abstract",
+		NoContent:    false,
+		Title:        "Joel H. W. Weinberger -- Paper Abstract",
+	},
 	"calendar.html": &BasicPage{
 		ExtraCSS: []string{
 			"/css/page/calendar.css",
@@ -98,7 +119,8 @@ var pages map[string]Page = map[string]Page{
 		},
 		Papers: []Paper{
 			Paper{
-				Authors:      []Author{Author{Homepage: "", Name: "Joel"}},
+				//authors:      []Author{Author{homepage: "", name: "Joel"}},
+				Authors:      []string{"abarth"},
 				Citeseer:     "",
 				Conference:   "USENIX somethearuther",
 				Extended:     "",
@@ -148,6 +170,68 @@ func generateRedirectHandle(dst string) func(http.ResponseWriter, *http.Request)
 
 var blogRedirectHandle func(http.ResponseWriter, *http.Request) = generateRedirectHandle("http://blog.joelweinberger.us")
 
+type PubsInfo struct {
+	Authors map[string]Author
+	Papers  []Paper
+	Techs   []Paper
+}
+
+func loadPubsInfo() *PubsInfo {
+	jsonBlob, err := ioutil.ReadFile("pubs.json")
+
+	if err != nil {
+		fmt.Println("Error loading pubs.json: ", err)
+		return nil
+	}
+
+	var pubs PubsInfo
+	err = json.Unmarshal(jsonBlob, &pubs)
+	if err != nil {
+		fmt.Println("Error unmarshaling JSON:", err)
+		return nil
+	}
+
+	return &pubs
+}
+
+func abstractHandle(w http.ResponseWriter, r *http.Request) {
+	abstract := strings.TrimPrefix(r.URL.Path, "/abstracts/")
+	fmt.Println("Serving abstract ", abstract)
+
+	var info *PubsInfo
+	if info = loadPubsInfo(); info == nil {
+		// loadPubsInfo prints an appropriate error message
+		return
+	}
+
+	var validPub = regexp.MustCompile(`\/abstracts\/pub([0-9]+)`)
+	groups := validPub.FindStringSubmatch(r.URL.Path)
+	if len(groups) < 2 {
+		fmt.Println("Error extracting pub number from URL (no number present)")
+		return
+	}
+
+	var index int
+	var err error
+	if index, err = strconv.Atoi(groups[1]); err != nil {
+		fmt.Println("Error extracting pub number from URL (not a number)")
+		return
+	}
+
+	fmt.Println(info.Papers[index].Abstract)
+	err = templates["/abstract.html"].Execute(w, pages["/abstract.html"])
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+
+func bibtexHandle(w http.ResponseWriter, r *http.Request) {
+	bibtex := strings.TrimPrefix(r.URL.Path, "/bibtexs/")
+	fmt.Println("Serving bibtex ", bibtex)
+}
+
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if handle, ok := request_mux[r.URL.String()]; !ok {
 		path := r.URL.Path
@@ -157,6 +241,18 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// permalinks still work.
 		if strings.Index(path+"/", "/blog/") == 0 {
 			blogRedirectHandle(w, r)
+			return
+		}
+
+		// Abstracts and bibliographies are special cases because their
+		// particular pages are generated dynamically.
+		if strings.Index(path, "/abstracts/") == 0 {
+			abstractHandle(w, r)
+			return
+		}
+
+		if strings.Index(path, "/bibtexs/") == 0 {
+			bibtexHandle(w, r)
 			return
 		}
 

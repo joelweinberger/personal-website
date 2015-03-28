@@ -1,0 +1,13 @@
+    {{define "body"}}
+	{{with not .Nosectionheading}}
+    <h3 class="section-heading">
+      {{.Abstract.Title}}
+    </h3>
+    {{end}}
+    
+    <div>
+    <div class="abstract">
+      {{markdown .Abstract.Abstract}}
+    </div>
+    </div>
+	{{end}}

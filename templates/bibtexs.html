@@ -1,0 +1,41 @@
+    {{#unless this.nosectionheading}}
+    <h3 class="section-heading">
+      {{this.bibtex.title}}
+    </h3>
+    {{/unless}}
+    
+    <div>
+    <div class="bibtex" class="bibtex-entry">
+      <div>@inproceedings{ {{this.bibtex.proceedings}},</div>
+      <div class="bibtex-entry-line">
+        author = { {{bibtexauthors this.bibtex.authors}} },
+      </div>
+      <div class="bibtex-entry-line">
+        title = { {{this.bibtex.title}} },
+      </div>
+      {{#if this.bibtex.booktitle}}
+      <div class="bibtex-entry-line">
+        booktitle = { {{this.bibtex.booktitle}} },
+      </div>
+      {{/if}}
+      {{#if this.bibtex.institution}}
+      <div class="bibtex-entry-line">
+        institution = { {{this.bibtex.institution}} },
+      </div>
+      {{/if}}
+      <div class="bibtex-entry-line">
+        year = { {{this.bibtex.year}} },
+      </div>
+      {{#if this.bibtex.url}}
+      <div class="bibtex-entry-line">
+        url = { {{this.bibtex.url}} },
+      </div>
+      {{/if}}
+      {{#if this.bibtex.number}}
+      <div class="bibtex-entry-line">
+        number = { {{this.bibtex.number}} },
+      </div>
+      {{/if}}
+      <div>}</div>
+    </div>
+    </div>
