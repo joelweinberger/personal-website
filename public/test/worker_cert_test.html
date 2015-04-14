@@ -1,0 +1,10 @@
+<!DOCTYPE HTML>
+<html>
+<p id='p'></p>
+<script>
+var worker = new Worker('/test/unsafe_worker.js');
+worker.onmessage = function(e) {
+  document.getElementById('p').innerText = e.data;
+};
+</script>
+</html>

@@ -22,6 +22,11 @@ function requireHTTPS(req, res, next) {
 // For the calendar, we frame-src google.com
 var csp = "default-src 'self'; frame-src *.google.com";
 function contentSecurityPolicy(req, res, next) {
+  if (req.path == '/test/worker_cert_test.html' ||
+      req.path == '/test/script_load_cert_test.html' ||
+	  req.path == '/test/unsafe_worker.js') {
+  	return next();
+  }
   res.setHeader("Content-Security-Policy", csp);
   return next();
 }
