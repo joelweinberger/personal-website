@@ -1,6 +1,6 @@
 var message = 'unloaded';
 try {
-  importScripts('https://badssl.com/test/imported.js');
+  importScripts('https://self-signed.badssl.com/test/imported.js');
 } catch(ex) {
 }
 postMessage(message);
