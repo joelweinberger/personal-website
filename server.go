@@ -68,12 +68,37 @@ type PubPage struct {
 type AbstractPage struct {
 	BasicPage
 	Abstract string
-	NoLayout bool
 	Title    string
+	NoLayout bool
+}
+
+type BibtexPage struct {
+	BasicPage
+	Authors     []string
+	Booktitle   string
+	Citeseer    string
+	Conference  string
+	PDF         string
+	Proceedings string
+	Textitle    string
+	Title       string
+	Year        string
+	NoLayout    bool
 }
 
 var pages map[string]*BasicPage = map[string]*BasicPage{
 	"abstract.html": &BasicPage{
+		ExtraCSS: []string{
+			"/css/generic/basic-page.css",
+			"/css/generic/header.css",
+		},
+		ExtraMeta:    []MetaTag{},
+		ExtraScripts: []string{},
+		Header:       "jww (at) joelweinberger (dot) us -- abstract",
+		NoContent:    false,
+		Title:        "Joel H. W. Weinberger -- Paper Abstract",
+	},
+	"bibtex.html": &BasicPage{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
 			"/css/generic/header.css",
@@ -269,9 +294,75 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func bibtexHandle(w http.ResponseWriter, r *http.Request) {
-	bibtex := strings.TrimPrefix(r.URL.Path, "/bibtexs/")
+func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
+	pubError := func(url string, msg string) {
+		fmt.Println("Error extracting pub number from URL \"", url, "\": ", msg)
+	}
+
+	var bibtex string
+	if isAjax {
+		bibtex = strings.TrimPrefix(r.URL.Path, "/ajax/bibtexs/")
+	} else {
+		bibtex = strings.TrimPrefix(r.URL.Path, "/bibtexs/")
+	}
+
 	fmt.Println("Serving bibtex ", bibtex)
+
+	var info *PubsInfo
+	if info = loadPubsInfo(); info == nil {
+		// loadPubsInfo() prints an appropriate error message, so no need to
+		// print one here as well.
+		return
+	}
+
+	//paperArray := info.Papers
+	var validPub = regexp.MustCompile(`\/bibtexs\/pub([0-9]+)`)
+	groups := validPub.FindStringSubmatch(r.URL.Path)
+	if len(groups) < 2 {
+		//paperArray = info.Techs
+		validPub = regexp.MustCompile(`\/bibtexs\/tech([0-9]+)`)
+		groups = validPub.FindStringSubmatch(r.URL.Path)
+
+		if len(groups) < 2 {
+			pubError(r.URL.Path, "No number present")
+			return
+		}
+	}
+
+	var index int
+	var err error
+	if index, err = strconv.Atoi(groups[1]); err != nil {
+		pubError(r.URL.Path, "Not a number")
+		return
+	}
+
+	if index > len(info.Papers) {
+		pubError(r.URL.Path, "Pub doesn't exist")
+	}
+
+	bibtexPage := BibtexPage{
+		BasicPage:   *pages["bibtex.html"],
+		Authors:     []string{"jww", "abarth"},
+		Booktitle:   "foo",
+		Citeseer:    "citeseer!",
+		Conference:  "USENIX",
+		PDF:         "blah.pdf",
+		Proceedings: "Conference of whatever",
+		Textitle:    "hooha",
+		Title:       "Formal Hooha",
+		Year:        "2007",
+		NoLayout:    isAjax,
+	}
+	if isAjax {
+		bibtexTemplate.Execute(w, bibtexPage)
+	} else {
+		err = templates["bibtex.html"].Execute(w, bibtexPage)
+	}
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -299,7 +390,12 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if strings.Index(path, "/bibtexs/") == 0 {
-			bibtexHandle(w, r)
+			bibtexHandle(false, w, r)
+			return
+		}
+
+		if strings.Index(path, "/ajax/bibtexs/") == 0 {
+			bibtexHandle(true, w, r)
 			return
 		}
 
