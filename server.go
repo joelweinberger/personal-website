@@ -207,7 +207,7 @@ func loadPubsInfo() *PubsInfo {
 
 func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 	pubError := func(url string, msg string) {
-		fmt.Println("Error extracting pub number from URL \"%s\": ", url, msg)
+		fmt.Println("Error extracting pub number from URL \"", url, "\": ", msg)
 	}
 
 	var abstract string
@@ -226,11 +226,18 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	paperArray := info.Papers
 	var validPub = regexp.MustCompile(`\/abstracts\/pub([0-9]+)`)
 	groups := validPub.FindStringSubmatch(r.URL.Path)
 	if len(groups) < 2 {
-		pubError(r.URL.Path, "No number present")
-		return
+		paperArray = info.Techs
+		validPub = regexp.MustCompile(`\/abstracts\/tech([0-9]+)`)
+		groups = validPub.FindStringSubmatch(r.URL.Path)
+
+		if len(groups) < 2 {
+			pubError(r.URL.Path, "No number present")
+			return
+		}
 	}
 
 	var index int
@@ -246,8 +253,8 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 
 	abstractPage := AbstractPage{
 		BasicPage: *pages["abstract.html"],
-		Abstract:  info.Papers[index].Abstract,
-		Title:     info.Papers[index].Title,
+		Abstract:  paperArray[index].Abstract,
+		Title:     paperArray[index].Title,
 		NoLayout:  isAjax,
 	}
 	if isAjax {
