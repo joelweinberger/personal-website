@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/russross/blackfriday"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -232,17 +233,22 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var index int
 	var err error
-	if _, err = strconv.Atoi(groups[1]); err != nil {
+	if index, err = strconv.Atoi(groups[1]); err != nil {
 		pubError(r.URL.Path, "Not a number")
 		return
 	}
 
+	if index > len(info.Papers) {
+		pubError(r.URL.Path, "Pub doesn't exist")
+	}
+
 	abstractPage := AbstractPage{
 		BasicPage: *pages["abstract.html"],
-		Abstract:  "a",
+		Abstract:  info.Papers[index].Abstract,
+		Title:     info.Papers[index].Title,
 		NoLayout:  isAjax,
-		Title:     "t",
 	}
 	if isAjax {
 		abstractTemplate.Execute(w, abstractPage)
@@ -313,9 +319,9 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// TODO: Fill this in with actual markdown conversion
 func markdowner(args ...interface{}) template.HTML {
-	return template.HTML("foobar")
+	s := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
+	return template.HTML(s)
 }
 
 func main() {
