@@ -64,15 +64,22 @@ type PubPage struct {
 	TechReports []Paper
 }
 
-var pages map[string]Page = map[string]Page{
+type AbstractPage struct {
+	BasicPage
+	Abstract string
+	NoLayout bool
+	Title    string
+}
+
+var pages map[string]*BasicPage = map[string]*BasicPage{
 	"abstract.html": &BasicPage{
 		ExtraCSS: []string{
-			"/css/page/basic-page.css",
-			"/css/page/header.css",
+			"/css/generic/basic-page.css",
+			"/css/generic/header.css",
 		},
 		ExtraMeta:    []MetaTag{},
 		ExtraScripts: []string{},
-		Header:       "abstract",
+		Header:       "jww (at) joelweinberger (dot) us -- abstract",
 		NoContent:    false,
 		Title:        "Joel H. W. Weinberger -- Paper Abstract",
 	},
@@ -100,37 +107,38 @@ var pages map[string]Page = map[string]Page{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- jww",
 	},
-	"publications.html": &PubPage{
-		BasicPage: BasicPage{
-			ExtraCSS: []string{
-				"/css/generic/basic-page.css",
-				"/css/generic/header.css",
-				"/css/page/index.css",
-			},
-			ExtraMeta: []MetaTag{},
-			ExtraScripts: []string{
-				"/lib/jquery.min.js",
-				"/js/index.js",
-			},
-			Header:     "publications",
-			NoContent:  false,
-			NoHomeLink: false,
-			Title:      "Joel H. W. Weinberger -- Publications",
+	//"publications.html": &PubPage{
+	//	BasicPage: BasicPage{
+	"publications.html": &BasicPage{
+		ExtraCSS: []string{
+			"/css/generic/basic-page.css",
+			"/css/generic/header.css",
+			"/css/page/index.css",
 		},
-		Papers: []Paper{
-			Paper{
-				//authors:      []Author{Author{homepage: "", name: "Joel"}},
-				Authors:      []string{"abarth"},
-				Citeseer:     "",
-				Conference:   "USENIX somethearuther",
-				Extended:     "",
-				Notes:        "",
-				Path:         "test.pdf",
-				Presentation: "",
-				Title:        "hullo",
-			},
+		ExtraMeta: []MetaTag{},
+		ExtraScripts: []string{
+			"/lib/jquery.min.js",
+			"/js/index.js",
 		},
-		TechReports: []Paper{},
+		Header:     "publications",
+		NoContent:  false,
+		NoHomeLink: false,
+		Title:      "Joel H. W. Weinberger -- Publications",
+		//},
+		//Papers: []Paper{
+		//	Paper{
+		//		//authors:      []Author{Author{homepage: "", name: "Joel"}},
+		//		Authors:      []string{"abarth"},
+		//		Citeseer:     "",
+		//		Conference:   "USENIX somethearuther",
+		//		Extended:     "",
+		//		Notes:        "",
+		//		Path:         "test.pdf",
+		//		Presentation: "",
+		//		Title:        "hullo",
+		//	},
+		//},
+		//TechReports: []Paper{},
 	},
 	"wedding.html": &BasicPage{
 		ExtraCSS: []string{
@@ -148,6 +156,8 @@ var pages map[string]Page = map[string]Page{
 }
 
 var templates map[string]*template.Template
+var abstractTemplate *template.Template
+var bibtexTemplate *template.Template
 
 func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -194,32 +204,51 @@ func loadPubsInfo() *PubsInfo {
 	return &pubs
 }
 
-func abstractHandle(w http.ResponseWriter, r *http.Request) {
-	abstract := strings.TrimPrefix(r.URL.Path, "/abstracts/")
+func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
+	pubError := func(url string, msg string) {
+		fmt.Println("Error extracting pub number from URL \"%s\": ", url, msg)
+	}
+
+	var abstract string
+	if isAjax {
+		abstract = strings.TrimPrefix(r.URL.Path, "/ajax/abstracts/")
+	} else {
+		abstract = strings.TrimPrefix(r.URL.Path, "/abstracts/")
+	}
+
 	fmt.Println("Serving abstract ", abstract)
 
 	var info *PubsInfo
 	if info = loadPubsInfo(); info == nil {
-		// loadPubsInfo prints an appropriate error message
+		// loadPubsInfo() prints an appropriate error message, so no need to
+		// print one here as well.
 		return
 	}
 
 	var validPub = regexp.MustCompile(`\/abstracts\/pub([0-9]+)`)
 	groups := validPub.FindStringSubmatch(r.URL.Path)
 	if len(groups) < 2 {
-		fmt.Println("Error extracting pub number from URL (no number present)")
+		pubError(r.URL.Path, "No number present")
 		return
 	}
 
-	var index int
 	var err error
-	if index, err = strconv.Atoi(groups[1]); err != nil {
-		fmt.Println("Error extracting pub number from URL (not a number)")
+	if _, err = strconv.Atoi(groups[1]); err != nil {
+		pubError(r.URL.Path, "Not a number")
 		return
 	}
 
-	fmt.Println(info.Papers[index].Abstract)
-	err = templates["/abstract.html"].Execute(w, pages["/abstract.html"])
+	abstractPage := AbstractPage{
+		BasicPage: *pages["abstract.html"],
+		Abstract:  "a",
+		NoLayout:  isAjax,
+		Title:     "t",
+	}
+	if isAjax {
+		abstractTemplate.Execute(w, abstractPage)
+	} else {
+		err = templates["abstract.html"].Execute(w, abstractPage)
+	}
 
 	if err != nil {
 		fmt.Println(err)
@@ -247,7 +276,12 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// Abstracts and bibliographies are special cases because their
 		// particular pages are generated dynamically.
 		if strings.Index(path, "/abstracts/") == 0 {
-			abstractHandle(w, r)
+			abstractHandle(false, w, r)
+			return
+		}
+
+		if strings.Index(path, "/ajax/abstracts/") == 0 {
+			abstractHandle(true, w, r)
 			return
 		}
 
@@ -300,6 +334,18 @@ func main() {
 	for name, _ := range pages {
 		templates[name] = template.Must(template.Must(layout.Clone()).ParseFiles("templates/" + name))
 	}
+
+	abstractTemplateBytes, err := ioutil.ReadFile("templates/abstract.html")
+	if err != nil {
+		panic("Could not read abstract.html template")
+	}
+	abstractTemplate = template.Must(template.New("abstract").Funcs(funcMap).Parse(string(abstractTemplateBytes)))
+
+	bibtexTemplateBytes, err := ioutil.ReadFile("templates/bibtex.html")
+	if err != nil {
+		panic("Could not read bibtex.html template")
+	}
+	bibtexTemplate = template.Must(template.New("bibtex").Funcs(funcMap).Parse(string(bibtexTemplateBytes)))
 
 	server := http.Server{
 		Addr:    ":" + http_port,

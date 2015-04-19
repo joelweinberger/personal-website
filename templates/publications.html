@@ -5,7 +5,6 @@
     
     <ul class="index-papers-list">
       {{range $index, $paper := .Papers}}
-	  <p>Hullo!</p>
       <li class="index-text">
         <div id="pub{{$index}}" class="paper"> <!-- pub div -->
     
@@ -19,7 +18,12 @@
         </span>
     
         <span class="paper-authors">
-		  {{range $paper.Authors}}{{if .Homepage}}<a href="{{.Homepage}}">{{end}}{{.Name}}{{if .Homepage}}</a>{{end}}{{end}}
+		  {{range $paper.Authors}}
+		  {{if .Homepage}}
+		  <a href="{{.Homepage}}">{{.Name}}</a>
+		  {{else}}
+		  {{.Name}}
+		  {{end}}{{end}}
         </span>
     
         {{if $paper.Conference}}

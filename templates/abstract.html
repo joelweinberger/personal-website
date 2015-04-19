@@ -1,13 +1,16 @@
     {{define "body"}}
-	{{with not .Nosectionheading}}
+	{{if not .NoLayout}}
     <h3 class="section-heading">
-      {{.Abstract.Title}}
+      {{.Title}}
     </h3>
     {{end}}
     
     <div>
     <div class="abstract">
-      {{markdown .Abstract.Abstract}}
+      {{markdown .Abstract}}
     </div>
     </div>
+	{{end}}
+	{{if .NoLayout}}
+	{{template "body" .}}
 	{{end}}

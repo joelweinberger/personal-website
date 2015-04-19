@@ -1,0 +1,46 @@
+    {{define "body"}}
+	{{if not .NoLayout}}
+    <h3 class="section-heading">
+	  {{.Title}}
+    </h3>
+	{{end}}
+    
+    <div>
+    <div class="bibtex" class="bibtex-entry">
+      <div>@inproceedings{ {{.Proceedings}},</div>
+      <div class="bibtex-entry-line">
+	    author = { {{range $index, $author := .Authors}}$author and {{end}} },
+      </div>
+      <div class="bibtex-entry-line">
+        title = { {{.Title}} },
+      </div>
+	  {{if .Booktitle}}
+      <div class="bibtex-entry-line">
+        booktitle = { {{.Booktitle}} },
+      </div>
+      {{end}}
+	  {{if .Institution}}
+      <div class="bibtex-entry-line">
+        institution = { {{.Institution}} },
+      </div>
+      {{end}}
+      <div class="bibtex-entry-line">
+        year = { {{.Year}} },
+      </div>
+	  {{if .Url}}
+      <div class="bibtex-entry-line">
+        url = { {{.Url}} },
+      </div>
+      {{end}}
+	  {{if .Number}}
+      <div class="bibtex-entry-line">
+        number = { {{.Number}} },
+      </div>
+      {{end}}
+      <div>}</div>
+    </div>
+    </div>
+    {{end}}
+	{{if .NoLayout}}
+	{{template "body"}}
+	{{end}}
