@@ -79,3 +79,13 @@ h5 {
 div.abstract p {
   display: inline;
 }
+
+.abstract-content {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.bibtex-content {
+  padding-left: 5px;
+  padding-right: 5px;
+}
