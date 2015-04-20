@@ -49,13 +49,16 @@ type Paper struct {
 	Conference   string
 	Extended     string
 	Homepage     string
+	Institution  string
 	Notes        string
+	Number       string
 	Path         string
 	Pdf          string
 	Presentation string
 	Proceedings  string
-	Texttitle    string
+	Textitle     string
 	Title        string
+	Url          string
 	Year         string
 }
 
@@ -78,10 +81,13 @@ type BibtexPage struct {
 	Booktitle   string
 	Citeseer    string
 	Conference  string
-	PDF         string
+	Institution string
+	Number      string
+	Pdf         string
 	Proceedings string
 	Textitle    string
 	Title       string
+	Url         string
 	Year        string
 	NoLayout    bool
 }
@@ -105,9 +111,9 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		},
 		ExtraMeta:    []MetaTag{},
 		ExtraScripts: []string{},
-		Header:       "jww (at) joelweinberger (dot) us -- abstract",
+		Header:       "jww (at) joelweinberger (dot) us -- bibtex",
 		NoContent:    false,
-		Title:        "Joel H. W. Weinberger -- Paper Abstract",
+		Title:        "Joel H. W. Weinberger -- Paper BibTeX",
 	},
 	"calendar.html": &BasicPage{
 		ExtraCSS: []string{
@@ -133,8 +139,6 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- jww",
 	},
-	//"publications.html": &PubPage{
-	//	BasicPage: BasicPage{
 	"publications.html": &BasicPage{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
@@ -150,21 +154,6 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		NoContent:  false,
 		NoHomeLink: false,
 		Title:      "Joel H. W. Weinberger -- Publications",
-		//},
-		//Papers: []Paper{
-		//	Paper{
-		//		//authors:      []Author{Author{homepage: "", name: "Joel"}},
-		//		Authors:      []string{"abarth"},
-		//		Citeseer:     "",
-		//		Conference:   "USENIX somethearuther",
-		//		Extended:     "",
-		//		Notes:        "",
-		//		Path:         "test.pdf",
-		//		Presentation: "",
-		//		Title:        "hullo",
-		//	},
-		//},
-		//TechReports: []Paper{},
 	},
 	"wedding.html": &BasicPage{
 		ExtraCSS: []string{
@@ -248,6 +237,7 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 	if info = loadPubsInfo(); info == nil {
 		// loadPubsInfo() prints an appropriate error message, so no need to
 		// print one here as well.
+		http.NotFound(w, r)
 		return
 	}
 
@@ -261,6 +251,7 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 
 		if len(groups) < 2 {
 			pubError(r.URL.Path, "No number present")
+			http.NotFound(w, r)
 			return
 		}
 	}
@@ -269,11 +260,14 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 	var err error
 	if index, err = strconv.Atoi(groups[1]); err != nil {
 		pubError(r.URL.Path, "Not a number")
+		http.NotFound(w, r)
 		return
 	}
 
-	if index > len(info.Papers) {
+	if index >= len(paperArray) {
 		pubError(r.URL.Path, "Pub doesn't exist")
+		http.NotFound(w, r)
+		return
 	}
 
 	abstractPage := AbstractPage{
@@ -290,6 +284,7 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		fmt.Println(err)
+		http.NotFound(w, r)
 		return
 	}
 }
@@ -312,19 +307,21 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 	if info = loadPubsInfo(); info == nil {
 		// loadPubsInfo() prints an appropriate error message, so no need to
 		// print one here as well.
+		http.NotFound(w, r)
 		return
 	}
 
-	//paperArray := info.Papers
+	paperArray := info.Papers
 	var validPub = regexp.MustCompile(`\/bibtexs\/pub([0-9]+)`)
 	groups := validPub.FindStringSubmatch(r.URL.Path)
 	if len(groups) < 2 {
-		//paperArray = info.Techs
+		paperArray = info.Techs
 		validPub = regexp.MustCompile(`\/bibtexs\/tech([0-9]+)`)
 		groups = validPub.FindStringSubmatch(r.URL.Path)
 
 		if len(groups) < 2 {
 			pubError(r.URL.Path, "No number present")
+			http.NotFound(w, r)
 			return
 		}
 	}
@@ -333,24 +330,30 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 	var err error
 	if index, err = strconv.Atoi(groups[1]); err != nil {
 		pubError(r.URL.Path, "Not a number")
+		http.NotFound(w, r)
 		return
 	}
 
-	if index > len(info.Papers) {
+	if index >= len(paperArray) {
 		pubError(r.URL.Path, "Pub doesn't exist")
+		http.NotFound(w, r)
+		return
 	}
 
 	bibtexPage := BibtexPage{
 		BasicPage:   *pages["bibtex.html"],
-		Authors:     []string{"jww", "abarth"},
-		Booktitle:   "foo",
-		Citeseer:    "citeseer!",
-		Conference:  "USENIX",
-		PDF:         "blah.pdf",
-		Proceedings: "Conference of whatever",
-		Textitle:    "hooha",
-		Title:       "Formal Hooha",
-		Year:        "2007",
+		Authors:     paperArray[index].Authors,
+		Booktitle:   paperArray[index].Booktitle,
+		Citeseer:    paperArray[index].Citeseer,
+		Conference:  paperArray[index].Conference,
+		Institution: paperArray[index].Institution,
+		Number:      paperArray[index].Number,
+		Pdf:         paperArray[index].Pdf,
+		Proceedings: paperArray[index].Proceedings,
+		Textitle:    paperArray[index].Textitle,
+		Title:       paperArray[index].Title,
+		Url:         paperArray[index].Url,
+		Year:        paperArray[index].Year,
 		NoLayout:    isAjax,
 	}
 	if isAjax {
@@ -361,6 +364,7 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		fmt.Println(err)
+		http.NotFound(w, r)
 		return
 	}
 }
