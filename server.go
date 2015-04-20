@@ -33,6 +33,7 @@ type BasicPage struct {
 	Header       string
 	NoContent    bool
 	NoHomeLink   bool
+	Pubs         *PubsInfo
 	Title        string
 }
 
@@ -153,6 +154,7 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		Header:     "publications",
 		NoContent:  false,
 		NoHomeLink: false,
+		Pubs:       loadPubsInfo(),
 		Title:      "Joel H. W. Weinberger -- Publications",
 	},
 	"wedding.html": &BasicPage{

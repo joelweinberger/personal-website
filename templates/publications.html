@@ -4,7 +4,10 @@
     </h5>
     
     <ul class="index-papers-list">
-      {{range $index, $paper := .Papers}}
+	  {{$Authors := .Pubs.Authors}}
+	  {{$Papers := .Pubs.Papers}}
+	  {{$Techs := .Pubs.Techs}}
+      {{range $index, $paper := .Pubs.Papers}}
       <li class="index-text">
         <div id="pub{{$index}}" class="paper"> <!-- pub div -->
     
@@ -18,11 +21,12 @@
         </span>
     
         <span class="paper-authors">
-		  {{range $paper.Authors}}
-		  {{if .Homepage}}
-		  <a href="{{.Homepage}}">{{.Name}}</a>
+		  {{range $authorIndex := $paper.Authors}}
+		  {{$author := index $Authors $authorIndex}}
+		  {{if $author.Homepage}}
+		  <a href="{{$author.Homepage}}">{{$author.Name}}</a>
 		  {{else}}
-		  {{.Name}}
+		  {{$author.Name}}
 		  {{end}}{{end}}
         </span>
     
