@@ -9,7 +9,7 @@
     <div class="bibtex" class="bibtex-entry">
       <div>@inproceedings{ {{.Proceedings}},</div>
       <div class="bibtex-entry-line">
-	    author = { {{range $index, $author := .Authors}}{{$author}} and {{end}} },
+	    author = { {{.Authors}} },
       </div>
       <div class="bibtex-entry-line">
         title = { {{.Title}} },

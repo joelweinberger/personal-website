@@ -77,7 +77,7 @@ type AbstractPage struct {
 
 type BibtexPage struct {
 	BasicPage
-	Authors     []string
+	Authors     string
 	Booktitle   string
 	Citeseer    string
 	Conference  string
@@ -340,9 +340,17 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var authors string
+	for j, author := range paperArray[index].Authors {
+		if j != 0 {
+			authors = authors + " and "
+		}
+		authors = authors + info.Authors[author].Name
+	}
+
 	bibtexPage := BibtexPage{
 		BasicPage:   *pages["bibtex.html"],
-		Authors:     paperArray[index].Authors,
+		Authors:     authors,
 		Booktitle:   paperArray[index].Booktitle,
 		Citeseer:    paperArray[index].Citeseer,
 		Conference:  paperArray[index].Conference,
