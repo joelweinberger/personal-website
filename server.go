@@ -6,12 +6,16 @@ import (
 	"github.com/russross/blackfriday"
 	"html/template"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 )
+
+var http_port string = "8001"
+var https_port string = "8000"
 
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
 
@@ -441,8 +445,20 @@ func markdowner(args ...interface{}) template.HTML {
 	return template.HTML(s)
 }
 
+func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
+	host, _, err := net.SplitHostPort(r.Host)
+	if err != nil {
+		fmt.Println("Unexpected error in splitting host and port in: ", r.URL)
+		return
+	}
+	redirect_url := *r.URL
+	redirect_url.Scheme = "https"
+	redirect_url.Host = host + ":" + https_port
+	fmt.Println("Redirecting '", r.URL.String(), "' to '", redirect_url.String(), "'")
+	http.Redirect(w, r, redirect_url.String(), http.StatusMovedPermanently)
+}
+
 func main() {
-	http_port := "8000"
 	request_mux = requestMapper{
 		"/":             generateBasicHandle("index.html"),
 		"/calendar":     generateBasicHandle("calendar.html"),
@@ -471,10 +487,16 @@ func main() {
 	bibtexTemplate = template.Must(template.New("bibtex").Funcs(funcMap).Parse(string(bibtexTemplateBytes)))
 
 	server := http.Server{
-		Addr:    ":" + http_port,
+		Addr:    ":" + https_port,
 		Handler: &myHandler{},
 	}
 
-	fmt.Println("Listening on port " + http_port)
-	server.ListenAndServe()
+	// The HTTP server is strictly for redirecting to HTTPS.
+	go http.ListenAndServe(":"+http_port, http.HandlerFunc(redirectToHTTPS))
+
+	fmt.Println("Listening on port " + https_port)
+	if err := server.ListenAndServeTLS("cert/ssl.crt", "cert/ssl.key"); err != nil {
+		fmt.Println("ListenAndServe error: %v", err)
+		return
+	}
 }
