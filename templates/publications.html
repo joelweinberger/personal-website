@@ -1,12 +1,12 @@
     {{define "body"}}
+    {{$Authors := .Pubs.Authors}}
+    {{$Papers := .Pubs.Papers}}
+    {{$Techs := .Pubs.Techs}}
 	<h5 class="index-papers-header">
       Refereed Publications
     </h5>
     
     <ul class="index-papers-list">
-	  {{$Authors := .Pubs.Authors}}
-	  {{$Papers := .Pubs.Papers}}
-	  {{$Techs := .Pubs.Techs}}
       {{range $index, $paper := .Pubs.Papers}}
       <li class="index-text">
         <div id="pub{{$index}}" class="paper"> <!-- pub div -->
@@ -87,7 +87,7 @@
     </h5>
     
     <ul class="index-papers-list">
-	  {{range $index, $paper := .TechReports}}
+	  {{range $index, $paper := .Pubs.Techs}}
       <li class="index-text">
         <div id="tech{{$index}}" class="paper"> <!-- tech div -->
     
@@ -101,7 +101,13 @@
         </span>
     
         <span class="paper-authors">
-		  {{range $paper.Authors}}{{if .Homepage}}<a href="{{.Homepage}}">{{end}}{{.Name}}{{if .Homepage}}</a>{{end}}{{end}}
+		  {{range $authorIndex := $paper.Authors}}
+		  {{$author := index $Authors $authorIndex}}
+		  {{if $author.Homepage}}
+		  <a href="{{$author.Homepage}}">{{$author.Name}}</a>
+		  {{else}}
+		  {{$author.Name}}
+		  {{end}}{{end}}
         </span>
     
         {{if $paper.Conference}}
