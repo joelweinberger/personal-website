@@ -30,8 +30,6 @@ type MetaTag struct {
 	Description string
 }
 
-type Page interface{}
-
 type BasicPage struct {
 	ExtraCSS     []string
 	ExtraMeta    []MetaTag
