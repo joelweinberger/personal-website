@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
-	"github.com/russross/blackfriday"
 	"html/template"
 	"io/ioutil"
 	"net"
@@ -12,10 +12,12 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/russross/blackfriday"
 )
 
-var http_port string = "8001"
-var https_port string = "8000"
+var http_port string
+var https_port string
 
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
 
@@ -459,6 +461,20 @@ func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http_port_int := flag.Int("http-port", 8080, "The HTTP port to listen on that will redirect to HTTPS.")
+	https_port_int := flag.Int("https-port", 8443, "The HTTPS port to listen on for the main server.")
+
+	flag.Parse()
+
+	if *http_port_int < 1 || *http_port_int > 65535 ||
+		*https_port_int < 1 || *https_port_int > 65535 {
+		fmt.Println("Port numbers must be between 1 and 65535, inclusive.")
+		return
+	}
+
+	http_port = strconv.Itoa(*http_port_int)
+	https_port = strconv.Itoa(*https_port_int)
+
 	request_mux = requestMapper{
 		"/":             generateBasicHandle("index.html"),
 		"/calendar":     generateBasicHandle("calendar.html"),
