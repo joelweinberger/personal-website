@@ -193,16 +193,6 @@ func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-func generateRedirectHandle(dst string) func(http.ResponseWriter, *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		path := strings.TrimPrefix(r.URL.Path, "/blog")
-		fmt.Println("Redirecting to ", dst+path)
-		http.Redirect(w, r, dst+path, 301)
-	}
-}
-
-var blogRedirectHandle func(http.ResponseWriter, *http.Request) = generateRedirectHandle("http://blog.joelweinberger.us")
-
 type PubsInfo struct {
 	Authors map[string]Author
 	Papers  []Paper
@@ -393,7 +383,7 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// links from the original blog path to the new blog path so that old
 		// permalinks still work.
 		if strings.Index(path+"/", "/blog/") == 0 {
-			blogRedirectHandle(w, r)
+			redirectBlog(w, r)
 			return
 		}
 
@@ -445,6 +435,13 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func markdowner(args ...interface{}) template.HTML {
 	s := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
 	return template.HTML(s)
+}
+
+func redirectBlog(w http.ResponseWriter, r *http.Request) {
+	dst := "http://blog.joelweinberger.us"
+	path := strings.TrimPrefix(r.URL.Path, "/blog")
+	fmt.Println("Redirecting to ", dst+path)
+	http.Redirect(w, r, dst+path, http.StatusMovedPermanently)
 }
 
 func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
