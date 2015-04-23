@@ -69,12 +69,6 @@ type Paper struct {
 	Year         string
 }
 
-type PubPage struct {
-	BasicPage
-	Papers      []Paper
-	TechReports []Paper
-}
-
 type AbstractPage struct {
 	BasicPage
 	Abstract string
@@ -84,19 +78,8 @@ type AbstractPage struct {
 
 type BibtexPage struct {
 	BasicPage
-	Authors     string
-	Booktitle   string
-	Citeseer    string
-	Conference  string
-	Institution string
-	Number      string
-	Pdf         string
-	Proceedings string
-	Textitle    string
-	Title       string
-	Url         string
-	Year        string
-	NoLayout    bool
+	NoLayout bool
+	Paper    Paper
 }
 
 var pages map[string]*BasicPage = map[string]*BasicPage{
@@ -347,20 +330,9 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 	}
 
 	bibtexPage := BibtexPage{
-		BasicPage:   *pages["bibtex.html"],
-		Authors:     authors,
-		Booktitle:   paperArray[index].Booktitle,
-		Citeseer:    paperArray[index].Citeseer,
-		Conference:  paperArray[index].Conference,
-		Institution: paperArray[index].Institution,
-		Number:      paperArray[index].Number,
-		Pdf:         paperArray[index].Pdf,
-		Proceedings: paperArray[index].Proceedings,
-		Textitle:    paperArray[index].Textitle,
-		Title:       paperArray[index].Title,
-		Url:         paperArray[index].Url,
-		Year:        paperArray[index].Year,
-		NoLayout:    isAjax,
+		BasicPage: *pages["bibtex.html"],
+		Paper:     paperArray[index],
+		NoLayout:  isAjax,
 	}
 	if isAjax {
 		bibtexTemplate.Execute(w, bibtexPage)
