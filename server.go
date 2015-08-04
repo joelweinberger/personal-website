@@ -475,6 +475,7 @@ func main() {
 	}
 
 	// The HTTP server is strictly for redirecting to HTTPS.
+	fmt.Println("Redirecting HTTP on port " + http_port + " to HTTPS on port " + https_port)
 	go http.ListenAndServe(":"+http_port, http.HandlerFunc(redirectToHTTPS))
 
 	fmt.Println("Listening on port " + https_port)
