@@ -177,6 +177,7 @@ var bibtexTemplate *template.Template
 func addHeaders(w http.ResponseWriter) {
 	header := w.Header()
 	header.Set("Content-Security-Policy", csp)
+	header.Set("Strict-Transport-Security", "max-age=12096000")
 }
 
 func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
