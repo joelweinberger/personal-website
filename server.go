@@ -24,6 +24,12 @@ var csp string = strings.Join([]string{
 	"frame-src *.google.com",
 }, "; ")
 
+var static_files_with_csp_exceptions map[string]bool = map[string]bool{
+	"/test/worker_cert_test.html":      true,
+	"/test/script_load_cert_test.html": true,
+	"/test/unsafe_worker.js":           true,
+}
+
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
 
 var request_mux requestMapper
@@ -359,9 +365,11 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 }
 
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	addHeaders(w)
 	if handle, ok := request_mux[r.URL.String()]; !ok {
 		path := r.URL.Path
+		if !static_files_with_csp_exceptions[path] {
+			addHeaders(w)
+		}
 
 		// For legacy reasons (namely, the original blog), we need to redirect
 		// links from the original blog path to the new blog path so that old
