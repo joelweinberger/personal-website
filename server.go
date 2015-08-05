@@ -19,6 +19,11 @@ import (
 var http_port string
 var https_port string
 
+var csp string = strings.Join([]string{
+	"default-src 'self'",
+	"frame-src *.google.com",
+}, "; ")
+
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
 
 var request_mux requestMapper
@@ -163,8 +168,14 @@ var templates map[string]*template.Template
 var abstractTemplate *template.Template
 var bibtexTemplate *template.Template
 
+func addHeaders(w http.ResponseWriter) {
+	header := w.Header()
+	header.Set("Content-Security-Policy", csp)
+}
+
 func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		addHeaders(w)
 		err := templates[page].Execute(w, pages[page])
 
 		if err != nil {
@@ -199,6 +210,7 @@ func loadPubsInfo() *PubsInfo {
 }
 
 func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
+	addHeaders(w)
 	pubError := func(url string, msg string) {
 		fmt.Println("Error extracting pub number from URL \"", url, "\": ", msg)
 	}
@@ -269,6 +281,7 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 }
 
 func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
+	addHeaders(w)
 	pubError := func(url string, msg string) {
 		fmt.Println("Error extracting pub number from URL \"", url, "\": ", msg)
 	}
@@ -346,6 +359,7 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 }
 
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	addHeaders(w)
 	if handle, ok := request_mux[r.URL.String()]; !ok {
 		path := r.URL.Path
 
@@ -408,6 +422,7 @@ func markdowner(args ...interface{}) template.HTML {
 }
 
 func redirectBlog(w http.ResponseWriter, r *http.Request) {
+	addHeaders(w)
 	dst := "http://blog.joelweinberger.us"
 	path := strings.TrimPrefix(r.URL.Path, "/blog")
 	fmt.Println("Redirecting to ", dst+path)
@@ -415,6 +430,7 @@ func redirectBlog(w http.ResponseWriter, r *http.Request) {
 }
 
 func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
+	addHeaders(w)
 	host, _, err := net.SplitHostPort(r.Host)
 	if err != nil {
 		fmt.Println("Unexpected error in splitting host and port in: ", r.URL)
