@@ -21,7 +21,9 @@ To build and run:
   Fortunately, the last option is finally possible Linux as of kernel version
   2.6.24. To do so, compile the server, then, as root, run `setcap
   'cap_net_bind_service=+ep' /path/to/server`. This should allow the executable
-  to bind to privileged ports without any other escalation of privileges.
+  to bind to privileged ports without any other escalation of privileges. You
+  can also just use the script `tools/set-privileged-ports-cap` to set the
+  privilege on the server file.
 
 Recommended Linux system service setup:
 * Add `go-server.service` to `/etc/init.d/go-server`. Make sure to replace the
