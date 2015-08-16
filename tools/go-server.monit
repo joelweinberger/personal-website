@@ -1,0 +1,3 @@
+check process server with pidfile /path/to/pidfile/go-server.pid
+    start program = "service go-server start"
+    stop program = "service go-server stop"
