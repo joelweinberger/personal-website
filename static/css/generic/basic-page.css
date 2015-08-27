@@ -89,3 +89,8 @@ div.abstract p {
   padding-left: 5px;
   padding-right: 5px;
 }
+
+.sw {
+	visibility: hidden;
+	display: none;
+}

@@ -21,7 +21,7 @@ var https_port string
 
 var csp string = strings.Join([]string{
 	"default-src 'self'",
-	"frame-src *.google.com",
+	"frame-src 'self' *.google.com",
 }, "; ")
 
 var static_files_with_csp_exceptions map[string]bool = map[string]bool{
