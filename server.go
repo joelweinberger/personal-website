@@ -455,6 +455,7 @@ func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http_port_int := flag.Int("http-port", 8080, "The HTTP port to listen on that will redirect to HTTPS.")
 	https_port_int := flag.Int("https-port", 8443, "The HTTPS port to listen on for the main server.")
+	unsafely_run_on_http := flag.Bool("unsafely-run-on-http", false, "Whether to unsafely run the main server on HTTP.")
 
 	flag.Parse()
 
@@ -494,18 +495,24 @@ func main() {
 	}
 	bibtexTemplate = template.Must(template.New("bibtex").Funcs(funcMap).Parse(string(bibtexTemplateBytes)))
 
-	server := http.Server{
-		Addr:    ":" + https_port,
-		Handler: &myHandler{},
-	}
+	// The HTTP server is strictly for redirecting to HTTPS, unless the
+	// --unsafely-run-on-http flag is specified.
+	if *unsafely_run_on_http {
+		fmt.Println("Unsafely running on HTTP on port " + http_port)
+		http.ListenAndServe(":"+http_port, &myHandler{})
+	} else {
+		fmt.Println("Redirecting HTTP on port " + http_port + " to HTTPS on port " + https_port)
+		server := http.Server{
+			Addr:    ":" + https_port,
+			Handler: &myHandler{},
+		}
 
-	// The HTTP server is strictly for redirecting to HTTPS.
-	fmt.Println("Redirecting HTTP on port " + http_port + " to HTTPS on port " + https_port)
-	go http.ListenAndServe(":"+http_port, http.HandlerFunc(redirectToHTTPS))
+		go http.ListenAndServe(":"+http_port, http.HandlerFunc(redirectToHTTPS))
 
-	fmt.Println("Listening on port " + https_port)
-	if err := server.ListenAndServeTLS("cert/ssl.crt", "cert/ssl.key"); err != nil {
-		fmt.Println("ListenAndServe error: %v", err)
-		return
+		fmt.Println("Listening on port " + https_port)
+		if err := server.ListenAndServeTLS("cert/ssl.crt", "cert/ssl.key"); err != nil {
+			fmt.Println("ListenAndServe error: %v", err)
+			return
+		}
 	}
 }
