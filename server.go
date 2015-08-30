@@ -24,12 +24,6 @@ var csp string = strings.Join([]string{
 	"frame-src 'self' *.google.com",
 }, "; ")
 
-var static_files_with_csp_exceptions map[string]bool = map[string]bool{
-	"/test/worker_cert_test.html":      true,
-	"/test/script_load_cert_test.html": true,
-	"/test/unsafe_worker.js":           true,
-}
-
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
 
 var request_mux requestMapper
@@ -174,16 +168,23 @@ var templates map[string]*template.Template
 var abstractTemplate *template.Template
 var bibtexTemplate *template.Template
 
-func addHeaders(w http.ResponseWriter) {
+func addHeaders(w http.ResponseWriter, useCSP bool) {
 	header := w.Header()
-	header.Set("Content-Security-Policy", csp)
+	if useCSP {
+		header.Set("Content-Security-Policy", csp)
+	}
 	header.Set("Strict-Transport-Security", "max-age=12096000")
 }
 
-func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
+func generateBasicHandle(page string, hasOfflineMode bool) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		addHeaders(w)
-		err := templates[page].Execute(w, pages[page])
+		addOffline := hasOfflineMode && r.URL.Query().Get("offline") == "true"
+		addHeaders(w, true)
+		basicPage := pages[page]
+		if addOffline {
+			basicPage.ExtraCSS = append(basicPage.ExtraCSS, "/css/generic/offline.css")
+		}
+		err := templates[page].Execute(w, basicPage)
 
 		if err != nil {
 			fmt.Println(err)
@@ -217,7 +218,7 @@ func loadPubsInfo() *PubsInfo {
 }
 
 func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
-	addHeaders(w)
+	addHeaders(w, true)
 	pubError := func(url string, msg string) {
 		fmt.Println("Error extracting pub number from URL \"", url, "\": ", msg)
 	}
@@ -288,7 +289,7 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 }
 
 func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
-	addHeaders(w)
+	addHeaders(w, true)
 	pubError := func(url string, msg string) {
 		fmt.Println("Error extracting pub number from URL \"", url, "\": ", msg)
 	}
@@ -366,63 +367,68 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 }
 
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if handle, ok := request_mux[r.URL.String()]; !ok {
-		path := r.URL.Path
-		if !static_files_with_csp_exceptions[path] {
-			addHeaders(w)
-		}
-
-		// For legacy reasons (namely, the original blog), we need to redirect
-		// links from the original blog path to the new blog path so that old
-		// permalinks still work.
-		if strings.Index(path+"/", "/blog/") == 0 {
-			redirectBlog(w, r)
-			return
-		}
-
-		// Abstracts and bibliographies are special cases because their
-		// particular pages are generated dynamically.
-		if strings.Index(path, "/abstracts/") == 0 {
-			abstractHandle(false, w, r)
-			return
-		}
-
-		if strings.Index(path, "/ajax/abstracts/") == 0 {
-			abstractHandle(true, w, r)
-			return
-		}
-
-		if strings.Index(path, "/bibtexs/") == 0 {
-			bibtexHandle(false, w, r)
-			return
-		}
-
-		if strings.Index(path, "/ajax/bibtexs/") == 0 {
-			bibtexHandle(true, w, r)
-			return
-		}
-
-		// All other cases are static files that need to be loaded from the
-		// ./static directory.
-
-		// The following should never be the case, so this should probably be an
-		// assert, but just in case something wacky occurs, return a 404 if the
-		// URL is not an absolute path.
-		if !filepath.IsAbs(path) {
-			http.NotFound(w, r)
-			return
-		}
-		// The following cleanup is necessary to avoid directory traversals.
-		// Since the above check makes sure that the path is absolute, this call
-		// to Clean removes any ../ references so a directory traversal is not
-		// possible. That is, this call treats the Path as if it is at root, and
-		// removes anything that would go beyond root.
-		path = filepath.Clean(path)
-		fmt.Println("Serving static file ./static" + path)
-		http.ServeFile(w, r, "./static"+path)
-	} else {
+	if handle, ok := request_mux[r.URL.EscapedPath()]; ok {
+		// Dynamic page
 		handle(w, r)
+		return
 	}
+
+	// Static Content
+	// Note that, for now, there are no static files that CSP is applied to. If
+	// that should change, the second argument to addHeaders() should be changed
+	// appropriately.
+	addHeaders(w, false)
+	path := r.URL.Path
+
+	// For legacy reasons (namely, the original blog), we need to redirect
+	// links from the original blog path to the new blog path so that old
+	// permalinks still work.
+	if strings.Index(path+"/", "/blog/") == 0 {
+		redirectBlog(w, r)
+		return
+	}
+
+	// Abstracts and bibliographies are special cases because their
+	// particular pages are generated dynamically.
+	if strings.Index(path, "/abstracts/") == 0 {
+		abstractHandle(false, w, r)
+		return
+	}
+
+	if strings.Index(path, "/ajax/abstracts/") == 0 {
+		abstractHandle(true, w, r)
+		return
+	}
+
+	if strings.Index(path, "/bibtexs/") == 0 {
+		bibtexHandle(false, w, r)
+		return
+	}
+
+	if strings.Index(path, "/ajax/bibtexs/") == 0 {
+		bibtexHandle(true, w, r)
+		return
+	}
+
+	// All other cases are static files that need to be loaded from the ./static
+	// directory.
+
+	// The following should never be the case, so this should probably be an
+	// assert, but just in case something wacky occurs, return a 404 if the URL
+	// is not an absolute path.
+	if !filepath.IsAbs(path) {
+		http.NotFound(w, r)
+		return
+	}
+
+	// The following cleanup is necessary to avoid directory traversals.  Since
+	// the above check makes sure that the path is absolute, this call to
+	// Clean() removes any ../ references so a directory traversal is not
+	// possible. That is, this call treats the Path as if it is at root, and
+	// removes anything that would go beyond root.
+	path = filepath.Clean(path)
+	fmt.Println("Serving static file ./static" + path)
+	http.ServeFile(w, r, "./static"+path)
 }
 
 func markdowner(args ...interface{}) template.HTML {
@@ -431,7 +437,7 @@ func markdowner(args ...interface{}) template.HTML {
 }
 
 func redirectBlog(w http.ResponseWriter, r *http.Request) {
-	addHeaders(w)
+	addHeaders(w, true)
 	dst := "http://blog.joelweinberger.us"
 	path := strings.TrimPrefix(r.URL.Path, "/blog")
 	fmt.Println("Redirecting to ", dst+path)
@@ -439,7 +445,7 @@ func redirectBlog(w http.ResponseWriter, r *http.Request) {
 }
 
 func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
-	addHeaders(w)
+	addHeaders(w, true)
 	host, _, err := net.SplitHostPort(r.Host)
 	if err != nil {
 		fmt.Println("Unexpected error in splitting host and port in: ", r.URL)
@@ -469,11 +475,11 @@ func main() {
 	https_port = strconv.Itoa(*https_port_int)
 
 	request_mux = requestMapper{
-		"/":             generateBasicHandle("index.html"),
-		"/calendar":     generateBasicHandle("calendar.html"),
-		"/index":        generateBasicHandle("index.html"),
-		"/publications": generateBasicHandle("publications.html"),
-		"/wedding":      generateBasicHandle("wedding.html"),
+		"/":             generateBasicHandle("index.html", true),
+		"/calendar":     generateBasicHandle("calendar.html", false),
+		"/index":        generateBasicHandle("index.html", true),
+		"/publications": generateBasicHandle("publications.html", false),
+		"/wedding":      generateBasicHandle("wedding.html", false),
 	}
 
 	templates = make(map[string]*template.Template)

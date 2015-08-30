@@ -4,8 +4,11 @@ importScripts('/js/serviceworker-cache-polyfill.js');
 
 var CACHE_NAME = 'site-cache-v1';
 var urlsToCache = [
+	'/index',
+	'/index?offline=true',
 	'/css/generic/basic-page.css',
 	'/css/generic/header.css',
+	'/css/generic/offline.css',
 	'/css/page/index.css',
 	'/img/greetings from newark.jpg',
 	'/img/joel-weinberger-headshot.jpg'
