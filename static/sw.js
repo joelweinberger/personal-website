@@ -2,10 +2,11 @@ console.log("Running ServiceWorker");
 
 importScripts('/js/serviceworker-cache-polyfill.js');
 
-var CACHE_NAME = 'site-cache-v1';
+var CACHE_VERSION = 'v1';
+var CACHE_NAME = 'joelweinberger.us-cache-v1';
 var urlsToCache = [
+	'/',
 	'/index',
-	'/index?offline=true',
 	'/css/generic/basic-page.css',
 	'/css/generic/header.css',
 	'/css/generic/offline.css',
@@ -18,19 +19,12 @@ self.addEventListener('install', function(event) {
 	event.waitUntil(
 		caches.open(CACHE_NAME)
 			.then(function(cache) {
-				console.log('Opened cache');
 				return cache.addAll(urlsToCache);
 			}));
 });
 
 self.addEventListener('fetch', function(event) {
-	if (navigator.onLine) {
-		event.respondWith(fetch(event.request));
-		return;
-	}
-
-	// The offline case
-	event.respondWith(caches.match('img/joel-weinberger-headshot.jpg')
+	event.respondWith(caches.match(event.request)
 		.then(function(response) {
 			if (response) {
 				return response;

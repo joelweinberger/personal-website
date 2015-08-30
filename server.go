@@ -176,15 +176,10 @@ func addHeaders(w http.ResponseWriter, useCSP bool) {
 	header.Set("Strict-Transport-Security", "max-age=12096000")
 }
 
-func generateBasicHandle(page string, hasOfflineMode bool) func(http.ResponseWriter, *http.Request) {
+func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		addOffline := hasOfflineMode && r.URL.Query().Get("offline") == "true"
 		addHeaders(w, true)
-		basicPage := pages[page]
-		if addOffline {
-			basicPage.ExtraCSS = append(basicPage.ExtraCSS, "/css/generic/offline.css")
-		}
-		err := templates[page].Execute(w, basicPage)
+		err := templates[page].Execute(w, pages[page])
 
 		if err != nil {
 			fmt.Println(err)
@@ -475,11 +470,11 @@ func main() {
 	https_port = strconv.Itoa(*https_port_int)
 
 	request_mux = requestMapper{
-		"/":             generateBasicHandle("index.html", true),
-		"/calendar":     generateBasicHandle("calendar.html", false),
-		"/index":        generateBasicHandle("index.html", true),
-		"/publications": generateBasicHandle("publications.html", false),
-		"/wedding":      generateBasicHandle("wedding.html", false),
+		"/":             generateBasicHandle("index.html"),
+		"/calendar":     generateBasicHandle("calendar.html"),
+		"/index":        generateBasicHandle("index.html"),
+		"/publications": generateBasicHandle("publications.html"),
+		"/wedding":      generateBasicHandle("wedding.html"),
 	}
 
 	templates = make(map[string]*template.Template)
