@@ -9,7 +9,6 @@ var urlsToCache = [
 	'/index',
 	'/css/generic/basic-page.css',
 	'/css/generic/header.css',
-	'/css/generic/offline.css',
 	'/css/page/index.css',
 	'/img/greetings from newark.jpg',
 	'/img/joel-weinberger-headshot.jpg'
@@ -31,8 +30,7 @@ self.addEventListener('fetch', function(event) {
 			}
 
 			var fetchRequest = event.request.clone();
-
-			return fetch(fetchRequest).then(
+			var fetchResult = fetch(fetchRequest).then(
 				function(response) {
 					if (!response || response.status !== 200 || response.type !== 'basic') {
 						return response;
@@ -45,6 +43,14 @@ self.addEventListener('fetch', function(event) {
 						});
 					return response;
 				}
-			);
+			).catch(function() {
+				console.log("Failed to fetch " + fetchRequest.url);
+			});
+
+			if (response) {
+				return response;
+			}
+
+			return fetchResult;
 		}))
 });
