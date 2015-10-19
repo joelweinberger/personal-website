@@ -21,6 +21,7 @@ var https_port string
 
 var csp string = strings.Join([]string{
 	"default-src 'self'",
+	"child-src 'self' *.google.com",
 	"frame-src 'self' *.google.com",
 }, "; ")
 
