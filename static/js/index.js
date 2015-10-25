@@ -1,5 +1,5 @@
 "use strict";
-var $, document;
+var document;
 
 /*
  * This function creates a toggle "button" (actually an anchor) with the given
@@ -11,38 +11,31 @@ var $, document;
  */
 function attachToggle(item_id, pub_id) {
   var toggle_id = pub_id + '-' + item_id,
-      toggle = $('#' + toggle_id),
-      pub = $('#' + pub_id);
+	  toggle = document.querySelector('#' + toggle_id),
+	  pub = document.querySelector('#' + pub_id);
 
-  $.get('ajax/' + toggle.attr('href'), function(data) {
-    /*
-     * Setup the appropriate classes so that the text does not appear
-     * initially (it starts hidden and is revealed by clicking on the
-     * toggle).
-     */
-    var entry_id = toggle_id + '-entry',
-        content;
-    pub.addClass('initialized');
-    toggle.addClass('toggle');
-    toggle.removeAttr('href');
-
-    content = $('#' + entry_id).html(data);
-
-    toggle.click(function() {
+  fetch('ajax/' + toggle.getAttribute('href')).then(function(response) {
+    response.text().then(function(data) {
       /*
-       * If the content is visible, we are about to make it invisible, so change
-       * the toggle to the closed icon. Otherwise, do the opposite.
+       * Setup the appropriate classes so that the text does not appear
+       * initially (it starts hidden and is revealed by clicking on the
+       * toggle).
        */
-      if (content.is(':visible')) {
-        toggle.removeClass('open');
-        toggle.addClass('closed');
-      } else {
-        toggle.removeClass('closed');
-        toggle.addClass('open');
-      }
+      var entry_id = toggle_id + '-entry',
+          content;
+      pub.classList.add('initialized');
+      toggle.classList.add('toggle');
+      toggle.removeAttribute('href');
 
-      content.slideToggle();
-    });
+	  content = document.querySelector('#' + entry_id);
+	  content.innerHTML = data;
+
+      toggle.onclick = function() {
+		toggle.classList.toggle('open');
+		toggle.classList.toggle('closed');
+        $(content).slideToggle();
+      };
+	});
   });
 }
 
@@ -51,12 +44,14 @@ function attachToggle(item_id, pub_id) {
  * click toggle to each.
  */
 (function() {
-  $(document).ready(function() {
-    $(".paper-bibtex-toggle").each(function() {
-      attachToggle("bibtex", $(this).attr("data-pub"));
-    });
-    $(".paper-abstract-toggle").each(function() {
-      attachToggle("abstract", $(this).attr("data-pub"));
-    });
-  });
+  window.onload = function() {
+    var matches = document.querySelectorAll(".paper-bibtex-toggle");
+	for (var i = 0; i < matches.length; i++) {
+	  attachToggle("bibtex", matches[i].getAttribute("data-pub"));
+	}
+    matches = document.querySelectorAll(".paper-abstract-toggle");
+	for (var i = 0; i < matches.length; i++) {
+	  attachToggle("abstract", matches[i].getAttribute("data-pub"));
+	}
+  };
 }());
