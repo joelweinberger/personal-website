@@ -1,4 +1,5 @@
 *.swp
+/bower_components
 /cert
 /server
 /untracked

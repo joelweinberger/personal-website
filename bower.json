@@ -1,0 +1,22 @@
+{
+  "name": "jww-website",
+  "homepage": "https://github.com/metromoxie/personal-website",
+  "authors": [
+    "Joel Howard Willis Weinberger <jww@joelweinberger.us>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "es6-promise": "~3.0.2",
+    "fetch": "~0.10.0"
+  }
+}

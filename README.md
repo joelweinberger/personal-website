@@ -1,6 +1,8 @@
 The website of Joel H. W. Weinberger, Go Edition!
 
 To build and run:
+* Install Bower: http://bower.io
+* Run `bower install` to install dependencies.
 * Make sure you have `$GOPATH` environment variable set to a location that files
   can be downloaded to, for example `/home/user/gocode`.
 * Set `$GOBIN` to `$GOPATH/bin`.
@@ -45,3 +47,6 @@ Urutseg, converted from: http://commons.wikimedia.org/wiki/File:Crypto_stub.svg
 
 The photo static/img/joel-weinberger-headshot.jpg is used courtesy of Steve
 Hanna (http://www.vividmachines.com).
+
+serviceworker-cache-polyfill.js is taken from
+https://github.com/coonsta/cache-polyfill under an Apache v2.0 license.

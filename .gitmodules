@@ -1,3 +1,0 @@
-[submodule "cache-polyfill"]
-	path = cache-polyfill
-	url = https://github.com/coonsta/cache-polyfill.git
