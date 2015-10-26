@@ -2,6 +2,9 @@
     {{$Authors := .Pubs.Authors}}
     {{$Papers := .Pubs.Papers}}
     {{$Techs := .Pubs.Techs}}
+
+	<link rel="import" href="/components/iron-collapse/iron-collapse.html"></link>
+
 	<h5 class="index-papers-header">
       Refereed Publications
     </h5>
@@ -49,7 +52,9 @@
     
         <div id="pub{{$index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="pub{{$index}}">
           <a id="pub{{$index}}-bibtex" href="bibtexs/pub{{$index}}">[BibTeX]</a>
+	      <iron-collapse id="pub{{$index}}-bibtex-collapse">
           <div id="pub{{$index}}-bibtex-entry" class="bitex-content start-hidden"></div>
+		  </iron-collapse>
         </div>
         </div> <!-- end citation div -->
     
@@ -72,7 +77,9 @@
         <div> <!-- abstract div -->
         <div class="paper-abstract">
           <a id="pub{{$index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/pub{{$index}}" data-pub="pub{{$index}}">Abstract</a>
+	      <iron-collapse id="pub{{$index}}-abstract-collapse">
           <div id="pub{{$index}}-abstract-entry" class="abstract-content start-hidden"></div>
+		  </iron-collapse>
         </div>
         </div> <!-- end abstract div -->
     
@@ -124,14 +131,18 @@
     
         <div id="tech{{$index}}-bibtex-toggle" class="paper-bibtex-toggle" data-pub="tech{{$index}}">
           <a id="tech{{$index}}-bibtex" href="bibtexs/tech{{$index}}">[BibTeX]</a>
+	      <iron-collapse id="tech{{$index}}-bibtex-collapse">
           <div id="tech{{$index}}-bibtex-entry" class="bibtex-content start-hidden"></div>
+		  </iron-collapse>
         </div>
         </div> <!-- end citation div -->
     
         <div> <!-- abstract div -->
         <div class="paper-abstract">
           <a id="tech{{$index}}-abstract" class="icon closed paper-abstract-toggle" href="abstracts/tech{{$index}}" data-pub="tech{{$index}}">Abstract</a>
+	      <iron-collapse id="tech{{$index}}-abstract-collapse">
           <div id="tech{{$index}}-abstract-entry" class="abstract-content start-hidden"></div>
+		  </iron-collapse>
         </div>
         </div> <!-- end abstract div -->
     

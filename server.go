@@ -23,6 +23,7 @@ var csp string = strings.Join([]string{
 	"default-src 'self'",
 	"child-src 'self' *.google.com",
 	"frame-src 'self' *.google.com",
+	"style-src 'unsafe-inline' 'self'",
 }, "; ")
 
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
@@ -141,7 +142,6 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		},
 		ExtraMeta: []MetaTag{},
 		ExtraScripts: []string{
-			"/lib/jquery.min.js",
 			"/js/index.js",
 		},
 		Header:     "publications",

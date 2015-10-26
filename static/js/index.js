@@ -22,18 +22,17 @@ function attachToggle(item_id, pub_id) {
        * toggle).
        */
       var entry_id = toggle_id + '-entry',
+          collapse_id = toggle_id + '-collapse',
           content;
-      pub.classList.add('initialized');
       toggle.classList.add('toggle');
       toggle.removeAttribute('href');
 
 	  content = document.querySelector('#' + entry_id);
 	  content.innerHTML = data;
 
+      var collapse = document.querySelector('#' + collapse_id);
       toggle.onclick = function() {
-		toggle.classList.toggle('open');
-		toggle.classList.toggle('closed');
-        $(content).slideToggle();
+          collapse.toggle();
       };
 	});
   });

@@ -25,11 +25,10 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
 	event.respondWith(caches.match(event.request)
 		.then(function(response) {
-			if (response) {
-				return response;
-			}
-
-			var fetchRequest = event.request.clone();
+			var request = event.request;
+			if (request.url === "http://localhost:8080/components/polymer/polymer-mini.html")
+			console.log('w00t');
+			var fetchRequest = request.clone();
 			var fetchResult = fetch(fetchRequest).then(
 				function(response) {
 					if (!response || response.status !== 200 || response.type !== 'basic') {
@@ -39,7 +38,7 @@ self.addEventListener('fetch', function(event) {
 					var responseToCache = response.clone();
 					caches.open(CACHE_NAME)
 						.then(function(cache) {
-							cache.put(event.request, responseToCache);
+							cache.put(request, responseToCache);
 						});
 					return response;
 				}
