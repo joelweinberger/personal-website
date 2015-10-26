@@ -2,7 +2,5 @@
 /bower_components
 /cert
 /server
+/static/components
 /untracked
-
-/static/components/polymer
-/static/components/iron-collapse

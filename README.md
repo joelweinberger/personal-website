@@ -4,7 +4,7 @@ To build and run:
 * Install Bower: http://bower.io
 * Install Crisper: https://github.com/PolymerLabs/crisper
 * Run `bower install` to install dependencies.
-* Run `./tools/externalize-scripts.sh` to create external scripts for CSP. Make sure to
+* Run `./tools/setup-components.sh` to create external scripts for CSP. Make sure to
   do this any time you run `bower install`.
 * Make sure you have `$GOPATH` environment variable set to a location that files
   can be downloaded to, for example `/home/user/gocode`.
