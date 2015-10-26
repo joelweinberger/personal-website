@@ -33,6 +33,8 @@ function attachToggle(item_id, pub_id) {
       var collapse = document.querySelector('#' + collapse_id);
       toggle.onclick = function() {
           collapse.toggle();
+		  toggle.classList.toggle('closed');
+		  toggle.classList.toggle('open');
       };
 	});
   });
