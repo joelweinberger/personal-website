@@ -3,3 +3,6 @@
 /cert
 /server
 /untracked
+
+/static/components/polymer
+/static/components/iron-collapse
