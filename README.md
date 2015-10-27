@@ -31,7 +31,7 @@ To build and run:
   2.6.24 onward. To do so, compile the server, then, as root, run `setcap
   'cap_net_bind_service=+ep' /path/to/server`. This should allow the executable
   to bind to privileged ports without any other escalation of privileges. You
-  can also just use the script `./tools/set-privileged-ports-cap` to set the
+  can also just run `sudo ./tools/set-privileged-ports-cap server` to set the
   privilege on the server file.
 
 Recommended Linux system service setup:
