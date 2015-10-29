@@ -444,8 +444,8 @@ func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
 	addHeaders(w, true)
 	host, _, err := net.SplitHostPort(r.Host)
 	if err != nil {
-		fmt.Println("Unexpected error in splitting host and port in: ", r.URL)
-		return
+		// Assume that the error was because there is no port present.
+		host = r.Host
 	}
 	redirect_url := *r.URL
 	redirect_url.Scheme = "https"
