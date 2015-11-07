@@ -10,18 +10,8 @@ div.content {
 	background-color: #cccccc;
 	padding: 10px 20px 10px 20px;
 
-	/*
-	 * border radius properties are going to be in CSS3, but Firefox (-moz) and
-	 * Safari (-webkit) have working implementations at this point.
-	 *
-	 * Of note, these properties will NOT validate as proper CSS.
-	 */
-	-moz-border-radius-bottomleft: 1em;
-	-moz-border-radius-bottomright: 1em;
-	-webkit-border-bottom-left-radius: 1em;
-	-webkit-border-bottom-right-radius: 1em;
-	border-radius-bottomleft: 1em;
-	border-radius-bottomright: 1em;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
 }
 
 .center-elt {
@@ -70,10 +60,6 @@ h5 {
 
 .strike {
 	text-decoration: line-through;
-}
-
-.no-dec-link {
-	text-decoration: none;
 }
 
 div.abstract p {

@@ -6,18 +6,8 @@ div.header {
 	padding-top: 5px;
 	padding-bottom: 10px;
 
-	/*
-	 * border radius properties are going to be in CSS3, but Firefox (-moz) and
-	 * Safari (-webkit) have working implementations at this point.
-	 *
-	 * Of note, these properties will NOT validate as proper CSS.
-	 */
-	-moz-border-radius-topleft: 1em;
-	-moz-border-radius-topright: 1em;
-	-webkit-border-top-left-radius: 1em;
-	-webkit-border-top-right-radius: 1em;
-	border-radius-topleft: 1em;
-	border-radius-topright: 1em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
 
 }
 
