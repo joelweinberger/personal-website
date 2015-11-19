@@ -26,7 +26,6 @@ self.addEventListener('fetch', function(event) {
 	event.respondWith(caches.match(event.request)
 		.then(function(response) {
 			var request = event.request;
-			if (request.url === "http://localhost:8080/components/polymer/polymer-mini.html")
 			var fetchRequest = request.clone();
 			var fetchResult = fetch(fetchRequest).then(
 				function(response) {
