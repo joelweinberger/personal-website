@@ -64,7 +64,6 @@ type Paper struct {
 	Institution  string
 	Notes        string
 	Number       string
-	Path         string
 	Pdf          string
 	Presentation string
 	Proceedings  string

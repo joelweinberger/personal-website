@@ -16,8 +16,8 @@
     
         <div> <!-- paper info div -->
         <span class="paper-title">
-        {{if $paper.Path}}
-        <a href="{{$paper.Path}}">{{$paper.Title}}.</a>
+        {{if $paper.Pdf}}
+        <a href="{{$paper.Pdf}}">{{$paper.Title}}.</a>
         {{else}}
 		{{$paper.Title}}
         {{end}}
@@ -100,8 +100,8 @@
     
         <div> <!-- paper info div -->
         <span class="paper-title">
-        {{if $paper.Path}}
-        <a href="{{$paper.Path}}">{{$paper.Title}}.</a>
+        {{if $paper.Pdf}}
+        <a href="{{$paper.Pdf}}">{{$paper.Title}}.</a>
         {{else}}
         {{$paper.Title}}
         {{end}}
