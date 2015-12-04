@@ -454,6 +454,29 @@ func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, redirect_url.String(), http.StatusMovedPermanently)
 }
 
+type CertsConfig struct {
+	PrivateKey string
+	FullChain  string
+}
+
+func loadCertConfig() *CertsConfig {
+	jsonBlob, err := ioutil.ReadFile("cert_config.json")
+
+	if err != nil {
+		fmt.Println("Error loading certs.json: ", err)
+		return nil
+	}
+
+	var config CertsConfig
+	err = json.Unmarshal(jsonBlob, &config)
+	if err != nil {
+		fmt.Println("Error unmarshaling JSON:", err)
+		return nil
+	}
+
+	return &config
+}
+
 func main() {
 	http_port_int := flag.Int("http-port", 8080, "The HTTP port to listen on that will redirect to HTTPS.")
 	https_port_int := flag.Int("https-port", 8443, "The HTTPS port to listen on for the main server.")
@@ -509,10 +532,15 @@ func main() {
 			Handler: &myHandler{},
 		}
 
+		cert_config := loadCertConfig()
+		if cert_config == nil {
+			return
+		}
+
 		go http.ListenAndServe(":"+http_port, http.HandlerFunc(redirectToHTTPS))
 
 		fmt.Println("Listening on port " + https_port)
-		if err := server.ListenAndServeTLS("cert/ssl.crt", "cert/ssl.key"); err != nil {
+		if err := server.ListenAndServeTLS(cert_config.FullChain, cert_config.PrivateKey); err != nil {
 			fmt.Println("ListenAndServe error: %v", err)
 			return
 		}

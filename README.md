@@ -11,6 +11,10 @@ Pre-build setup:
 * Make sure you have `$GOPATH` environment variable set to a location that files
   can be downloaded to, for example `/home/user/gocode`.
 * Set `$GOBIN` to `$GOPATH/bin`.
+* If you're using TLS, create a `cert_config.json` file, with two keys,
+  `PrivateKey` and `FullChain` whose values are the path to the private key and
+  the path to the full cert chain. Usually these will go in ./cert, which is
+  already in the .gitignore file.
 
 To build and run:
 * Run `go install`.
