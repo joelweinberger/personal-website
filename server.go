@@ -188,6 +188,18 @@ func generateBasicHandle(page string) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+func reversePapersInPlace(papers []Paper) {
+	total_len := len(papers)
+	for i, _ := range papers {
+		if i >= total_len/2 {
+			break
+		}
+		tmp := papers[total_len-i-1]
+		papers[total_len-i-1] = papers[i]
+		papers[i] = tmp
+	}
+}
+
 type PubsInfo struct {
 	Authors map[string]Author
 	Papers  []Paper
@@ -208,6 +220,13 @@ func loadPubsInfo() *PubsInfo {
 		fmt.Println("Error unmarshaling JSON:", err)
 		return nil
 	}
+
+	// For historical reasons, pubs are stored in the pubs.json file in
+	// chronological order. However, for purposes of templates and what-not, we
+	// actually want them to be in reverse chronological order, so we do that
+	// here.
+	reversePapersInPlace(pubs.Papers)
+	reversePapersInPlace(pubs.Techs)
 
 	return &pubs
 }
