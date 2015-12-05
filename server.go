@@ -16,9 +16,6 @@ import (
 	"github.com/russross/blackfriday"
 )
 
-var http_port string
-var https_port string
-
 var csp string = strings.Join([]string{
 	"default-src 'self'",
 	"child-src 'self' *.google.com",
@@ -458,18 +455,20 @@ func redirectBlog(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, dst+path, http.StatusMovedPermanently)
 }
 
-func redirectToHTTPS(w http.ResponseWriter, r *http.Request) {
-	addHeaders(w, true)
-	host, _, err := net.SplitHostPort(r.Host)
-	if err != nil {
-		// Assume that the error was because there is no port present.
-		host = r.Host
+func generateRedirectToHttps(https_port string) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		addHeaders(w, true)
+		host, _, err := net.SplitHostPort(r.Host)
+		if err != nil {
+			// Assume that the error was because there is no port present.
+			host = r.Host
+		}
+		redirect_url := *r.URL
+		redirect_url.Scheme = "https"
+		redirect_url.Host = host + ":" + https_port
+		fmt.Println("Redirecting '", r.URL.String(), "' to '", redirect_url.String(), "'")
+		http.Redirect(w, r, redirect_url.String(), http.StatusMovedPermanently)
 	}
-	redirect_url := *r.URL
-	redirect_url.Scheme = "https"
-	redirect_url.Host = host + ":" + https_port
-	fmt.Println("Redirecting '", r.URL.String(), "' to '", redirect_url.String(), "'")
-	http.Redirect(w, r, redirect_url.String(), http.StatusMovedPermanently)
 }
 
 type CertsConfig struct {
@@ -508,8 +507,8 @@ func main() {
 		return
 	}
 
-	http_port = strconv.Itoa(*http_port_int)
-	https_port = strconv.Itoa(*https_port_int)
+	http_port := strconv.Itoa(*http_port_int)
+	https_port := strconv.Itoa(*https_port_int)
 
 	request_mux = requestMapper{
 		"/":             generateBasicHandle("index.html"),
@@ -555,7 +554,7 @@ func main() {
 			return
 		}
 
-		go http.ListenAndServe(":"+http_port, http.HandlerFunc(redirectToHTTPS))
+		go http.ListenAndServe(":"+http_port, http.HandlerFunc(generateRedirectToHttps(https_port)))
 
 		fmt.Println("Listening on port " + https_port)
 		if err := server.ListenAndServeTLS(cert_config.FullChain, cert_config.PrivateKey); err != nil {
