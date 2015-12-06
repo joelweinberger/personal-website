@@ -16,6 +16,7 @@ Pre-build setup:
   `PrivateKey` and `FullChain` whose values are the path to the private key and
   the path to the full cert chain. Usually these will go in ./cert, which is
   already in the .gitignore file.
+* Finally, run `go get` to get all remote packages for the Go build.
 
 To build and run:
 * Run `go install`.
