@@ -2,8 +2,10 @@ The website of Joel H. W. Weinberger, Go Edition!
 
 Pre-build setup:
 * Install Bower, for dependency installation: http://bower.io
-* Install Crisper, for compiling Polymer Components to CSP friendly forms:
-  https://github.com/PolymerLabs/crisper
+* Install [Crisper](https://github.com/PolymerLabs/crisper), for compiling Polymer
+  Components to CSP friendly forms, by running `sudo npm -g install
+  https://github.com/PolymerLabs/crisper/archive/v2.0.1.tar.gz`.
+  
 * Run `bower install` to install dependencies.
 * Run `./tools/setup-components.sh` to create external scripts for CSP. Make sure to
   do this any time you run `bower install`.
