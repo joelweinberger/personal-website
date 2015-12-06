@@ -34,6 +34,6 @@ for soft_link in $SOFT_LINKS; do
 done
 
 for doc in $TO_EXTERNALIZE; do
-  crisper --source bower_components/$doc.html --html static/components/$doc.html --js static/components/$doc.js
+  crisper --script-in-head=false --source bower_components/$doc.html --html static/components/$doc.html --js static/components/$doc.js
 done
 echo "Done."
