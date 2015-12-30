@@ -498,6 +498,7 @@ func main() {
 	http_port_int := flag.Int("http-port", 8080, "The HTTP port to listen on that will redirect to HTTPS.")
 	https_port_int := flag.Int("https-port", 8443, "The HTTPS port to listen on for the main server.")
 	unsafely_run_on_http := flag.Bool("unsafely-run-on-http", false, "Whether to unsafely run the main server on HTTP.")
+	templates_dir := flag.String("templates-dir", "./templates", "Directory where templates reside.")
 
 	flag.Parse()
 
@@ -520,18 +521,18 @@ func main() {
 
 	templates = make(map[string]*template.Template)
 	funcMap := template.FuncMap{"markdown": markdowner}
-	layout := template.Must(template.ParseFiles("templates/layout.html")).Funcs(funcMap)
+	layout := template.Must(template.ParseFiles(*templates_dir + "/layout.html")).Funcs(funcMap)
 	for name, _ := range pages {
-		templates[name] = template.Must(template.Must(layout.Clone()).ParseFiles("templates/" + name))
+		templates[name] = template.Must(template.Must(layout.Clone()).ParseFiles(*templates_dir + "/" + name))
 	}
 
-	abstractTemplateBytes, err := ioutil.ReadFile("templates/abstract.html")
+	abstractTemplateBytes, err := ioutil.ReadFile(*templates_dir + "/abstract.html")
 	if err != nil {
 		panic("Could not read abstract.html template")
 	}
 	abstractTemplate = template.Must(template.New("abstract").Funcs(funcMap).Parse(string(abstractTemplateBytes)))
 
-	bibtexTemplateBytes, err := ioutil.ReadFile("templates/bibtex.html")
+	bibtexTemplateBytes, err := ioutil.ReadFile(*templates_dir + "/bibtex.html")
 	if err != nil {
 		panic("Could not read bibtex.html template")
 	}
