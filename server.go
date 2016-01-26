@@ -46,6 +46,7 @@ type BasicPage struct {
 	Header       string
 	NoContent    bool
 	NoHomeLink   bool
+	Pubs         *PubsInfo
 	Title        string
 }
 
@@ -86,6 +87,8 @@ type BibtexPage struct {
 	NoLayout bool
 	Paper    Paper
 }
+
+var pubs *PubsInfo
 
 var pages map[string]*BasicPage = map[string]*BasicPage{
 	"abstract.html": &BasicPage{
@@ -164,8 +167,6 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 	},
 }
 
-var pubs *PubsInfo
-
 var templates map[string]*template.Template
 var abstractTemplate *template.Template
 var bibtexTemplate *template.Template
@@ -228,6 +229,8 @@ func loadPubsInfo() bool {
 	// here.
 	reversePapersInPlace(pubs.Papers)
 	reversePapersInPlace(pubs.Techs)
+
+	pages["publications.html"].Pubs = pubs
 
 	return true
 }
