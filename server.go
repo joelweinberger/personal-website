@@ -16,6 +16,11 @@ import (
 	"github.com/russross/blackfriday"
 )
 
+var templates_dir string
+var static_dir string
+var cert_config_file string
+var pubs_file string
+
 var csp string = strings.Join([]string{
 	"default-src 'self'",
 	"child-src 'self' *.google.com",
@@ -41,7 +46,6 @@ type BasicPage struct {
 	Header       string
 	NoContent    bool
 	NoHomeLink   bool
-	Pubs         *PubsInfo
 	Title        string
 }
 
@@ -143,7 +147,6 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		Header:     "publications",
 		NoContent:  false,
 		NoHomeLink: false,
-		Pubs:       loadPubsInfo(),
 		Title:      "Joel H. W. Weinberger -- Publications",
 	},
 	"wedding.html": &BasicPage{
@@ -160,6 +163,8 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		Title:        "Joel H. W. Weinberger -- Wedding",
 	},
 }
+
+var pubs *PubsInfo
 
 var templates map[string]*template.Template
 var abstractTemplate *template.Template
@@ -203,19 +208,18 @@ type PubsInfo struct {
 	Techs   []Paper
 }
 
-func loadPubsInfo() *PubsInfo {
-	jsonBlob, err := ioutil.ReadFile("pubs.json")
+func loadPubsInfo() bool {
+	jsonBlob, err := ioutil.ReadFile(pubs_file)
 
 	if err != nil {
 		fmt.Println("Error loading pubs.json: ", err)
-		return nil
+		return false
 	}
 
-	var pubs PubsInfo
 	err = json.Unmarshal(jsonBlob, &pubs)
 	if err != nil {
 		fmt.Println("Error unmarshaling JSON:", err)
-		return nil
+		return false
 	}
 
 	// For historical reasons, pubs are stored in the pubs.json file in
@@ -225,7 +229,7 @@ func loadPubsInfo() *PubsInfo {
 	reversePapersInPlace(pubs.Papers)
 	reversePapersInPlace(pubs.Techs)
 
-	return &pubs
+	return true
 }
 
 func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
@@ -243,19 +247,11 @@ func abstractHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Serving abstract ", abstract)
 
-	var info *PubsInfo
-	if info = loadPubsInfo(); info == nil {
-		// loadPubsInfo() prints an appropriate error message, so no need to
-		// print one here as well.
-		http.NotFound(w, r)
-		return
-	}
-
-	paperArray := info.Papers
+	paperArray := pubs.Papers
 	var validPub = regexp.MustCompile(`\/abstracts\/pub([0-9]+)`)
 	groups := validPub.FindStringSubmatch(r.URL.Path)
 	if len(groups) < 2 {
-		paperArray = info.Techs
+		paperArray = pubs.Techs
 		validPub = regexp.MustCompile(`\/abstracts\/tech([0-9]+)`)
 		groups = validPub.FindStringSubmatch(r.URL.Path)
 
@@ -314,19 +310,11 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Serving bibtex ", bibtex)
 
-	var info *PubsInfo
-	if info = loadPubsInfo(); info == nil {
-		// loadPubsInfo() prints an appropriate error message, so no need to
-		// print one here as well.
-		http.NotFound(w, r)
-		return
-	}
-
-	paperArray := info.Papers
+	paperArray := pubs.Papers
 	var validPub = regexp.MustCompile(`\/bibtexs\/pub([0-9]+)`)
 	groups := validPub.FindStringSubmatch(r.URL.Path)
 	if len(groups) < 2 {
-		paperArray = info.Techs
+		paperArray = pubs.Techs
 		validPub = regexp.MustCompile(`\/bibtexs\/tech([0-9]+)`)
 		groups = validPub.FindStringSubmatch(r.URL.Path)
 
@@ -356,7 +344,7 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 		if j != 0 {
 			authors = authors + " and "
 		}
-		authors = authors + info.Authors[author].Name
+		authors = authors + pubs.Authors[author].Name
 	}
 
 	bibtexPage := BibtexPage{
@@ -421,7 +409,7 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// All other cases are static files that need to be loaded from the ./static
+	// All other cases are static files that need to be loaded from the static/
 	// directory.
 
 	// The following should never be the case, so this should probably be an
@@ -438,8 +426,8 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// possible. That is, this call treats the Path as if it is at root, and
 	// removes anything that would go beyond root.
 	path = filepath.Clean(path)
-	fmt.Println("Serving static file ./static" + path)
-	http.ServeFile(w, r, "./static"+path)
+	fmt.Println("Serving static file static" + path)
+	http.ServeFile(w, r, filepath.Join(static_dir, path))
 }
 
 func markdowner(args ...interface{}) template.HTML {
@@ -477,7 +465,7 @@ type CertsConfig struct {
 }
 
 func loadCertConfig() *CertsConfig {
-	jsonBlob, err := ioutil.ReadFile("cert_config.json")
+	jsonBlob, err := ioutil.ReadFile(cert_config_file)
 
 	if err != nil {
 		fmt.Println("Error loading certs.json: ", err)
@@ -494,11 +482,18 @@ func loadCertConfig() *CertsConfig {
 	return &config
 }
 
+func setConfigFiles(resources_dir *string) {
+	templates_dir = filepath.Join(*resources_dir, "templates")
+	static_dir = filepath.Join(*resources_dir, "static")
+	cert_config_file = filepath.Join(*resources_dir, "cert_config.json")
+	pubs_file = filepath.Join(*resources_dir, "pubs.json")
+}
+
 func main() {
 	http_port_int := flag.Int("http-port", 8080, "The HTTP port to listen on that will redirect to HTTPS.")
 	https_port_int := flag.Int("https-port", 8443, "The HTTPS port to listen on for the main server.")
 	unsafely_run_on_http := flag.Bool("unsafely-run-on-http", false, "Whether to unsafely run the main server on HTTP.")
-	templates_dir := flag.String("templates-dir", "./templates", "Directory where templates reside.")
+	resources_dir := flag.String("resources-dir", ".", "Directory where resources reside.")
 
 	flag.Parse()
 
@@ -511,6 +506,8 @@ func main() {
 	http_port := strconv.Itoa(*http_port_int)
 	https_port := strconv.Itoa(*https_port_int)
 
+	setConfigFiles(resources_dir)
+
 	request_mux = requestMapper{
 		"/":             generateBasicHandle("index.html"),
 		"/calendar":     generateBasicHandle("calendar.html"),
@@ -519,20 +516,24 @@ func main() {
 		"/wedding":      generateBasicHandle("wedding.html"),
 	}
 
-	templates = make(map[string]*template.Template)
-	funcMap := template.FuncMap{"markdown": markdowner}
-	layout := template.Must(template.ParseFiles(*templates_dir + "/layout.html")).Funcs(funcMap)
-	for name, _ := range pages {
-		templates[name] = template.Must(template.Must(layout.Clone()).ParseFiles(*templates_dir + "/" + name))
+	if !loadPubsInfo() {
+		panic("Failed to read the publications configuration.")
 	}
 
-	abstractTemplateBytes, err := ioutil.ReadFile(*templates_dir + "/abstract.html")
+	templates = make(map[string]*template.Template)
+	funcMap := template.FuncMap{"markdown": markdowner}
+	layout := template.Must(template.ParseFiles(filepath.Join(templates_dir, "/layout.html"))).Funcs(funcMap)
+	for name, _ := range pages {
+		templates[name] = template.Must(template.Must(layout.Clone()).ParseFiles(filepath.Join(templates_dir, name)))
+	}
+
+	abstractTemplateBytes, err := ioutil.ReadFile(filepath.Join(templates_dir, "/abstract.html"))
 	if err != nil {
 		panic("Could not read abstract.html template")
 	}
 	abstractTemplate = template.Must(template.New("abstract").Funcs(funcMap).Parse(string(abstractTemplateBytes)))
 
-	bibtexTemplateBytes, err := ioutil.ReadFile(*templates_dir + "/bibtex.html")
+	bibtexTemplateBytes, err := ioutil.ReadFile(filepath.Join(templates_dir, "/bibtex.html"))
 	if err != nil {
 		panic("Could not read bibtex.html template")
 	}
