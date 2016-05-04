@@ -6,41 +6,39 @@
 	{{end}}
     
     <div>
-	{{with .Paper}}
     <div class="bibtex" class="bibtex-entry">
-      <div>@inproceedings{ {{.Proceedings}},</div>
+      <div>@inproceedings{ {{.Paper.Proceedings}},</div>
       <div class="bibtex-entry-line">
-	    author = { {{.Authors}} },
+	    author = { {{.AuthorList}} },
       </div>
       <div class="bibtex-entry-line">
-        title = { {{.Title}} },
+        title = { {{.Paper.Title}} },
       </div>
-	  {{if .Booktitle}}
+	  {{if .Paper.Booktitle}}
       <div class="bibtex-entry-line">
-        booktitle = { {{.Booktitle}} },
-      </div>
-      {{end}}
-	  {{if .Institution}}
-      <div class="bibtex-entry-line">
-        institution = { {{.Institution}} },
+        booktitle = { {{.Paper.Booktitle}} },
       </div>
       {{end}}
+	  {{if .Paper.Institution}}
       <div class="bibtex-entry-line">
-        year = { {{.Year}} },
-      </div>
-	  {{if .Url}}
-      <div class="bibtex-entry-line">
-        url = { {{.Url}} },
+        institution = { {{.Paper.Institution}} },
       </div>
       {{end}}
-	  {{if .Number}}
       <div class="bibtex-entry-line">
-        number = { {{.Number}} },
+        year = { {{.Paper.Year}} },
+      </div>
+	  {{if .Paper.Url}}
+      <div class="bibtex-entry-line">
+        url = { {{.Paper.Url}} },
+      </div>
+      {{end}}
+	  {{if .Paper.Number}}
+      <div class="bibtex-entry-line">
+        number = { {{.Paper.Number}} },
       </div>
       {{end}}
       <div>}</div>
     </div>
-	{{end}}
     </div>
     {{end}}
 	{{if .NoLayout}}
