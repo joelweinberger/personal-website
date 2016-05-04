@@ -6,15 +6,15 @@
     },
     "cgordon": {
       "name": "Colin Gordon",
-      "homepage": "http://www.cs.washington.edu/homes/csgordon/"
+      "homepage": "https://www.cs.drexel.edu/~csgordon/"
     },
     "daw": {
       "name": "David Wagner",
-      "homepage": "http://www.eecs.berkeley.edu/~daw/"
+      "homepage": "https://www.eecs.berkeley.edu/~daw/"
     },
     "dawnsong": {
       "name": "Dawn Song",
-      "homepage": "http://www.eecs.berkeley.edu/~dawnsong/"
+      "homepage": "https://www.eecs.berkeley.edu/~dawnsong/"
     },
     "devdatta": {
       "name": "Devdatta Akhawe",
@@ -33,11 +33,11 @@
     },
     "livshits": {
       "name": "Ben Livshits",
-      "homepage": "http://research.microsoft.com/en-us/um/people/livshits/"
+      "homepage": "https://research.microsoft.com/en-us/um/people/livshits/"
     },
     "lmeyerov": {
       "name": "Leo Meyerovich",
-      "homepage": "http://www.eecs.berkeley.edu/~lmeyerov/"
+      "homepage": "https://lmeyerov.github.io/"
     },
     "mfinifter": {
       "name": "Matthew Finifter",
@@ -45,19 +45,19 @@
     },
     "saxena": {
       "name": "Prateek Saxena",
-      "homepage": "http://www.comp.nus.edu.sg/~prateeks/"
+      "homepage": "https://www.comp.nus.edu.sg/~prateeks/"
     },
     "schlesinger": {
       "name": "Cole Schlesinger",
-      "homepage": "http://www.cs.princeton.edu/~cschlesi/"
+      "homepage": "https://www.cs.princeton.edu/~cschlesi/"
     },
     "shriram": {
       "name": "Shriram Krishnamurthi",
-      "homepage": "http://www.cs.brown.edu/~sk/"
+      "homepage": "https://cs.brown.edu/~sk/"
     },
     "swamy": {
       "name": "Nikhil Swamy",
-      "homepage": "http://research.microsoft.com/en-us/people/nswamy/"
+      "homepage": "https://research.microsoft.com/en-us/people/nswamy/"
     }
   },
   "papers": [
@@ -174,7 +174,7 @@
       "textitle": "Monadic Refinement Types for Verifying JavaScript Programs",
       "institution": "Microsoft Research",
       "year": "2012",
-      "url": "http://research.microsoft.com/en-us/um/people/nswamy/papers/js2fs-icfp12-submitted-version.pdf",
+      "url": "https://research.microsoft.com/en-us/um/people/nswamy/papers/js2fs-icfp12-submitted-version.pdf",
       "abstract": "Researchers have developed several special-purpose type systems and program logics to analyze JavaScript and other dynamically typed programming languages.  Still, no prior system can precisely reason about both higher-order programs and mutable state; each system comes with its own delicate soundness proof (when such proofs are provided at all); and tools based on these theories (when they exist) are a significant implementation burden.\n\n This paper shows that JavaScript programs can be verified using a general-purpose verification tool---in our case, F\\*, a dependently typed dialect of ML. Our methodology consists of a few steps. First, we extend prior work on LambdaJS (Guha et al.) by translating JavaScript programs to F\\*. Within F\\*, we type pure JavaScript terms using a refinement of the type dyn, an algebraic datatype for dynamically typed values, where the refinement recovers more precise type information. Stateful expressions are typed using the Hoare state monad. Relying on a general-purpose weakest pre-condition calculus for this monad, we obtain higher-order verification conditions for JavaScript programs that can be discharged (via a novel encoding) by an off-the-shelf automated theorem prover. Our approach enjoys a fully mechanized proof of soundness, by virtue of the soundness of F\\*.\n\n We report on experiments that apply our tool chain to verify a collection of web browser extensions for the absence of JavaScript runtime errors. We conclude that, despite commonly held misgivings about JavaScript, automated verification for a sizable subset of the language is feasible. Our work opens the door to applying a wealth of research in automated program verification techniques to JavaScript programs."
     },
     {
@@ -186,7 +186,7 @@
       "textitle": "Analysis and Enforcement of Web Application Security Policies",
       "institution": "University of California, Berkeley",
       "year": "2012",
-      "url": "http://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-232.pdf",
+      "url": "https://www.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-232.pdf",
       "abstract": "Web applications are generally more exposed to untrusted user content than traditional applications. Thus, web applications face a variety of new and unique threats, especially that of content injection. One method for preventing these types of attacks is web application security policies. These policies specify the behavior or structure of the web application.  The goal of this work is twofold. First, we aim to understand how security policies and their systems are currently applied to web applications. Second, we aim to advance the mechanisms used to apply policies to web applications. We focus on the first part through two studies, examining two classes of current web application security policies. We focus on the second part by studying and working towards two new ways of applying policies.  These areas will advance the state of the art in understanding and building web application security policies and provide a foundation for future work in securing web applications."
     }
   ]
