@@ -139,6 +139,19 @@ var pages map[string]*BasicPage = map[string]*BasicPage{
 		NoHomeLink:   true,
 		Title:        "Joel H. W. Weinberger -- jww",
 	},
+	"offline.html": &BasicPage{
+		ExtraCSS: []string{
+			"/css/generic/basic-page.css",
+			"/css/generic/header.css",
+			"/css/page/index.css",
+		},
+		ExtraMeta:    []MetaTag{},
+		ExtraScripts: []string{},
+		Header:       "offline",
+		NoContent:    false,
+		NoHomeLink:   false,
+		Title:        "Joel H. W. Weinberger -- Offline",
+	},
 	"publications.html": &BasicPage{
 		ExtraCSS: []string{
 			"/css/generic/basic-page.css",
@@ -518,6 +531,7 @@ func main() {
 		"/":             generateBasicHandle("index.html"),
 		"/calendar":     generateBasicHandle("calendar.html"),
 		"/index":        generateBasicHandle("index.html"),
+		"/offline":      generateBasicHandle("offline.html"),
 		"/publications": generateBasicHandle("publications.html"),
 		"/wedding":      generateBasicHandle("wedding.html"),
 	}

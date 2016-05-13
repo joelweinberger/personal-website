@@ -11,7 +11,8 @@ var urlsToCache = [
 	'/css/generic/header.css',
 	'/css/page/index.css',
 	'/img/greetings from newark.jpg',
-	'/img/joel-weinberger-headshot.jpg'
+	'/img/joel-weinberger-headshot.jpg',
+	'/offline'
 ];
 
 self.addEventListener('install', function(event) {
@@ -42,6 +43,7 @@ self.addEventListener('fetch', function(event) {
 				}
 			).catch(function() {
 				console.log("Failed to fetch " + fetchRequest.url);
+				return caches.match('/offline');
 			});
 
 			if (response) {
