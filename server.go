@@ -64,6 +64,7 @@ type Paper struct {
 	Extended     string
 	Homepage     string
 	Institution  string
+	Nobibtex     bool
 	Notes        string
 	Number       string
 	Pdf          string
