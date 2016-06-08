@@ -152,10 +152,13 @@
     },
 	{
 	  "title": "A Week to Remember: The Impact of Browser Warning Storage Policies",
+	  "pdf": "papers/2016/weinberger-felt.pdf",
 	  "authors": [ "jww", "felt" ],
 	  "conference": "To appear at SOUPS, 2016",
+	  "textitle": "A Week to Remember: The Impact of Browser Warning Storage Policies",
+	  "booktitle": "Proc. of 12th Symposium on Usable Privacy and Security (SOUPS",
 	  "year": "2016",
-	  "nobibtex": true
+	  "abstract": "When someone decides to ignore an HTTPS error warning, how long should the browser remember that decision? If they return to the website in five minutes, an hour, a day, or a week, should the browser show them the warning again or respect their previous decision? There is no clear industry consensus, with eight major browsers exhibiting four different HTTPS error exception storage policies. Ideally, a browser would not ask someone about the same warning over and over again. If a user believes the warning is a false alarm, repeated warnings undermine the browser’s trustworthiness without providing a security benefit. However, some people might change their mind, and we do not want one security mistake to become permanent. We evaluated six storage policies with a large-scale, multimonth field experiment. We found substantial differences between the policies and that one of the storage policies achieved more of our goals than the rest. Google Chrome 45 adopted our proposal, and it has proved successful since deployed. Subsequently, we ran Mechanical Turk and Google Consumer Surveys to learn about user expectations for warnings. Respondents generally lacked knowledge about Chrome’s new storage policy, but we remain satisfied with our proposal due to the behavioral benefits we have observed in the field."
 	}
   ],
   "techs": [
