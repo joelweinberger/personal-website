@@ -155,6 +155,7 @@
 	  "pdf": "papers/2016/weinberger-felt.pdf",
 	  "authors": [ "jww", "felt" ],
 	  "conference": "To appear at SOUPS, 2016",
+      "proceedings": "weinberger-felt",
 	  "textitle": "A Week to Remember: The Impact of Browser Warning Storage Policies",
 	  "booktitle": "Proc. of 12th Symposium on Usable Privacy and Security (SOUPS",
 	  "year": "2016",
