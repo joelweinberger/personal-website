@@ -155,6 +155,7 @@
 	  "pdf": "papers/2016/weinberger-felt.pdf",
 	  "authors": [ "jww", "felt" ],
 	  "conference": "To appear at SOUPS, 2016",
+      "presentation": "SOUPS presentation by Adrienne Felt [slides](https://docs.google.com/presentation/d/1axXw-uO2JOAntYJP3BR8Ng7fCbN7LHbwg0b0nN-Ws98/pub?start=true&loop=false&delayms=3000&slide=id.g1501f84207_0_562)",
       "proceedings": "weinberger-felt",
 	  "textitle": "A Week to Remember: The Impact of Browser Warning Storage Policies",
 	  "booktitle": "Proc. of 12th Symposium on Usable Privacy and Security (SOUPS",
