@@ -144,6 +144,7 @@
       "pdf": "papers/2013/swamy-weinberger-schlesinger-chen-livshits.pdf",
       "authors": [ "swamy", "jww", "schlesinger", "jchen", "livshits" ],
       "conference": "In Proc. of Programming Language Design and Implementation (PLDI), 2013",
+	  "citeseer": "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.310.4136",
       "proceedings": "swamy-weinberger-dijkstra",
       "textitle": "Verifying Higher-order Programs with the Dijkstra Monad",
       "booktitle": "Proc. of 34th Programming Language Design and Implementation (PLDI)",
