@@ -28,6 +28,8 @@ var csp string = strings.Join([]string{
 	"style-src 'unsafe-inline' 'self'",
 }, "; ")
 
+var server_scheme string = "https"
+
 type requestMapper map[string]func(http.ResponseWriter, *http.Request)
 
 var request_mux requestMapper
@@ -385,6 +387,12 @@ func bibtexHandle(isAjax bool, w http.ResponseWriter, r *http.Request) {
 }
 
 func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// Only serve from "www."
+	if strings.Index(strings.ToLower(r.Host), "www.") != 0 {
+		redirectToWww(w, r)
+		return
+	}
+
 	if handle, ok := request_mux[r.URL.EscapedPath()]; ok {
 		// Dynamic page
 		handle(w, r)
@@ -402,7 +410,7 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// links from the original blog path to the new blog path so that old
 	// permalinks still work.
 	if strings.Index(path+"/", "/blog/") == 0 {
-		redirectBlog(w, r)
+		redirectToBlog(w, r)
 		return
 	}
 
@@ -454,12 +462,19 @@ func markdowner(args ...interface{}) template.HTML {
 	return template.HTML(s)
 }
 
-func redirectBlog(w http.ResponseWriter, r *http.Request) {
+func redirectToBlog(w http.ResponseWriter, r *http.Request) {
 	addHeaders(w, true)
 	dst := "http://blog.joelweinberger.us"
 	path := strings.TrimPrefix(r.URL.Path, "/blog")
 	fmt.Println("Redirecting to ", dst+path)
 	http.Redirect(w, r, dst+path, http.StatusMovedPermanently)
+}
+
+func redirectToWww(w http.ResponseWriter, r *http.Request) {
+	addHeaders(w, true)
+	dst := server_scheme + "://www." + r.Host + r.URL.Path
+	fmt.Println("Redirecting to ", dst)
+	http.Redirect(w, r, dst, http.StatusMovedPermanently)
 }
 
 func generateRedirectToHttps(https_port string) func(http.ResponseWriter, *http.Request) {
@@ -562,6 +577,7 @@ func main() {
 	// The HTTP server is strictly for redirecting to HTTPS, unless the
 	// --unsafely-run-on-http flag is specified.
 	if *unsafely_run_on_http {
+		server_scheme = "http"
 		fmt.Println("Unsafely running on HTTP on port " + http_port)
 		http.ListenAndServe(":"+http_port, &myHandler{})
 	} else {
