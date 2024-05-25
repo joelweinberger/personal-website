@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/metromoxie
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://joelweinberger.us
+  * I am metromoxie (https://keybase.io/metromoxie) on keybase.
+  * I have a public key ASDnCPdF1IeAQQL7s_xwQz1pc9TZHVmIHzu2__hDVdr31Qo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01206f484e4f843234d39785ae644e0e2993ad739c090273526b8db680a84ce2c4600a",
+      "host": "keybase.io",
+      "kid": "0120e708f745d487804102fbb3fc70433d6973d4d91d59881f3bb6fff84355daf7d50a",
+      "uid": "6668c3462721c4b65f31209e7dbecf19",
+      "username": "metromoxie"
+    },
+    "merkle_root": {
+      "ctime": 1716612142,
+      "hash": "23149ee75cec87c2c66227127e5facfed3df76029a71693f97975fc9156ede2f4b1d48d7f52c088bfd1f88d73224bba1a3e6c09c4cb41847703c2ce5416635d2",
+      "hash_meta": "eee39dd46b0fe8eda41f10f3a3e3d671527fcec1ccc89d4111be9ef720796446",
+      "seqno": 25757576
+    },
+    "service": {
+      "entropy": "DFpe+wrQalH6G1m5WevjV5PN",
+      "hostname": "joelweinberger.us",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.2.8"
+  },
+  "ctime": 1716612152,
+  "expire_in": 504576000,
+  "prev": "36ac795fc67d982116bfcec3bfcf9fa39078262fe049dc733db52e57f0aac60d",
+  "seqno": 20,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg5wj3RdSHgEEC+7P8cEM9aXPU2R1ZiB87tv/4Q1Xa99UKp3BheWxvYWTESpcCFMQgNqx5X8Z9mCEWv87Dv8+fo5B4Ji/gSdxzPbUuV/Cqxg3EILNV4OPjq1fHHDMp/IV0QgtBOM+cD/Vc0bno5awXhRawAgHCo3NpZ8RAZcRblO0aCBm3TvmM856NjVHpQfLHuy9VqxViBFgTwumNs0Kx4k79AQs9/19nHAOQAupVHKw489rPMRBpz675D6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIKhE/MGLJzTOjS5fZGAA9P5wjW75WlWtf0yGVgiFeyvho3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/metromoxie
+
+==================================================================

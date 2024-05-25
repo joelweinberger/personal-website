@@ -436,11 +436,6 @@ func (*myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if strings.Index(path, "/.well-known/keybase.txt") == 0 {
-		http.ServeFile(w, r, filepath.Join(static_dir, "keybase.txt"))
-	}
-	
-
 	// All other cases are static files that need to be loaded from the static/
 	// directory.
 
