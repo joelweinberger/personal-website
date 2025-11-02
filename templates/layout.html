@@ -3,38 +3,38 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"></meta>
 
-    {{range .ExtraMeta}}
-    <meta name="{{.Description}}}" content="{{.Content}}"></meta>
-    {{end}}
+    {{#each ExtraMeta}}
+    <meta name="{{Description}}" content="{{Content}}"></meta>
+    {{/each}}
 
-	{{range .ExtraCSS}}
-    <link rel="stylesheet" type="text/css" href="{{.}}"></link>
-	{{end}}
+	{{#each ExtraCSS}}
+    <link rel="stylesheet" type="text/css" href="{{this}}"></link>
+	{{/each}}
 
 	<script src="/components/webcomponentsjs/webcomponents.js"></script>
 	<script src="/components/es6-promise/promise.js"></script>
 	<script src="/components/fetch/fetch.js"></script>
 	<script src="/js/register-sw.js"></script>
 
-	{{range .ExtraScripts}}
-    <script type="text/javascript" src="{{.}}"></script>
-	{{end}}
+	{{#each ExtraScripts}}
+    <script type="text/javascript" src="{{this}}"></script>
+	{{/each}}
 
-    <title>{{.Title}}</title>
+    <title>{{Title}}</title>
   </head>
 
   <body>
-  	{{if .Header}}
+  	{{#if Header}}
     <div class="header">
       <h1>joel h. w. weinberger</h1>
-      <h3>{{.Header}}</h3>
+      <h3>{{Header}}</h3>
     </div>
-	{{end}}
+	{{/if}}
 
-	{{if not .NoContent}}<div class="content">{{end}}
-    {{template "body" .}}
-	{{if not .NoHomeLink}}<div id="homelink"><a href="/index">[home]</a></div>{{end}}
-	{{if not .NoContent}}</div>{{end}}
+	{{#unless NoContent}}<div class="content">{{/unless}}
+    {{> body}}
+	{{#unless NoHomeLink}}<div id="homelink"><a href="/index">[home]</a></div>{{/unless}}
+	{{#unless NoContent}}</div>{{/unless}}
   </body>
 
   <!-- begin Google Analytics -->

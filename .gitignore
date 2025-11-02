@@ -5,3 +5,5 @@
 /server
 /static/components
 /untracked
+/dist
+/node_modules

@@ -1,58 +1,133 @@
-The website of Joel H. W. Weinberger, Go Edition!
+# Personal Website of Joel H. W. Weinberger
 
-Pre-build setup:
-* Install Bower, for dependency installation: http://bower.io
-* Install [Crisper](https://github.com/PolymerLabs/crisper), for compiling Polymer
-  Components to CSP friendly forms, by running `sudo npm -g install
-  https://github.com/PolymerLabs/crisper/archive/v2.0.1.tar.gz`.
-* Run `bower install` to install dependencies.
-* Run `./tools/setup-components.sh` to create external scripts for CSP. Make sure to
-  do this any time you run `bower install`.
-* Install go: https://golang.org/doc/install
-* Make sure you have `$GOPATH` environment variable set to a location that files
-  can be downloaded to, for example `/home/user/gocode`.
-* Set `$GOBIN` to `$GOPATH/bin`.
-* If you're using TLS, create a `cert_config.json` file, with two keys,
-  `PrivateKey` and `FullChain` whose values are the path to the private key and
-  the path to the full cert chain. Usually these will go in ./cert, which is
-  already in the .gitignore file.
-* Finally, run `go get` to get all remote packages for the Go build.
+This is a static website generated from templates and data files. It can be hosted on GitHub Pages or any static hosting service.
 
-To build and run:
-* Run `go install`.
-* To directly run the server, you can try `go run server.go`, but this sometimes
-  results in an error (for reasons I'm still debugging). In that case, run `go
-  build server.go` then `./server`.
-* By default, the server runs HTTPS on port 8443 and the HTTP (for redirects
-  only) on port 8080. Use the options `--https-port=xxx` and `--http-port=yyy`
-  to change the HTTPS and HTTP ports to `xxx` and `yyy`, respectively.
-* If you want to use privileged ports on Linux (e.g. ports 443 and 80 for HTTPS
-  and HTTP, respectively), you need to either:
-  * Run the server as root (very bad)
-  * Redirect the privileged ports to the server on non-privileged ports
-	(complicated)
-  * Give the program privileged port capabilities while still running as an
-	unprivileged user (IMO easiest).
-  Fortunately, the last option is finally possible on Linux from kernel version
-  2.6.24 onward. To do so, compile the server, then, as root, run `setcap
-  'cap_net_bind_service=+ep' /path/to/server`. This should allow the executable
-  to bind to privileged ports without any other escalation of privileges. You
-  can also just run `sudo ./tools/set-privileged-ports-cap server` to set the
-  privilege on the server file.
+## Build Setup
 
-Recommended Linux system service setup:
-* Add `go-server.service` to `/etc/init.d/go-server`. Make sure to replace the
-  variable values in the file with the actual desired values.
-* Run `sudo update-rc.d go-server defaults` to install the service. Now `service
-  go-server {start,stop,restart}` should be usable.
-* Install monit (see https://mmonit.com/monit/ for documentation) for process
-  monitoring and automatic service restart.
-* Copy `go-server.monit` to `/etc/monit/conf.d/`. Make sure it is owned by root
-  and has permissions 600. Note to manually replace the pidfile location with
-  the desired actual location of the pidfile.
-* You can just startup the server and monit manually at this point (`sudo
-  service go-server start` and `sudo monit`, respectively), or you can reboot
-  once to verify that they start on boot.
+### Prerequisites
+* Node.js 14+ (for building the site)
+* Bower (optional, for web components): `npm install -g bower`
+
+### Installation
+
+1. **Install Node dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Install Bower components** (optional but recommended):
+   ```bash
+   bower install
+   ```
+   This installs the web components (iron-collapse, polyfills) needed for the publications page.
+
+### Building the Site
+
+To build the static site:
+
+```bash
+npm run build
+```
+
+This generates all HTML files in the `dist/` directory from:
+- Templates in `templates/` (Handlebars format)
+- Publication data from `pubs.json`
+- Static assets from `static/`
+
+### Development
+
+**Build and serve locally:**
+```bash
+npm run serve
+```
+
+This builds the site and starts a local server at http://localhost:8080
+
+**Clean build:**
+```bash
+npm run rebuild
+```
+
+This removes the `dist/` directory and rebuilds from scratch.
+
+### Project Structure
+
+```
+.
+├── build.js              # Build script (Node.js)
+├── package.json          # Node dependencies
+├── bower.json            # Web components
+├── pubs.json             # Publications data
+├── templates/            # Handlebars templates
+│   ├── layout.html       # Base layout
+│   ├── index.html        # Home page
+│   ├── publications.html # Publications list
+│   ├── calendar.html     # Calendar page
+│   ├── wedding.html      # Wedding page
+│   └── offline.html      # Offline fallback
+├── static/               # Static assets
+│   ├── css/              # Stylesheets
+│   ├── js/               # JavaScript files
+│   ├── img/              # Images
+│   ├── papers/           # PDF papers
+│   └── ...
+└── dist/                 # Generated site (gitignored)
+```
+
+### How It Works
+
+1. **Build script** (`build.js`):
+   - Reads `pubs.json` and processes publication data
+   - Resolves author IDs to full author objects
+   - Reverses paper arrays for reverse-chronological display
+   - Compiles Handlebars templates
+   - Renders each page with appropriate data
+   - Copies static assets to `dist/`
+   - Copies bower_components to `dist/components/` if available
+
+2. **Templates**:
+   - Written in Handlebars syntax
+   - `layout.html` provides the base page structure
+   - Each page template is inserted as the `{{> body}}` partial
+   - Publications are rendered with embedded abstracts and BibTeX entries
+
+3. **Client-side JavaScript**:
+   - No AJAX calls needed
+   - Abstract and BibTeX toggles work on embedded content
+   - Uses iron-collapse web component for expand/collapse behavior
+
+### Deploying to GitHub Pages
+
+The generated `dist/` directory contains everything needed for static hosting.
+
+**Option 1: Manual deployment**
+```bash
+npm run build
+cd dist
+git init
+git add .
+git commit -m "Deploy to GitHub Pages"
+git push -f https://github.com/YOUR_USERNAME/YOUR_REPO.git main:gh-pages
+```
+
+**Option 2: GitHub Actions** (recommended)
+Create `.github/workflows/deploy.yml` to automatically build and deploy on push.
+
+### Updating Content
+
+**To add/update publications:**
+1. Edit `pubs.json`
+2. Run `npm run build`
+3. Deploy the updated `dist/` folder
+
+**To modify pages:**
+1. Edit templates in `templates/`
+2. Run `npm run build`
+3. Deploy the updated `dist/` folder
+
+## Legacy Go Server
+
+The original Go-based server (`server.go`) is deprecated but retained for reference. See git history for the original README with Go setup instructions.
 
 The static/img/lock.ico favicon is used under a Creative Commons
 Attribution-Share Alike 3.0 Unported license, courtesy of Wikimedia user

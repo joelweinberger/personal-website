@@ -2,17 +2,18 @@ console.log("Running ServiceWorker");
 
 importScripts('/js/serviceworker-cache-polyfill.js');
 
-var CACHE_VERSION = 'v1';
-var CACHE_NAME = 'joelweinberger.us-cache-v1';
+var CACHE_VERSION = 'v2';
+var CACHE_NAME = 'joelweinberger.us-cache-v2';
 var urlsToCache = [
 	'/',
-	'/index',
+	'/index.html',
+	'/publications.html',
 	'/css/generic/basic-page.css',
 	'/css/generic/header.css',
 	'/css/page/index.css',
 	'/img/greetings from newark.jpg',
 	'/img/joel-weinberger-headshot.jpg',
-	'/offline'
+	'/offline.html'
 ];
 
 self.addEventListener('install', function(event) {
@@ -43,7 +44,7 @@ self.addEventListener('fetch', function(event) {
 				}
 			).catch(function() {
 				console.log("Failed to fetch " + fetchRequest.url);
-				return caches.match('/offline');
+				return caches.match('/offline.html');
 			});
 
 			if (response) {
