@@ -125,16 +125,13 @@ Create `.github/workflows/deploy.yml` to automatically build and deploy on push.
 2. Run `npm run build`
 3. Deploy the updated `dist/` folder
 
-## Legacy Go Server
-
-The original Go-based server (`server.go`) is deprecated but retained for reference. See git history for the original README with Go setup instructions.
+## Notes
 
 The static/img/lock.ico favicon is used under a Creative Commons
 Attribution-Share Alike 3.0 Unported license, courtesy of Wikimedia user
 Urutseg, converted from: http://commons.wikimedia.org/wiki/File:Crypto_stub.svg
 
-The photo static/img/joel-weinberger-headshot.jpg is used courtesy of Steve
-Hanna (http://www.vividmachines.com).
+The photo static/img/joel-weinberger-headshot.jpg is copyright of Joel Weinberger
 
 serviceworker-cache-polyfill.js is taken from
 https://github.com/coonsta/cache-polyfill under an Apache v2.0 license.
