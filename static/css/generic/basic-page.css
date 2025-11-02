@@ -33,6 +33,10 @@ h5 {
 	display: none;
 }
 
+.start-hidden {
+	display: none;
+}
+
 .initialized .start-hidden {
 	display: none;
 }
