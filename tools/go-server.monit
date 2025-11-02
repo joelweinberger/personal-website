@@ -1,3 +1,0 @@
-check process server with pidfile /path/to/pidfile/go-server.pid
-    start program = "/usr/sbin/service go-server start"
-    stop program = "/usr/sbin/service go-server stop"

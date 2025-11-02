@@ -46,7 +46,7 @@ Handlebars.registerHelper('markdown', function(text) {
   return new Handlebars.SafeString(marked(text));
 });
 
-// Page metadata (equivalent to Go's pages map)
+// Page metadata
 const pages = {
   'index.html': {
     ExtraCSS: [

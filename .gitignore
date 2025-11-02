@@ -1,8 +1,5 @@
 *.swp
 /bower_components
-/cert
-/cert_config.json
-/server
 /static/components
 /untracked
 /dist
