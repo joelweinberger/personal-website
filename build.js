@@ -178,6 +178,11 @@ function build() {
   cleanDist();
   ensureDir(DIST_DIR);
 
+  // Copying config
+  console.log('Copying config...');
+  copyFile('./_config.yml', path.join(DIST_DIR, '_config.yml'));
+
+
   // Load publications
   console.log('Loading publications...');
   const pubs = loadPubs();
