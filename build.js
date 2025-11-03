@@ -147,14 +147,35 @@ function readTemplate(filename) {
   return fs.readFileSync(path.join(TEMPLATES_DIR, filename), 'utf8');
 }
 
+// Clean dist directory but preserve .git if it exists
+function cleanDist() {
+  if (!fs.existsSync(DIST_DIR)) {
+    return;
+  }
+
+  const entries = fs.readdirSync(DIST_DIR, { withFileTypes: true });
+
+  for (const entry of entries) {
+    // Preserve .git directory for gh-pages deployment
+    if (entry.name === '.git') {
+      continue;
+    }
+
+    const fullPath = path.join(DIST_DIR, entry.name);
+    if (entry.isDirectory()) {
+      fs.rmSync(fullPath, { recursive: true });
+    } else {
+      fs.unlinkSync(fullPath);
+    }
+  }
+}
+
 // Build the site
 function build() {
   console.log('Starting build...');
 
-  // Clean and create dist directory
-  if (fs.existsSync(DIST_DIR)) {
-    fs.rmSync(DIST_DIR, { recursive: true });
-  }
+  // Clean dist directory (but preserve .git)
+  cleanDist();
   ensureDir(DIST_DIR);
 
   // Load publications
