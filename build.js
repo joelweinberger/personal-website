@@ -202,6 +202,10 @@ function build() {
     copyFile('./pubs.json', path.join(DIST_DIR, 'pubs.json'));
   }
 
+  // Create CNAME file for GitHub Pages custom domain
+  console.log('Creating CNAME file...');
+  fs.writeFileSync(path.join(DIST_DIR, 'CNAME'), 'www.joelweinberger.us\n');
+
   // Copy bower_components if they exist
   if (fs.existsSync('./bower_components')) {
     console.log('Copying bower components...');
