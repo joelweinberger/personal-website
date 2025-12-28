@@ -410,6 +410,32 @@
       color: var(--color-text-tertiary);
     }
 
+    .newark-link {
+      display: block;
+      margin-bottom: var(--space-6);
+    }
+
+    .newark-postcard {
+      width: 180px;
+      height: auto;
+      border-radius: var(--radius-md);
+      opacity: 0.85;
+      transition: all var(--transition-normal);
+      filter: saturate(0.9);
+    }
+
+    .newark-postcard:hover {
+      opacity: 1;
+      filter: saturate(1);
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 640px) {
+      .newark-postcard {
+        width: 140px;
+      }
+    }
+
     /* ============================================
        LEGACY CALLOUT
        ============================================ */
@@ -606,6 +632,13 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
+      <a href="http://www.ci.newark.nj.us/" class="newark-link">
+        <img
+          src="../static/img/greetings from newark.jpg"
+          alt="Greetings from Newark, NJ!"
+          class="newark-postcard"
+        />
+      </a>
       <nav class="footer-links">
         <a href="mailto:jww@joelweinberger.us" class="footer-link">Email</a>
         <a href="https://github.com/joelweinberger" class="footer-link">GitHub</a>
