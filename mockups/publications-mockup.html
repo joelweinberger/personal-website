@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publications - Joel Weinberger - Modernized Design Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       DESIGN SYSTEM - CSS Custom Properties
+       ============================================ */
+    :root {
+      /* Color Palette */
+      --color-bg-primary: #fafafa;
+      --color-bg-secondary: #ffffff;
+      --color-bg-tertiary: #f5f5f7;
+      --color-bg-accent: #f0f4ff;
+
+      --color-text-primary: #1a1a2e;
+      --color-text-secondary: #4a4a68;
+      --color-text-tertiary: #8888a0;
+
+      --color-accent-primary: #4f46e5;
+      --color-accent-secondary: #6366f1;
+      --color-accent-hover: #4338ca;
+
+      --color-border: #e5e5ea;
+      --color-border-subtle: #f0f0f5;
+
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+
+      /* Spacing */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+
+      /* Effects */
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --transition-fast: 150ms ease;
+      --transition-normal: 200ms ease;
+      --transition-slow: 300ms ease;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg-primary: #0f0f1a;
+        --color-bg-secondary: #1a1a2e;
+        --color-bg-tertiary: #252540;
+        --color-bg-accent: #1e1e3f;
+        --color-text-primary: #f5f5f7;
+        --color-text-secondary: #b8b8c8;
+        --color-text-tertiary: #7878a0;
+        --color-accent-primary: #818cf8;
+        --color-accent-secondary: #a5b4fc;
+        --color-accent-hover: #6366f1;
+        --color-border: #2d2d4a;
+        --color-border-subtle: #1f1f35;
+      }
+    }
+
+    /* ============================================
+       BASE STYLES
+       ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .page-header {
+      padding: var(--space-8) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color var(--transition-fast);
+    }
+
+    .back-link:hover {
+      color: var(--color-accent-primary);
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .pub-count {
+      background: var(--color-bg-accent);
+      color: var(--color-accent-primary);
+      padding: var(--space-1) var(--space-3);
+      border-radius: 9999px;
+      font-size: var(--text-xs);
+      font-weight: 600;
+    }
+
+    /* ============================================
+       FILTER / SEARCH
+       ============================================ */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      padding: var(--space-6) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .filter-chip {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 9999px;
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-chip:hover, .filter-chip.active {
+      background: var(--color-accent-primary);
+      border-color: var(--color-accent-primary);
+      color: white;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text-primary);
+      font-family: inherit;
+    }
+
+    .search-input::placeholder {
+      color: var(--color-text-tertiary);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-accent-primary);
+      box-shadow: 0 0 0 3px var(--color-bg-accent);
+    }
+
+    /* ============================================
+       PUBLICATIONS LIST
+       ============================================ */
+    .publications-section {
+      padding: var(--space-8) 0;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .section-label h2 {
+      margin: 0;
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .publications-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .publication-card {
+      padding: var(--space-5);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-fast);
+    }
+
+    .publication-card:hover {
+      border-color: var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .pub-year {
+      flex-shrink: 0;
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-bg-tertiary);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-text-tertiary);
+    }
+
+    .publication-title {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-base);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .publication-title a {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .publication-title a:hover {
+      color: var(--color-accent-primary);
+    }
+
+    .publication-authors {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .publication-authors a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--color-border);
+    }
+
+    .publication-authors a:hover {
+      color: var(--color-accent-primary);
+      border-bottom-color: var(--color-accent-primary);
+    }
+
+    .publication-authors .self {
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .publication-venue {
+      margin: 0 0 var(--space-3);
+      font-size: var(--text-sm);
+      font-style: italic;
+      color: var(--color-text-tertiary);
+    }
+
+    .publication-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .pub-action {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-bg-tertiary);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    .pub-action:hover {
+      background: var(--color-bg-accent);
+      color: var(--color-accent-primary);
+    }
+
+    .pub-action.primary {
+      background: var(--color-accent-primary);
+      color: white;
+    }
+
+    .pub-action.primary:hover {
+      background: var(--color-accent-hover);
+    }
+
+    /* Collapsible sections */
+    .collapsible-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--transition-slow);
+    }
+
+    .collapsible-content.open {
+      grid-template-rows: 1fr;
+    }
+
+    .collapsible-inner {
+      overflow: hidden;
+    }
+
+    .abstract-box, .bibtex-box {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-bg-tertiary);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .bibtex-box {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .bibtex-box code {
+      display: block;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      padding: var(--space-8) 0;
+      border-top: 1px solid var(--color-border-subtle);
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-tertiary);
+    }
+
+    .footer-text a {
+      color: var(--color-accent-primary);
+      text-decoration: none;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: var(--text-xl);
+      }
+
+      .pub-header {
+        flex-direction: column-reverse;
+        gap: var(--space-2);
+      }
+
+      .pub-year {
+        align-self: flex-start;
+      }
+
+      .filter-bar {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-left">
+          <a href="home-mockup.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 12L6 8L10 4"/>
+            </svg>
+            Home
+          </a>
+          <h1 class="page-title">Publications</h1>
+          <span class="pub-count">12 papers</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FILTER BAR -->
+  <div class="container">
+    <div class="filter-bar">
+      <button class="filter-chip active">All</button>
+      <button class="filter-chip">Refereed</button>
+      <button class="filter-chip">Technical Reports</button>
+      <button class="filter-chip">2010s</button>
+      <button class="filter-chip">2000s</button>
+      <input type="text" class="search-input" placeholder="Search publications...">
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- REFEREED PUBLICATIONS -->
+    <section class="publications-section">
+      <div class="section-label">
+        <h2>Refereed Publications</h2>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="publications-list">
+
+        <!-- Publication 1 -->
+        <article class="publication-card" data-year="2016">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">A Week to Remember: The Impact of Browser Warning Storage Policies</a>
+              </h3>
+              <p class="publication-authors">
+                <span class="self">Joel Weinberger</span>,
+                <a href="https://adrifelt.github.io/">Adrienne Felt</a>
+              </p>
+              <p class="publication-venue">SOUPS, 2016</p>
+            </div>
+            <span class="pub-year">2016</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+            <a href="#" class="pub-action">Slides</a>
+          </div>
+          <div class="collapsible-content abstract-wrapper">
+            <div class="collapsible-inner">
+              <div class="abstract-box">
+                When someone decides to ignore an HTTPS error warning, how long should the browser remember that decision? If they return to the website in five minutes, an hour, a day, or a week, should the browser show them the warning again or respect their previous decision? We evaluated six storage policies with a large-scale, multi-month field experiment. We found substantial differences between the policies and that one of the storage policies achieved more of our goals than the rest. Google Chrome 45 adopted our proposal, and it has proved successful since deployed.
+              </div>
+            </div>
+          </div>
+          <div class="collapsible-content bibtex-wrapper">
+            <div class="collapsible-inner">
+              <div class="bibtex-box"><code>@inproceedings{weinberger-felt,
+  author = {Joel Weinberger and Adrienne Felt},
+  title = {A Week to Remember: The Impact of Browser Warning Storage Policies},
+  booktitle = {Proc. of 12th Symposium on Usable Privacy and Security (SOUPS)},
+  year = {2016}
+}</code></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Publication 2 -->
+        <article class="publication-card" data-year="2013">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Verifying Higher-order Programs with the Dijkstra Monad</a>
+              </h3>
+              <p class="publication-authors">
+                <a href="#">Nikhil Swamy</a>,
+                <span class="self">Joel Weinberger</span>,
+                <a href="#">Cole Schlesinger</a>,
+                Juan Chen,
+                <a href="#">Ben Livshits</a>
+              </p>
+              <p class="publication-venue">PLDI, 2013</p>
+            </div>
+            <span class="pub-year">2013</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+            <a href="#" class="pub-action">CiteSeer</a>
+          </div>
+          <div class="collapsible-content abstract-wrapper">
+            <div class="collapsible-inner">
+              <div class="abstract-box">
+                Modern programming languages, ranging from Haskell and ML, to JavaScript, C# and Java, all make extensive use of higher-order state. This paper advocates a new verification methodology for higher-order stateful programs, based on a new monad of predicate transformers called the Dijkstra monad.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Publication 3 -->
+        <article class="publication-card" data-year="2011">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">A Systematic Analysis of XSS Sanitization in Web Application Frameworks</a>
+              </h3>
+              <p class="publication-authors">
+                <span class="self">Joel Weinberger</span>,
+                <a href="#">Prateek Saxena</a>,
+                <a href="#">Devdatta Akhawe</a>,
+                <a href="#">Matthew Finifter</a>,
+                <a href="#">Dawn Song</a>
+              </p>
+              <p class="publication-venue">ESORICS, 2011</p>
+            </div>
+            <span class="pub-year">2011</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+            <a href="#" class="pub-action">Slides</a>
+            <a href="#" class="pub-action">CiteSeer</a>
+          </div>
+          <div class="collapsible-content abstract-wrapper">
+            <div class="collapsible-inner">
+              <div class="abstract-box">
+                While most research on XSS defense has focused on techniques for securing existing applications and re-architecting browser mechanisms, sanitization remains the industry-standard defense mechanism. We systematically study the security of the XSS sanitization abstractions frameworks provide and evaluate 14 major commercially-used web frameworks.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Publication 4 -->
+        <article class="publication-card" data-year="2011">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Towards Client-side HTML Security Policies</a>
+              </h3>
+              <p class="publication-authors">
+                <span class="self">Joel Weinberger</span>,
+                <a href="#">Adam Barth</a>,
+                <a href="#">Dawn Song</a>
+              </p>
+              <p class="publication-venue">HotSec, 2011</p>
+            </div>
+            <span class="pub-year">2011</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+            <a href="#" class="pub-action">Slides</a>
+          </div>
+        </article>
+
+        <!-- Publication 5 -->
+        <article class="publication-card" data-year="2011">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Diesel: Applying Privilege Separation to Database Access</a>
+              </h3>
+              <p class="publication-authors">
+                <a href="#">Adrienne Felt</a>,
+                <a href="#">Matthew Finifter</a>,
+                <span class="self">Joel Weinberger</span>,
+                <a href="#">David Wagner</a>
+              </p>
+              <p class="publication-venue">ASIACCS, 2011</p>
+            </div>
+            <span class="pub-year">2011</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+            <a href="#" class="pub-action">Extended</a>
+          </div>
+        </article>
+
+        <!-- Publication 6 -->
+        <article class="publication-card" data-year="2010">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Preventing Capability Leaks in Secure JavaScript Subsets</a>
+              </h3>
+              <p class="publication-authors">
+                <a href="#">Matthew Finifter</a>,
+                <span class="self">Joel Weinberger</span>,
+                <a href="#">Adam Barth</a>
+              </p>
+              <p class="publication-venue">NDSS, 2010</p>
+            </div>
+            <span class="pub-year">2010</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+          </div>
+        </article>
+
+        <!-- Publication 7 -->
+        <article class="publication-card" data-year="2009">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Cross-Origin JavaScript Capability Leaks: Detection, Exploitation, and Defense</a>
+              </h3>
+              <p class="publication-authors">
+                <a href="#">Adam Barth</a>,
+                <span class="self">Joel Weinberger</span>,
+                <a href="#">Dawn Song</a>
+              </p>
+              <p class="publication-venue">USENIX Security, 2009</p>
+            </div>
+            <span class="pub-year">2009</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+            <a href="#" class="pub-action">Slides</a>
+            <a href="#" class="pub-action">Project</a>
+          </div>
+        </article>
+
+        <!-- Publication 8 -->
+        <article class="publication-card" data-year="2007">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Composition with Consistent Updates for Abstract State Machines</a>
+              </h3>
+              <p class="publication-authors">
+                <a href="#">Colin Gordon</a>,
+                <a href="#">Leo Meyerovich</a>,
+                <span class="self">Joel Weinberger</span>,
+                <a href="#">Shriram Krishnamurthi</a>
+              </p>
+              <p class="publication-venue">International ASM Workshop, 2007</p>
+            </div>
+            <span class="pub-year">2007</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+            <button class="pub-action" onclick="toggleContent(this, 'bibtex')">BibTeX</button>
+            <a href="#" class="pub-action">CiteSeer</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- TECHNICAL REPORTS -->
+    <section class="publications-section">
+      <div class="section-label">
+        <h2>Technical Reports & Thesis</h2>
+        <span class="section-line"></span>
+      </div>
+
+      <div class="publications-list">
+
+        <article class="publication-card" data-year="2012">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Analysis and Enforcement of Web Application Security Policies</a>
+              </h3>
+              <p class="publication-authors">
+                <span class="self">Joel Weinberger</span>
+              </p>
+              <p class="publication-venue">Ph.D. Thesis, UC Berkeley, 2012</p>
+            </div>
+            <span class="pub-year">2012</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+          </div>
+        </article>
+
+        <article class="publication-card" data-year="2012">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="#">Monadic Refinement Types for Verifying JavaScript Programs</a>
+              </h3>
+              <p class="publication-authors">
+                <a href="#">Nikhil Swamy</a>,
+                <span class="self">Joel Weinberger</span>,
+                Juan Chen,
+                <a href="#">Ben Livshits</a>,
+                <a href="#">Cole Schlesinger</a>
+              </p>
+              <p class="publication-venue">Microsoft Research Technical Report, 2012</p>
+            </div>
+            <span class="pub-year">2012</span>
+          </div>
+          <div class="publication-actions">
+            <a href="#" class="pub-action primary">PDF</a>
+            <button class="pub-action" onclick="toggleContent(this, 'abstract')">Abstract</button>
+          </div>
+        </article>
+
+        <article class="publication-card">
+          <div class="pub-header">
+            <div>
+              <h3 class="publication-title">
+                <a href="https://www.w3.org/TR/SRI/">Subresource Integrity (W3C Specification)</a>
+              </h3>
+              <p class="publication-authors">
+                <a href="#">Devdatta Akhawe</a>,
+                <a href="#">Frederik Braun</a>,
+                <a href="#">Francois Marier</a>,
+                <span class="self">Joel Weinberger</span>
+              </p>
+              <p class="publication-venue">W3C Recommendation</p>
+            </div>
+            <span class="pub-year">W3C</span>
+          </div>
+          <div class="publication-actions">
+            <a href="https://www.w3.org/TR/SRI/" class="pub-action primary">Specification</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">
+        <a href="home-mockup.html">Back to home</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleContent(button, type) {
+      const card = button.closest('.publication-card');
+      const wrapper = card.querySelector(`.${type}-wrapper`);
+      if (wrapper) {
+        wrapper.classList.toggle('open');
+        // Update button text
+        if (wrapper.classList.contains('open')) {
+          button.textContent = `Hide ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+        } else {
+          button.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+        }
+      }
+    }
+
+    // Filter chips
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Search
+    document.querySelector('.search-input').addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase();
+      document.querySelectorAll('.publication-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
