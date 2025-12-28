@@ -339,19 +339,26 @@ jobs:
 
 ---
 
-## Next Steps
+## Decisions Made
 
-1. **Review mockups**: Open `mockups/home-mockup.html` and `mockups/publications-mockup.html` in a browser
-2. **Approve design direction**: Confirm color palette, typography, and layout
-3. **Choose framework**: Astro (recommended) or alternative
-4. **Begin implementation**: I can start the migration immediately upon approval
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| Color | Indigo (#4f46e5) | Approved |
+| Fonts | Self-hosted | Better privacy, faster loading, no external requests, no GDPR concerns |
+| Analytics | Privacy-friendly (Plausible/Fathom) | Aligns with privacy-conscious approach |
+| Framework | Astro | Zero JS by default, fast builds, easy migration |
+| Design tone | Personal bio | Not resume-like; removed job title badges, simplified layout |
+| Home publications | "Publication Highlights" | Not actively publishing, so "Recent" doesn't apply |
+| Layout | Centered | All buttons and links centered, especially on mobile |
 
 ---
 
-## Questions for You
+## Next Steps
 
-1. **Color preference**: The mockups use an indigo accent (#4f46e5). Would you prefer a different accent color?
-2. **Font loading**: Google Fonts (easier) or self-hosted (better privacy)?
-3. **Analytics**: Remove Google Analytics entirely, or replace with privacy-friendly alternative (Plausible, Fathom)?
-4. **Blog integration**: Keep as external link, or integrate into main site?
-5. **Additional pages**: Any new sections you'd like to add (talks, projects, etc.)?
+Ready to begin implementation! The plan is:
+
+1. Initialize Astro project with the approved design system
+2. Migrate content from Handlebars templates
+3. Self-host Inter and JetBrains Mono fonts
+4. Add Plausible/Fathom analytics snippet
+5. Configure GitHub Actions for deployment

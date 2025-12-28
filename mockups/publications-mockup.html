@@ -171,6 +171,7 @@
     .filter-bar {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: var(--space-3);
       padding: var(--space-6) 0;
       border-bottom: 1px solid var(--color-border-subtle);
@@ -327,6 +328,7 @@
     .publication-actions {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: var(--space-2);
     }
 
@@ -420,21 +422,39 @@
        RESPONSIVE
        ============================================ */
     @media (max-width: 640px) {
+      .header-content {
+        justify-content: center;
+      }
+
+      .header-left {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
       .page-title {
         font-size: var(--text-xl);
       }
 
       .pub-header {
         flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
         gap: var(--space-2);
       }
 
       .pub-year {
-        align-self: flex-start;
+        align-self: center;
       }
 
-      .filter-bar {
-        flex-direction: column;
+      .publication-title,
+      .publication-authors,
+      .publication-venue {
+        text-align: center;
+      }
+
+      .section-label {
+        justify-content: center;
       }
     }
   </style>
