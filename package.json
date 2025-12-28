@@ -1,22 +1,19 @@
 {
-  "name": "personal-website",
-  "version": "1.0.0",
-  "description": "Joel Weinberger's personal website - static site generator",
+  "name": "joel-weinberger-website",
+  "type": "module",
+  "version": "2.0.0",
+  "description": "Joel Weinberger's personal website - built with Astro",
   "private": true,
   "scripts": {
-    "build": "node build.js",
-    "clean": "rm -rf dist",
-    "serve": "npm run build && cd dist && python3 -m http.server 8080",
-    "postinstall": "npx bower install"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "legacy-build": "node build.js"
   },
   "dependencies": {
-    "handlebars": "^4.7.8",
-    "marked": "^11.1.1"
-  },
-  "devDependencies": {
-    "bower": "^1.8.14"
+    "astro": "^4.0.0"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   }
 }

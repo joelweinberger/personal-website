@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Calendar - Joel Weinberger" description="Joel Weinberger's public calendar">
+  <header class="page-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-left">
+          <a href="/" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 12L6 8L10 4"/>
+            </svg>
+            Home
+          </a>
+          <h1 class="page-title">Calendar</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="calendar-section">
+      <iframe
+        id="calendar"
+        src="https://www.google.com/calendar/embed?title=Joel%27s%20Public%20Calendar&showCalendars=0&height=600&wkst=1&bgcolor=%23FFFFFF&src=tmq1bdsp9a1q6lhsfet00rlvvk%40group.calendar.google.com&color=%237A367A&src=cq8k4ahd738mk3c4qh6v691m0o%40group.calendar.google.com&color=%23528800&src=n4968bnrhnhcaq7ohr06k8fcds%40group.calendar.google.com&color=%235A6986&src=joel.weinberger%40gmail.com&color=%232952A3&ctz=America%2FLos_Angeles"
+        title="Joel's Public Calendar"
+      ></iframe>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">
+        <a href="/">Back to home</a>
+      </p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-8) 0;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-accent-primary);
+  }
+
+  .page-title {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .calendar-section {
+    padding: var(--space-8) 0;
+  }
+
+  #calendar {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .footer-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  .footer-text a {
+    color: var(--color-accent-primary);
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .header-left {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>
