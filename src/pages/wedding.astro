@@ -1,23 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SimpleFooter from '../components/SimpleFooter.astro';
 ---
 
 <BaseLayout title="Wedding - Joel Weinberger" description="Joel and Sarah's wedding, May 30th, 2010">
-  <header class="page-header">
-    <div class="container">
-      <div class="header-content">
-        <div class="header-left">
-          <a href="/" class="back-link">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M10 12L6 8L10 4"/>
-            </svg>
-            Home
-          </a>
-          <h1 class="page-title">Wedding</h1>
-        </div>
-      </div>
-    </div>
-  </header>
+  <PageHeader title="Wedding" />
 
   <main class="container">
     <section class="section">
@@ -36,75 +24,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           A day after the wedding, Sarah and I took off on a honeymoon to Italy,
           where we visited Venice, Florence, Tuscany, Umbria, the Amalfi Coast,
           and Rome. We had an amazing time. If you would like to see some photos
-          from the honeymoon, please look
-          <a href="https://www.flickr.com/photos/metromoxie/sets/72157624953047064">here</a>.
+          from the honeymoon, please look at our
+          <a href="https://www.flickr.com/photos/metromoxie/sets/72157624953047064" rel="noopener noreferrer">honeymoon photos on Flickr</a>.
         </p>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p class="footer-text">
-        <a href="/">Back to home</a>
-      </p>
-    </div>
-  </footer>
+  <SimpleFooter />
 </BaseLayout>
-
-<style>
-  .page-header {
-    padding: var(--space-8) 0;
-    border-bottom: 1px solid var(--color-border-subtle);
-  }
-
-  .header-content {
-    display: flex;
-    align-items: center;
-  }
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    color: var(--color-text-tertiary);
-    text-decoration: none;
-    font-size: var(--text-sm);
-    transition: color var(--transition-fast);
-  }
-
-  .back-link:hover {
-    color: var(--color-accent-primary);
-  }
-
-  .page-title {
-    margin: 0;
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  .footer-text {
-    font-size: var(--text-sm);
-    color: var(--color-text-tertiary);
-  }
-
-  .footer-text a {
-    color: var(--color-accent-primary);
-    text-decoration: none;
-  }
-
-  @media (max-width: 640px) {
-    .header-left {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-  }
-</style>

@@ -1,41 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import pubs from '../../pubs.json';
+import {
+  getFeaturedPapers,
+  getSriSpec,
+  getPdfUrl,
+  formatAuthorsWithPrefix,
+  getShortVenue,
+  getSlidesUrl,
+} from '../lib/publications';
 
-// Get featured publications (latest refereed papers)
-const featuredPaperIds = ['weinberger-felt', 'weinberger11sanitize', 'finifter10jssafesubsets'];
-const featuredPapers = pubs.papers.filter(p => featuredPaperIds.includes(p.proceedings || ''));
-
-// Also include SRI as a highlight
-const sriPub = pubs.techs.find(t => t.title.includes('Subresource Integrity'));
-
-function getAuthorName(authorId: string): string {
-  const author = pubs.authors[authorId];
-  return author?.name || authorId;
-}
-
-function formatAuthors(authorIds: string[], excludeSelf: boolean = true): string {
-  const names = authorIds
-    .filter(id => !excludeSelf || id !== 'jww')
-    .map(id => getAuthorName(id));
-
-  if (names.length === 0) return '';
-  if (names.length === 1) return `with ${names[0]}`;
-  if (names.length === 2) return `with ${names[0]} and ${names[1]}`;
-  return `with ${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
-}
-
-function getShortVenue(conference: string): string {
-  // Extract just the venue and year
-  const match = conference.match(/(?:In Proc\. of |)(.+?)(?:,|\s+\d{4}|$)/);
-  if (match) {
-    const venue = match[1].trim();
-    const yearMatch = conference.match(/\d{4}/);
-    const year = yearMatch ? yearMatch[0] : '';
-    return year ? `${venue} ${year}` : venue;
-  }
-  return conference;
-}
+const featuredPapers = getFeaturedPapers();
+const sriPub = getSriSpec();
 ---
 
 <BaseLayout title="Joel Weinberger">
@@ -54,7 +29,7 @@ function getShortVenue(conference: string): string {
       <nav class="quick-nav">
         <a href="/publications" class="nav-link primary">Publications</a>
         <a href="/resume.pdf" class="nav-link">Resume</a>
-        <a href="https://github.com/metromoxie" class="nav-link">GitHub</a>
+        <a href="https://github.com/joelweinberger" class="nav-link" rel="noopener noreferrer">GitHub</a>
         <a href="/calendar" class="nav-link">Calendar</a>
       </nav>
     </div>
@@ -69,19 +44,19 @@ function getShortVenue(conference: string): string {
 
       <div class="bio-content">
         <p>
-          I'm a security engineer and researcher currently at <a href="https://www.anthropic.com">Anthropic</a>.
-          Previously, I led security engineering at <a href="https://www.lightspark.com/">Lightspark</a>
-          and managed supply chain security at <a href="https://www.snap.com">Snap</a>. Before that, I was on
-          the <a href="https://www.chromium.org/Home/chromium-security">Chrome Security</a> team at Google.
+          I'm a security engineer and researcher currently at <a href="https://www.anthropic.com" rel="noopener noreferrer">Anthropic</a>.
+          Previously, I led security engineering at <a href="https://www.lightspark.com/" rel="noopener noreferrer">Lightspark</a>
+          and managed supply chain security at <a href="https://www.snap.com" rel="noopener noreferrer">Snap</a>. Before that, I was on
+          the <a href="https://www.chromium.org/Home/chromium-security" rel="noopener noreferrer">Chrome Security</a> team at Google.
         </p>
         <p>
-          I hold a Ph.D. from <a href="http://www.berkeley.edu/">UC Berkeley</a>, where I worked with
-          <a href="http://www.cs.berkeley.edu/~dawnsong/">Dawn Song</a> on web application security.
+          I hold a Ph.D. from <a href="https://www.berkeley.edu/" rel="noopener noreferrer">UC Berkeley</a>, where I worked with
+          <a href="https://www.cs.berkeley.edu/~dawnsong/" rel="noopener noreferrer">Dawn Song</a> on web application security.
           My research focused on making the web safer through better security policies and analysis tools.
-          You can find our group's work at <a href="http://webblaze.cs.berkeley.edu/">WebBlaze</a>.
+          You can find our group's work at <a href="https://webblaze.cs.berkeley.edu/" rel="noopener noreferrer">WebBlaze</a>.
         </p>
         <p>
-          I earned my B.S. and M.S. from <a href="http://www.brown.edu">Brown University</a>,
+          I earned my B.S. and M.S. from <a href="https://www.brown.edu" rel="noopener noreferrer">Brown University</a>,
           and spent time at Sun Microsystems and Microsoft Research along the way.
         </p>
       </div>
@@ -101,15 +76,15 @@ function getShortVenue(conference: string): string {
         {featuredPapers.map(paper => (
           <article class="publication-card">
             <h3 class="publication-title">
-              <a href={paper.pdf.startsWith('http') ? paper.pdf : `/${paper.pdf}`}>{paper.title}</a>
+              <a href={getPdfUrl(paper)}>{paper.title}</a>
             </h3>
             <p class="publication-meta">
-              {formatAuthors(paper.authors)} &middot; {getShortVenue(paper.conference)}
+              {formatAuthorsWithPrefix(paper.authors)} &middot; {getShortVenue(paper.conference || '')}
             </p>
             <div class="publication-actions">
-              <a href={paper.pdf.startsWith('http') ? paper.pdf : `/${paper.pdf}`} class="pub-action">PDF</a>
-              {paper.presentation && (
-                <a href={paper.presentation.match(/\[slides\]\(([^)]+)\)/)?.[1] || '#'} class="pub-action">Slides</a>
+              <a href={getPdfUrl(paper)} class="pub-action">PDF</a>
+              {getSlidesUrl(paper) && (
+                <a href={getSlidesUrl(paper)} class="pub-action" rel="noopener noreferrer">Slides</a>
               )}
             </div>
           </article>
@@ -118,13 +93,13 @@ function getShortVenue(conference: string): string {
         {sriPub && (
           <article class="publication-card">
             <h3 class="publication-title">
-              <a href={sriPub.pdf}>{sriPub.title.replace(' (W3C Specification)', '')}</a>
+              <a href={sriPub.pdf} rel="noopener noreferrer">{sriPub.title.replace(' (W3C Specification)', '')}</a>
             </h3>
             <p class="publication-meta">
-              {formatAuthors(sriPub.authors)} &middot; W3C Recommendation
+              {formatAuthorsWithPrefix(sriPub.authors)} &middot; W3C Recommendation
             </p>
             <div class="publication-actions">
-              <a href={sriPub.pdf} class="pub-action">Specification</a>
+              <a href={sriPub.pdf} class="pub-action" rel="noopener noreferrer">Specification</a>
             </div>
           </article>
         )}
@@ -140,8 +115,8 @@ function getShortVenue(conference: string): string {
       <div class="bio-content">
         <p>
           Most of my time outside work is spent with my three kids. When I get a moment,
-          I run, <a href="https://www.mammothmountain.com">ski</a>, snowboard, and surf.
-          I still <a href="http://www.touchstoneclimbing.com">rock climb</a> occasionally,
+          I run, <a href="https://www.mammothmountain.com" rel="noopener noreferrer">ski</a>, snowboard, and surf.
+          I still <a href="https://www.touchstoneclimbing.com" rel="noopener noreferrer">rock climb</a> occasionally,
           though not as much as I'd like. And I love tap dancing.
         </p>
         <p>
@@ -154,22 +129,23 @@ function getShortVenue(conference: string): string {
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <a href="http://www.ci.newark.nj.us/" class="newark-link">
+      <a href="https://www.newarknj.gov/" class="newark-link" rel="noopener noreferrer">
         <img
           src="/img/greetings from newark.jpg"
           alt="Greetings from Newark, NJ!"
           class="newark-postcard"
           width="180"
+          loading="lazy"
         />
       </a>
       <nav class="footer-links">
         <a href="mailto:jww@joelweinberger.us" class="footer-link">Email</a>
-        <a href="https://github.com/metromoxie" class="footer-link">GitHub</a>
-        <a href="https://twitter.com/metromoxie" class="footer-link">Twitter</a>
+        <a href="https://github.com/joelweinberger" class="footer-link" rel="noopener noreferrer">GitHub</a>
+        <a href="https://twitter.com/metromoxie" class="footer-link" rel="noopener noreferrer">Twitter</a>
         <a href="/calendar" class="footer-link">Calendar</a>
       </nav>
       <p class="footer-credit">
-        <a href="https://github.com/metromoxie/personal-website">Source on GitHub</a>
+        <a href="https://github.com/joelweinberger/personal-website" rel="noopener noreferrer">Source on GitHub</a>
       </p>
     </div>
   </footer>
