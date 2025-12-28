@@ -1,137 +1,81 @@
 # Personal Website of Joel H. W. Weinberger
 
-This is a static website generated from templates and data files. It can be hosted on GitHub Pages or any static hosting service.
+A modern static website built with [Astro](https://astro.build). Hosted on GitHub Pages.
 
-## Build Setup
-
-### Prerequisites
-* Node.js 14+ (for building the site)
-* Bower (optional, for web components): `npm install -g bower`
-
-### Installation
-
-1. **Install Node dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Install Bower components** (optional but recommended):
-   ```bash
-   bower install
-   ```
-   This installs the web components (iron-collapse, polyfills) needed for the publications page.
-
-### Building the Site
-
-To build the static site:
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Development server (http://localhost:4321)
+npm run dev
+
+# Production build
 npm run build
+
+# Preview production build
+npm run preview
 ```
 
-This generates all HTML files in the `dist/` directory from:
-- Templates in `templates/` (Handlebars format)
-- Publication data from `pubs.json`
-- Static assets from `static/`
-
-### Development
-
-**Build and serve locally:**
-```bash
-npm run serve
-```
-
-This builds the site and starts a local server at http://localhost:8080
-
-**Clean build:**
-```bash
-npm run rebuild
-```
-
-This removes the `dist/` directory and rebuilds from scratch.
-
-### Project Structure
+## Project Structure
 
 ```
 .
-├── build.js              # Build script (Node.js)
-├── package.json          # Node dependencies
-├── bower.json            # Web components
+├── astro.config.mjs      # Astro configuration
+├── package.json          # Dependencies and scripts
 ├── pubs.json             # Publications data
-├── templates/            # Handlebars templates
-│   ├── layout.html       # Base layout
-│   ├── index.html        # Home page
-│   ├── publications.html # Publications list
-│   ├── calendar.html     # Calendar page
-│   ├── wedding.html      # Wedding page
-│   └── offline.html      # Offline fallback
-├── static/               # Static assets
-│   ├── css/              # Stylesheets
-│   ├── js/               # JavaScript files
-│   ├── img/              # Images
-│   ├── papers/           # PDF papers
-│   └── ...
+├── src/
+│   ├── components/       # Reusable Astro components
+│   │   ├── PageHeader.astro
+│   │   └── SimpleFooter.astro
+│   ├── layouts/          # Page layouts
+│   │   └── BaseLayout.astro
+│   ├── lib/              # Shared utilities
+│   │   └── publications.ts
+│   ├── pages/            # Routes (each .astro file = a page)
+│   │   ├── index.astro
+│   │   ├── publications.astro
+│   │   ├── calendar.astro
+│   │   └── wedding.astro
+│   └── styles/
+│       └── global.css    # Design system and global styles
+├── public/               # Static assets (copied as-is)
+│   ├── img/
+│   ├── papers/
+│   ├── fonts/
+│   └── brown-cs-website/ # Legacy site preserved
 └── dist/                 # Generated site (gitignored)
 ```
 
-### How It Works
+## Development
 
-1. **Build script** (`build.js`):
-   - Reads `pubs.json` and processes publication data
-   - Resolves author IDs to full author objects
-   - Reverses paper arrays for reverse-chronological display
-   - Compiles Handlebars templates
-   - Renders each page with appropriate data
-   - Copies static assets to `dist/`
-   - Copies bower_components to `dist/components/` if available
+### Adding/Updating Publications
 
-2. **Templates**:
-   - Written in Handlebars syntax
-   - `layout.html` provides the base page structure
-   - Each page template is inserted as the `{{> body}}` partial
-   - Publications are rendered with embedded abstracts and BibTeX entries
+1. Edit `pubs.json` with new paper data
+2. The site will hot-reload in dev mode, or run `npm run build`
 
-3. **Client-side JavaScript**:
-   - No AJAX calls needed
-   - Abstract and BibTeX toggles work on embedded content
-   - Uses iron-collapse web component for expand/collapse behavior
+### Modifying Pages
 
-### Deploying to GitHub Pages
+Edit the `.astro` files in `src/pages/`. Astro uses a component-based approach with scoped CSS.
 
-The generated `dist/` directory contains everything needed for static hosting.
+### Styling
 
-**Option 1: Manual deployment**
+The design system is in `src/styles/global.css` with CSS custom properties for colors, typography, spacing, etc. Supports light/dark mode via `prefers-color-scheme`.
+
+## Deployment
+
+GitHub Actions automatically builds and deploys to GitHub Pages on push to main. See `.github/workflows/deploy.yml`.
+
+### Manual Deployment
+
 ```bash
 npm run build
-cd dist
-git init
-git add .
-git commit -m "Deploy to GitHub Pages"
-git push -f https://github.com/YOUR_USERNAME/YOUR_REPO.git main:gh-pages
+# Upload contents of dist/ to your hosting provider
 ```
-
-**Option 2: GitHub Actions** (recommended)
-Create `.github/workflows/deploy.yml` to automatically build and deploy on push.
-
-### Updating Content
-
-**To add/update publications:**
-1. Edit `pubs.json`
-2. Run `npm run build`
-3. Deploy the updated `dist/` folder
-
-**To modify pages:**
-1. Edit templates in `templates/`
-2. Run `npm run build`
-3. Deploy the updated `dist/` folder
 
 ## Notes
 
-The static/img/lock.ico favicon is used under a Creative Commons
-Attribution-Share Alike 3.0 Unported license, courtesy of Wikimedia user
-Urutseg, converted from: http://commons.wikimedia.org/wiki/File:Crypto_stub.svg
-
-The photo static/img/joel-weinberger-headshot.jpg is copyright of Joel Weinberger
-
-serviceworker-cache-polyfill.js is taken from
-https://github.com/coonsta/cache-polyfill under an Apache v2.0 license.
+- The lock.ico favicon is used under CC BY-SA 3.0, courtesy of Wikimedia user Urutseg
+- Profile photo is copyright Joel Weinberger
+- Legacy Brown CS site preserved at `/brown-cs-website/`
