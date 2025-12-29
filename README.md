@@ -63,9 +63,26 @@ Edit the `.astro` files in `src/pages/`. Astro uses a component-based approach w
 
 The design system is in `src/styles/global.css` with CSS custom properties for colors, typography, spacing, etc. Supports light/dark mode via `prefers-color-scheme`.
 
-## Deployment
+## Deployment to GitHub Pages
 
-GitHub Actions automatically builds and deploys to GitHub Pages on push to main. See `.github/workflows/deploy.yml`.
+The site automatically deploys via GitHub Actions when you push to `main`.
+
+### Initial Setup (one-time)
+
+1. Go to your repository on GitHub
+2. Navigate to **Settings → Pages**
+3. Under "Build and deployment", set **Source** to **GitHub Actions**
+4. Push to `main` — the workflow will build and deploy automatically
+
+### Custom Domain (optional)
+
+1. In **Settings → Pages**, enter your custom domain (e.g., `joelweinberger.us`)
+2. Add a `CNAME` file to `public/` containing your domain name
+3. Configure DNS with your registrar:
+   - For apex domain: Add `A` records pointing to GitHub's IPs (185.199.108-111.153)
+   - For subdomain: Add a `CNAME` record pointing to `<username>.github.io`
+
+See [GitHub's custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) for details.
 
 ### Manual Deployment
 
