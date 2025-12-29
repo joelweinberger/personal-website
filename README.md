@@ -65,7 +65,7 @@ The design system is in `src/styles/global.css` with CSS custom properties for c
 
 ## Deployment
 
-Push to `main` to deploy automatically via GitHub Actions.
+Deployments are automatic: push to `main` triggers a GitHub Actions build that publishes to the `gh-pages` branch. You can also trigger manually via Actions → "Deploy to GitHub Pages" → "Run workflow".
 
 ## Notes
 
