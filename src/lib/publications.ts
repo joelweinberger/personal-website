@@ -166,7 +166,7 @@ export function sortByYear(paperList: Paper[]): Paper[] {
  * Get featured papers for homepage highlights
  */
 export function getFeaturedPapers(): Paper[] {
-  const featuredIds = ['weinberger-felt', 'weinberger11sanitize', 'finifter10jssafesubsets'];
+  const featuredIds = ['weinberger-felt', 'weinberger11sanitize', 'barth09heapgraph'];
   return papers.filter(p => featuredIds.includes(p.proceedings || ''));
 }
 
