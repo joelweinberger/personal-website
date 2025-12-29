@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SimpleFooter from '../components/SimpleFooter.astro';
+---
+
+<BaseLayout title="Calendar - Joel Weinberger" description="Joel Weinberger's public calendar">
+  <PageHeader title="Calendar" />
+
+  <main class="container">
+    <section class="calendar-section">
+      <iframe
+        id="calendar"
+        src="https://www.google.com/calendar/embed?title=Joel%27s%20Public%20Calendar&showCalendars=0&height=600&wkst=1&bgcolor=%23FFFFFF&src=tmq1bdsp9a1q6lhsfet00rlvvk%40group.calendar.google.com&color=%237A367A&src=cq8k4ahd738mk3c4qh6v691m0o%40group.calendar.google.com&color=%23528800&src=n4968bnrhnhcaq7ohr06k8fcds%40group.calendar.google.com&color=%235A6986&src=joel.weinberger%40gmail.com&color=%232952A3&ctz=America%2FLos_Angeles"
+        title="Joel's Public Calendar"
+      ></iframe>
+    </section>
+  </main>
+
+  <SimpleFooter />
+</BaseLayout>
+
+<style>
+  .calendar-section {
+    padding: var(--space-8) 0;
+  }
+
+  #calendar {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+</style>

@@ -1,0 +1,19 @@
+p { text-align : center }
+
+.center { text-align : center }
+
+a img { border : none }
+
+ul.home-links { text-align : center;
+                list-style : none;
+                margin : 0;
+                padding : 0; }
+
+ul.home-links li { display : inline;
+                   margin : 0;
+                   text-align : center; }
+
+ul.home-links li a { text-decoration : none;
+                     font-size : 75%;
+                     color : #000000; }
+ul.home-links li a:hover { color : #004fff }

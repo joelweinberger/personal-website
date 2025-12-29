@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SimpleFooter from '../components/SimpleFooter.astro';
+---
+
+<BaseLayout title="Wedding - Joel Weinberger" description="Joel and Sarah's wedding, May 30th, 2010">
+  <PageHeader title="Wedding" />
+
+  <main class="container">
+    <section class="section">
+      <div class="bio-content">
+        <p>
+          On May 30th, 2010, my wonderful wife, Sarah, and I were married at her
+          family's ranch in Westlake Village, CA, just outside of Los Angeles. It
+          was a beautiful, sunny, Southern Californian day and an even more
+          beautiful occasion. The ceremony was a traditional Jewish wedding,
+          preceded by speeches by both the bride and groom to their respective
+          wedding parties. The ceremony was followed by an evening of dancing and
+          singing and eating under the setting California sun.
+        </p>
+
+        <p>
+          A day after the wedding, Sarah and I took off on a honeymoon to Italy,
+          where we visited Venice, Florence, Tuscany, Umbria, the Amalfi Coast,
+          and Rome. We had an amazing time. If you would like to see some photos
+          from the honeymoon, please look at our
+          <a href="https://www.flickr.com/photos/metromoxie/sets/72157624953047064" rel="noopener noreferrer">honeymoon photos on Flickr</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <SimpleFooter />
+</BaseLayout>
