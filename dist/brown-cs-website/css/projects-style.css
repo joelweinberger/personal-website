@@ -1,0 +1,31 @@
+#sub-section-header { padding-top : 10px;
+                      border-top : solid;
+                      border-top-width : 2px;
+                      border-color : #000000; }
+
+.image-display { text-align : center }
+
+#mainImg { width : 400px;
+           height : 400px; }
+
+.image-nav { margin : 0 0/*25%*/;
+             padding : 0; }
+
+.image-nav li { display : inline; }
+
+.image-nav li img { padding-top : /*12px*/2px;
+                    width : 100px;
+                    height : 100px;
+                    margin-top : 3px;}
+
+.image-nav li img:hover { padding-top : 2px;
+                          border-top : solid;
+                          border-color : #d54477;
+                          border-top-width : 5px; }
+
+.selected-image { padding-top : 2px;
+                  border-top : solid;
+                  border-color : #d54477;
+                  border-top-width : 5px; }
+                  
+.not-selected-image { }

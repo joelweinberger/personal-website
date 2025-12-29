@@ -1,0 +1,24 @@
+/* set inteior's style */
+body { background-color : #fff1db }
+
+/* navbar style */
+ul.navbar {text-align : center;
+           font-family : arial;
+           font-size : 125%;
+           margin : 0;
+           padding : 0;}
+           
+ul.navbar li {display : inline;
+              border-top : none;}
+
+ul.navbar li a {text-decoration : none;
+                color : #549eb0;
+                font-weight : bold;}
+
+ul.navbar li a:hover {border-top : solid;
+                      border-top-width : 5px;
+                      border-color : #d54477;}
+
+ul.navbar li a.currentpage {border-top : solid;
+                            border-width : 5px;
+                            border-color : #d54477;}
