@@ -30,7 +30,6 @@ const sriPub = getSriSpec();
         <a href="/publications" class="nav-link primary">Publications</a>
         <a href="/resume.pdf" class="nav-link">Resume</a>
         <a href="https://github.com/joelweinberger" class="nav-link" rel="noopener noreferrer">GitHub</a>
-        <a href="/calendar" class="nav-link">Calendar</a>
       </nav>
     </div>
   </header>
@@ -72,7 +71,7 @@ const sriPub = getSriSpec();
         <h2 class="section-title">Publication Highlights</h2>
       </header>
 
-      <div class="publications-list">
+      <div class="publications-list compact">
         {featuredPapers.map(paper => (
           <article class="publication-card">
             <h3 class="publication-title">
@@ -81,12 +80,6 @@ const sriPub = getSriSpec();
             <p class="publication-meta">
               {formatAuthorsWithPrefix(paper.authors)} &middot; {getShortVenue(paper.conference || '')}
             </p>
-            <div class="publication-actions">
-              <a href={getPdfUrl(paper)} class="pub-action">PDF</a>
-              {getSlidesUrl(paper) && (
-                <a href={getSlidesUrl(paper)} class="pub-action" rel="noopener noreferrer">Slides</a>
-              )}
-            </div>
           </article>
         ))}
 
@@ -98,9 +91,6 @@ const sriPub = getSriSpec();
             <p class="publication-meta">
               {formatAuthorsWithPrefix(sriPub.authors)} &middot; W3C Recommendation
             </p>
-            <div class="publication-actions">
-              <a href={sriPub.pdf} class="pub-action" rel="noopener noreferrer">Specification</a>
-            </div>
           </article>
         )}
       </div>

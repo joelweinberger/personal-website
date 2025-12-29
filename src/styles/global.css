@@ -309,6 +309,24 @@ a:hover {
   gap: var(--space-5);
 }
 
+.publications-list.compact {
+  gap: var(--space-3);
+}
+
+.publications-list.compact .publication-card {
+  padding: var(--space-3) var(--space-4);
+}
+
+.publications-list.compact .publication-title {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-1);
+}
+
+.publications-list.compact .publication-meta {
+  font-size: var(--text-xs);
+  margin-bottom: 0;
+}
+
 .publication-card {
   padding: var(--space-5);
   background: var(--color-bg-secondary);
