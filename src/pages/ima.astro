@@ -1,0 +1,457 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SimpleFooter from '../components/SimpleFooter.astro';
+---
+
+<BaseLayout title="Ima Counter - Joel Weinberger" description="Tracking how many times the little one says Ima">
+  <PageHeader title="Ima Counter" />
+
+  <main class="container">
+    <section class="section">
+      <div class="bio-content">
+        <p>
+          My son says "Ima" (Hebrew for "mom") <em>a lot</em>. Sometimes once,
+          sometimes in long bursts of "Ima Ima Ima Ima!" This tracker keeps count.
+        </p>
+      </div>
+
+      <div class="counter-stats">
+        <div class="stat-card">
+          <span class="stat-value" id="total-imas">0</span>
+          <span class="stat-label">Total Imas</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="total-syllables">0</span>
+          <span class="stat-label">Total Syllables</span>
+        </div>
+      </div>
+
+      <div class="burst-input">
+        <label class="burst-label" for="burst-count">How many Imas in this burst?</label>
+        <div class="burst-controls">
+          <button class="burst-btn" id="burst-minus" aria-label="Decrease count">-</button>
+          <input
+            type="number"
+            id="burst-count"
+            class="burst-number"
+            value="1"
+            min="1"
+            max="99"
+          />
+          <button class="burst-btn" id="burst-plus" aria-label="Increase count">+</button>
+        </div>
+        <p class="burst-syllables"><span id="burst-syllable-preview">2</span> syllables</p>
+      </div>
+
+      <button class="ima-button" id="record-btn">
+        Record Ima!
+      </button>
+
+      <div class="log-section">
+        <div class="log-header">
+          <h2 class="section-title">Log</h2>
+          <button class="clear-btn" id="clear-btn">Clear All</button>
+        </div>
+        <div id="log-entries" class="log-entries">
+          <p class="log-empty" id="log-empty">No Imas recorded yet. Tap the button when he starts!</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SimpleFooter />
+</BaseLayout>
+
+<script>
+  const STORAGE_KEY = 'ima-counter-log';
+
+  interface LogEntry {
+    count: number;
+    timestamp: string;
+  }
+
+  function loadLog(): LogEntry[] {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveLog(log: LogEntry[]): void {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(log));
+  }
+
+  function formatTime(iso: string): string {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+  }
+
+  function updateStats(log: LogEntry[]): void {
+    const totalImas = log.reduce((sum, e) => sum + e.count, 0);
+    const totalSyllables = totalImas * 2;
+
+    document.getElementById('total-imas')!.textContent = String(totalImas);
+    document.getElementById('total-syllables')!.textContent = String(totalSyllables);
+  }
+
+  function renderLog(log: LogEntry[]): void {
+    const container = document.getElementById('log-entries')!;
+    const emptyMsg = document.getElementById('log-empty')!;
+
+    if (log.length === 0) {
+      emptyMsg.style.display = '';
+      // Remove all entry elements
+      container.querySelectorAll('.log-entry').forEach(el => el.remove());
+      return;
+    }
+
+    emptyMsg.style.display = 'none';
+
+    // Remove existing entries
+    container.querySelectorAll('.log-entry').forEach(el => el.remove());
+
+    // Render newest first
+    for (let i = log.length - 1; i >= 0; i--) {
+      const entry = log[i];
+      const el = document.createElement('div');
+      el.className = 'log-entry';
+      const imaText = entry.count === 1 ? 'Ima' : 'Ima'.repeat(1) + ` x${entry.count}`;
+      const syllables = entry.count * 2;
+      el.innerHTML = `
+        <span class="log-imas">${entry.count === 1 ? 'Ima' : `Ima x${entry.count}`}</span>
+        <span class="log-syllables">${syllables} syl</span>
+        <span class="log-time">${formatTime(entry.timestamp)}</span>
+        <button class="log-delete" data-index="${i}" aria-label="Delete entry">&times;</button>
+      `;
+      container.appendChild(el);
+    }
+  }
+
+  function getBurstCount(): number {
+    const input = document.getElementById('burst-count') as HTMLInputElement;
+    const val = parseInt(input.value, 10);
+    return isNaN(val) || val < 1 ? 1 : val;
+  }
+
+  function updateBurstPreview(): void {
+    const count = getBurstCount();
+    document.getElementById('burst-syllable-preview')!.textContent = String(count * 2);
+  }
+
+  // Initialize
+  const log = loadLog();
+  updateStats(log);
+  renderLog(log);
+
+  // Burst +/- buttons
+  document.getElementById('burst-minus')!.addEventListener('click', () => {
+    const input = document.getElementById('burst-count') as HTMLInputElement;
+    const val = Math.max(1, getBurstCount() - 1);
+    input.value = String(val);
+    updateBurstPreview();
+  });
+
+  document.getElementById('burst-plus')!.addEventListener('click', () => {
+    const input = document.getElementById('burst-count') as HTMLInputElement;
+    const val = Math.min(99, getBurstCount() + 1);
+    input.value = String(val);
+    updateBurstPreview();
+  });
+
+  (document.getElementById('burst-count') as HTMLInputElement)
+    .addEventListener('input', updateBurstPreview);
+
+  // Record button
+  document.getElementById('record-btn')!.addEventListener('click', () => {
+    const count = getBurstCount();
+    const log = loadLog();
+    log.push({ count, timestamp: new Date().toISOString() });
+    saveLog(log);
+    updateStats(log);
+    renderLog(log);
+
+    // Button feedback
+    const btn = document.getElementById('record-btn')!;
+    btn.textContent = `+${count} Ima${count > 1 ? 's' : ''}!`;
+    btn.classList.add('recorded');
+    setTimeout(() => {
+      btn.textContent = 'Record Ima!';
+      btn.classList.remove('recorded');
+    }, 600);
+  });
+
+  // Clear button
+  document.getElementById('clear-btn')!.addEventListener('click', () => {
+    if (!confirm('Clear all Ima records?')) return;
+    saveLog([]);
+    updateStats([]);
+    renderLog([]);
+  });
+
+  // Delete individual entries
+  document.getElementById('log-entries')!.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!target.classList.contains('log-delete')) return;
+    const index = parseInt(target.dataset.index!, 10);
+    const log = loadLog();
+    log.splice(index, 1);
+    saveLog(log);
+    updateStats(log);
+    renderLog(log);
+  });
+</script>
+
+<style>
+  /* Stats cards */
+  .counter-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-6);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+  }
+
+  .stat-value {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-accent-primary);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+
+  .stat-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    font-weight: 500;
+  }
+
+  /* Burst input */
+  .burst-input {
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .burst-label {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
+  }
+
+  .burst-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .burst-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: inherit;
+  }
+
+  .burst-btn:hover {
+    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
+  }
+
+  .burst-number {
+    width: 64px;
+    height: 44px;
+    text-align: center;
+    font-size: var(--text-xl);
+    font-weight: 600;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: inherit;
+    -moz-appearance: textfield;
+  }
+
+  .burst-number::-webkit-inner-spin-button,
+  .burst-number::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .burst-number:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px var(--color-bg-accent);
+  }
+
+  .burst-syllables {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  /* Record button */
+  .ima-button {
+    display: block;
+    width: 100%;
+    padding: var(--space-5);
+    background: var(--color-accent-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: inherit;
+    min-height: 56px;
+  }
+
+  .ima-button:hover {
+    background: var(--color-accent-hover);
+    transform: scale(1.01);
+  }
+
+  .ima-button:active {
+    transform: scale(0.98);
+  }
+
+  .ima-button.recorded {
+    background: #16a34a;
+  }
+
+  /* Log section */
+  .log-section {
+    margin-top: var(--space-10);
+  }
+
+  .log-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+
+  .clear-btn {
+    background: none;
+    border: none;
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    font-family: inherit;
+  }
+
+  .clear-btn:hover {
+    color: #dc2626;
+    background: #fef2f2;
+  }
+
+  .log-entries {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .log-empty {
+    text-align: center;
+    color: var(--color-text-tertiary);
+    font-size: var(--text-sm);
+    padding: var(--space-8) 0;
+  }
+
+  .log-entry {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  .log-imas {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+  }
+
+  .log-syllables {
+    font-size: var(--text-xs);
+    color: var(--color-accent-primary);
+    background: var(--color-bg-accent);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+    font-weight: 500;
+  }
+
+  .log-time {
+    margin-left: auto;
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+  }
+
+  .log-delete {
+    background: none;
+    border: none;
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+    font-size: var(--text-lg);
+    line-height: 1;
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .log-delete:hover {
+    color: #dc2626;
+    background: #fef2f2;
+  }
+
+  @media (max-width: 640px) {
+    .stat-value {
+      font-size: var(--text-3xl);
+    }
+
+    .ima-button {
+      font-size: var(--text-lg);
+    }
+
+    .log-entry {
+      flex-wrap: wrap;
+    }
+
+    .log-time {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+</style>
