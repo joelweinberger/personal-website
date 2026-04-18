@@ -386,6 +386,33 @@ a:hover {
   color: var(--color-text-tertiary);
 }
 
+.details-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.details-link:hover {
+  color: var(--color-accent-primary);
+}
+
+@keyframes publication-card-highlight {
+  0%   { box-shadow: 0 0 0 3px var(--color-accent-primary); }
+  100% { box-shadow: none; }
+}
+
+.publication-card.highlight {
+  animation: publication-card-highlight 2.5s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .publication-card.highlight {
+    animation: none;
+    box-shadow: 0 0 0 3px var(--color-accent-primary);
+  }
+}
+
 .publication-authors {
   margin: 0 0 var(--space-2);
   font-size: var(--text-sm);

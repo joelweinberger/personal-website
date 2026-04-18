@@ -163,6 +163,18 @@ export function sortByYear(paperList: Paper[]): Paper[] {
 }
 
 /**
+ * Stable DOM id for deep-linking to a paper on the publications page.
+ * Uses the BibTeX `proceedings` key when present, otherwise slugifies the title.
+ */
+export function getPaperId(paper: Paper): string {
+  if (paper.proceedings) return paper.proceedings;
+  return paper.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+/**
  * Get featured papers for homepage highlights
  */
 export function getFeaturedPapers(): Paper[] {

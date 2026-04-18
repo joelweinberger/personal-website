@@ -7,6 +7,7 @@ import {
   formatAuthorsWithPrefix,
   getShortVenue,
   getSlidesUrl,
+  getPaperId,
 } from '../lib/publications';
 
 const featuredPapers = getFeaturedPapers();
@@ -81,6 +82,7 @@ const sriPub = getSriSpec();
             </h3>
             <p class="publication-meta">
               {formatAuthorsWithPrefix(paper.authors)} &middot; {getShortVenue(paper.conference || '')}
+              &middot; <a href={`/publications#${getPaperId(paper)}`} class="details-link">Details &rarr;</a>
             </p>
           </article>
         ))}
@@ -92,6 +94,7 @@ const sriPub = getSriSpec();
             </h3>
             <p class="publication-meta">
               {formatAuthorsWithPrefix(sriPub.authors)} &middot; W3C Recommendation
+              &middot; <a href={`/publications#${getPaperId(sriPub)}`} class="details-link">Details &rarr;</a>
             </p>
           </article>
         )}
