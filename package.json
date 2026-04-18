@@ -11,9 +11,9 @@
     "legacy-build": "node build.js"
   },
   "dependencies": {
-    "astro": "^4.0.0"
+    "astro": "^6.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.12.0"
   }
 }
