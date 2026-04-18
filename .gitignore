@@ -5,3 +5,8 @@
 /dist
 /node_modules
 /.astro
+
+# Claude Code — personal/machine-local
+.claude/settings.local.json
+.claude/worktrees/
+CLAUDE.local.md
