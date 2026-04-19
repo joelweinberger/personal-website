@@ -14,6 +14,7 @@ import {
   getYear,
   generateBibtex,
   sortByYear,
+  getPaperId,
 } from '../lib/publications';
 
 const sortedPapers = sortByYear(papers);
@@ -46,7 +47,7 @@ const totalPubs = papers.length + techs.length;
 
       <div class="publications-list">
         {sortedPapers.map(paper => (
-          <article class="publication-card" data-year={getYear(paper)} data-type="refereed">
+          <article class="publication-card" id={getPaperId(paper)} data-year={getYear(paper)} data-type="refereed">
             <div class="pub-header">
               <div>
                 <h3 class="publication-title">
@@ -119,7 +120,7 @@ const totalPubs = papers.length + techs.length;
 
       <div class="publications-list">
         {sortedTechs.map(paper => (
-          <article class="publication-card" data-year={getYear(paper)} data-type="technical">
+          <article class="publication-card" id={getPaperId(paper)} data-year={getYear(paper)} data-type="technical">
             <div class="pub-header">
               <div>
                 <h3 class="publication-title">
@@ -217,6 +218,22 @@ const totalPubs = papers.length + techs.length;
         }
       });
     });
+
+    // Deep-link highlight: flash the card matching the current hash
+    function highlightFromHash() {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return;
+      const target = document.getElementById(hash);
+      if (!target?.classList.contains('publication-card')) return;
+
+      target.classList.remove('highlight');
+      void (target as HTMLElement).offsetWidth;
+      target.classList.add('highlight');
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    highlightFromHash();
+    window.addEventListener('hashchange', highlightFromHash);
 
     // Search with debounce
     const searchInput = document.getElementById('pub-search') as HTMLInputElement;
