@@ -11,6 +11,7 @@
     "legacy-build": "node build.js"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
     "astro": "^6.0.0"
   },
   "engines": {
