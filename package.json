@@ -7,8 +7,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "legacy-build": "node build.js"
+    "preview": "astro preview"
   },
   "dependencies": {
     "astro": "^6.0.0"

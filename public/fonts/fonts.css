@@ -1,11 +1,13 @@
 /*
- * Self-hosted font configuration
+ * Remote font configuration.
  *
- * For full self-hosting, download Inter and JetBrains Mono:
+ * Fonts are loaded from fonts.gstatic.com. `local()` fallbacks come first so
+ * installed copies are used when available, avoiding the network fetch.
+ *
+ * To fully self-host, download the families below, drop the .woff2 files in
+ * this directory, and swap the https:// src URLs for relative paths.
  * - Inter: https://rsms.me/inter/
  * - JetBrains Mono: https://www.jetbrains.com/lp/mono/
- *
- * Place .woff2 files in this directory and uncomment the @font-face rules below.
  */
 
 /* Inter Font Family */
