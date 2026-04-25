@@ -75,29 +75,37 @@ const sriPub = getSriSpec();
       </header>
 
       <div class="publications-list compact">
-        {featuredPapers.map(paper => (
-          <article class="publication-card">
-            <h3 class="publication-title">
-              <a href={getPdfUrl(paper)}>{paper.title}</a>
-            </h3>
-            <p class="publication-meta">
-              {formatAuthorsWithPrefix(paper.authors)} &middot; {getShortVenue(paper.conference || '')}
-              &middot; <a href={`/publications#${getPaperId(paper)}`} class="details-link">Details &rarr;</a>
-            </p>
-          </article>
-        ))}
+        {featuredPapers.map(paper => {
+          const coauthors = formatAuthorsWithPrefix(paper.authors);
+          return (
+            <article class="publication-card">
+              <h3 class="publication-title">
+                <a href={getPdfUrl(paper)}>{paper.title}</a>
+              </h3>
+              <p class="publication-meta">
+                {coauthors && <>{coauthors} &middot; </>}
+                {getShortVenue(paper.conference || '')}
+                &middot; <a href={`/publications#${getPaperId(paper)}`} class="details-link">Details &rarr;</a>
+              </p>
+            </article>
+          );
+        })}
 
-        {sriPub && (
-          <article class="publication-card">
-            <h3 class="publication-title">
-              <a href={sriPub.pdf} rel="noopener noreferrer">{sriPub.title.replace(' (W3C Specification)', '')}</a>
-            </h3>
-            <p class="publication-meta">
-              {formatAuthorsWithPrefix(sriPub.authors)} &middot; W3C Recommendation
-              &middot; <a href={`/publications#${getPaperId(sriPub)}`} class="details-link">Details &rarr;</a>
-            </p>
-          </article>
-        )}
+        {sriPub && (() => {
+          const coauthors = formatAuthorsWithPrefix(sriPub.authors);
+          return (
+            <article class="publication-card">
+              <h3 class="publication-title">
+                <a href={sriPub.pdf} rel="noopener noreferrer">{sriPub.title.replace(' (W3C Specification)', '')}</a>
+              </h3>
+              <p class="publication-meta">
+                {coauthors && <>{coauthors} &middot; </>}
+                W3C Recommendation
+                &middot; <a href={`/publications#${getPaperId(sriPub)}`} class="details-link">Details &rarr;</a>
+              </p>
+            </article>
+          );
+        })()}
       </div>
 
       <p class="see-all-link">

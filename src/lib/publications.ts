@@ -103,17 +103,18 @@ export function formatVenue(conference: string): string {
 }
 
 /**
- * Extract a short venue name with year
+ * Extract a short venue name with year.
+ * Anchors on the 4-digit year so conference strings with internal commas
+ * (e.g. "...Information, Computer and Communications Security (ASIACCS), 2011")
+ * keep the full venue name.
  */
 export function getShortVenue(conference: string): string {
-  const match = conference.match(/(?:In Proc\. of |)(.+?)(?:,|\s+\d{4}|$)/);
-  if (match) {
-    const venue = match[1].trim();
-    const yearMatch = conference.match(/\d{4}/);
-    const year = yearMatch ? yearMatch[0] : '';
-    return year ? `${venue} ${year}` : venue;
-  }
-  return conference;
+  const stripped = conference.replace(/^In Proc\. of /, '');
+  const yearMatch = stripped.match(/\d{4}/);
+  if (!yearMatch) return stripped.trim();
+  const year = yearMatch[0];
+  const venue = stripped.slice(0, yearMatch.index).replace(/[,.\s]+$/, '');
+  return venue ? `${venue} ${year}` : year;
 }
 
 /**
