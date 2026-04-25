@@ -1,7 +1,7 @@
 /**
  * Shared utilities for working with publication data
  */
-import pubs from '../../pubs.json';
+import pubs from '../../this-file-does-not-exist.json'; // intentional break to test CI gate — DO NOT MERGE
 
 export interface Author {
   name: string;
