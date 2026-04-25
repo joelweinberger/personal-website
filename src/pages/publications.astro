@@ -33,7 +33,7 @@ const totalPubs = papers.length + techs.length;
       <button class="filter-chip active" data-filter="all">All</button>
       <button class="filter-chip" data-filter="refereed">Refereed</button>
       <button class="filter-chip" data-filter="technical">Technical Reports</button>
-      <input type="text" class="search-input" placeholder="Search publications..." id="pub-search">
+      <input type="text" class="search-input" placeholder="Search publications..." id="pub-search" aria-label="Search publications">
     </div>
   </div>
 
@@ -93,14 +93,14 @@ const totalPubs = papers.length + techs.length;
               )}
             </div>
             {paper.abstract && (
-              <div class="collapsible-content abstract-wrapper">
+              <div class="collapsible-content abstract-wrapper" aria-hidden="true">
                 <div class="collapsible-inner">
                   <div class="abstract-box">{paper.abstract}</div>
                 </div>
               </div>
             )}
             {!paper.nobibtex && paper.proceedings && (
-              <div class="collapsible-content bibtex-wrapper">
+              <div class="collapsible-content bibtex-wrapper" aria-hidden="true">
                 <div class="collapsible-inner">
                   <div class="bibtex-box"><code>{generateBibtex(paper)}</code></div>
                 </div>
@@ -156,14 +156,14 @@ const totalPubs = papers.length + techs.length;
               )}
             </div>
             {paper.abstract && (
-              <div class="collapsible-content abstract-wrapper">
+              <div class="collapsible-content abstract-wrapper" aria-hidden="true">
                 <div class="collapsible-inner">
                   <div class="abstract-box">{paper.abstract}</div>
                 </div>
               </div>
             )}
             {!paper.nobibtex && paper.proceedings && (
-              <div class="collapsible-content bibtex-wrapper">
+              <div class="collapsible-content bibtex-wrapper" aria-hidden="true">
                 <div class="collapsible-inner">
                   <div class="bibtex-box"><code>{generateBibtex(paper)}</code></div>
                 </div>
@@ -188,6 +188,7 @@ const totalPubs = papers.length + techs.length;
         if (wrapper) {
           const isOpen = wrapper.classList.contains('open');
           wrapper.classList.toggle('open');
+          wrapper.setAttribute('aria-hidden', String(isOpen));
           button.setAttribute('aria-expanded', String(!isOpen));
           button.textContent = isOpen ? type.charAt(0).toUpperCase() + type.slice(1) : 'Hide';
         }
