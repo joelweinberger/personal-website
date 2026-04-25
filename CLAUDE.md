@@ -19,7 +19,7 @@ Astro 6 static site (requires Node ≥22.12; `.nvmrc` is the single source of tr
 
 **Styling.** Design system lives in `src/styles/global.css` as CSS custom properties (colors, typography, spacing). Light/dark mode is driven purely by `prefers-color-scheme` — no toggle, no JS. Component styles inside `.astro` files are scoped by Astro.
 
-**Legacy content.** `public/brown-cs-website/` is a preserved snapshot of the old site served at `/brown-cs-website/`. Leave it alone unless explicitly asked. `bower_components/` and `docs/MIGRATION_SUMMARY.md` are historical artifacts from the pre-Astro Go-server era.
+**Legacy content.** `public/brown-cs-website/` is a preserved snapshot of the old site served at `/brown-cs-website/`. Leave it alone unless explicitly asked.
 
 ## Workflow
 
