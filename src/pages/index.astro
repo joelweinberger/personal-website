@@ -8,6 +8,7 @@ import {
   getShortVenue,
   getSlidesUrl,
   getPaperId,
+  safeHref,
 } from '../lib/publications';
 
 const featuredPapers = getFeaturedPapers();
@@ -77,10 +78,12 @@ const sriPub = getSriSpec();
       <div class="publications-list compact">
         {featuredPapers.map(paper => {
           const coauthors = formatAuthorsWithPrefix(paper.authors);
+          const pdfUrl = getPdfUrl(paper);
+          const pdfIsExternal = paper.pdf.startsWith('http');
           return (
             <article class="publication-card">
               <h3 class="publication-title">
-                <a href={getPdfUrl(paper)}>{paper.title}</a>
+                <a href={safeHref(pdfUrl)} rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>{paper.title}</a>
               </h3>
               <p class="publication-meta">
                 {coauthors && <>{coauthors} &middot; </>}
@@ -96,7 +99,7 @@ const sriPub = getSriSpec();
           return (
             <article class="publication-card">
               <h3 class="publication-title">
-                <a href={sriPub.pdf} rel="noopener noreferrer">{sriPub.title.replace(' (W3C Specification)', '')}</a>
+                <a href={safeHref(sriPub.pdf)} rel="noopener noreferrer">{sriPub.title.replace(' (W3C Specification)', '')}</a>
               </h3>
               <p class="publication-meta">
                 {coauthors && <>{coauthors} &middot; </>}

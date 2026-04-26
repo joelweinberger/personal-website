@@ -23,12 +23,28 @@ export interface Paper {
   textitle?: string;
   booktitle?: string;
   institution?: string;
+  number?: string;
+  url?: string;
   nobibtex?: boolean;
 }
 
 export const authors: Record<string, Author> = pubs.authors;
 export const papers: Paper[] = pubs.papers;
 export const techs: Paper[] = pubs.techs;
+
+/**
+ * Validate a URL-ish string for use in an `href`. Allows `https:`, `http:`,
+ * relative paths (`/foo`, `./foo`), fragments (`#x`), and `mailto:`. Anything
+ * else (`javascript:`, `data:`, `vbscript:`, etc.) returns `'#'` so a bad
+ * value in pubs.json can't render as a clickable XSS link.
+ */
+export function safeHref(url: string | null | undefined): string {
+  if (!url) return '#';
+  const trimmed = url.trim();
+  if (/^(https?:|mailto:)/i.test(trimmed)) return trimmed;
+  if (/^[/#]/.test(trimmed) || trimmed.startsWith('./')) return trimmed;
+  return '#';
+}
 
 /**
  * Get author's display name from their ID
@@ -52,13 +68,30 @@ export function getPdfUrl(paper: Paper): string {
 }
 
 /**
- * Extract a markdown link from text by label
- * e.g., extractMarkdownLink("[slides](url)", "slides") returns "url"
+ * Extract a markdown link's URL from text by label.
+ * e.g., extractMarkdownLink("[slides](url)", "slides") returns "url".
+ * Walks balanced parentheses so URLs containing `(...)` (e.g. Wikipedia
+ * disambiguation links) are extracted in full instead of truncating at the
+ * first inner `)`. Label is matched literally; regex metacharacters in label
+ * are escaped.
  */
 export function extractMarkdownLink(text: string, label: string): string | null {
-  const regex = new RegExp(`\\[${label}\\]\\(([^)]+)\\)`, 'i');
-  const match = text.match(regex);
-  return match?.[1] || null;
+  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const head = new RegExp(`\\[${escapedLabel}\\]\\(`, 'i');
+  const headMatch = text.match(head);
+  if (!headMatch || headMatch.index === undefined) return null;
+
+  const start = headMatch.index + headMatch[0].length;
+  let depth = 1;
+  for (let i = start; i < text.length; i++) {
+    const c = text[i];
+    if (c === '(') depth++;
+    else if (c === ')') {
+      depth--;
+      if (depth === 0) return text.slice(start, i) || null;
+    }
+  }
+  return null;
 }
 
 /**
@@ -125,30 +158,26 @@ export function getYear(paper: Paper): string {
 }
 
 /**
- * Generate BibTeX citation for a paper
+ * Generate BibTeX citation for a paper. Returns '' if the paper opted out
+ * (`nobibtex`) or has no `proceedings` cite key — without a key BibTeX entries
+ * collide on the bibliography side.
  */
 export function generateBibtex(paper: Paper): string {
-  if (paper.nobibtex) return '';
+  if (paper.nobibtex || !paper.proceedings) return '';
 
   const authorList = paper.authors.map(id => getAuthorName(id)).join(' and ');
   const type = paper.institution ? 'techreport' : 'inproceedings';
 
-  let bibtex = `@${type}{${paper.proceedings || 'ref'},\n`;
-  bibtex += `  author = {${authorList}},\n`;
-  bibtex += `  title = {${paper.textitle || paper.title}},\n`;
+  const fields: string[] = [
+    `  author = {${authorList}}`,
+    `  title = {${paper.textitle || paper.title}}`,
+  ];
+  if (paper.booktitle) fields.push(`  booktitle = {${paper.booktitle}}`);
+  if (paper.institution) fields.push(`  institution = {${paper.institution}}`);
+  if (paper.number) fields.push(`  number = {${paper.number}}`);
+  if (paper.year) fields.push(`  year = {${paper.year}}`);
 
-  if (paper.booktitle) {
-    bibtex += `  booktitle = {${paper.booktitle}},\n`;
-  }
-  if (paper.institution) {
-    bibtex += `  institution = {${paper.institution}},\n`;
-  }
-  if (paper.year) {
-    bibtex += `  year = {${paper.year}}\n`;
-  }
-
-  bibtex += '}';
-  return bibtex;
+  return `@${type}{${paper.proceedings},\n${fields.join(',\n')}\n}`;
 }
 
 /**
