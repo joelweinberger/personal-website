@@ -114,7 +114,9 @@ function highlightFromHash() {
   target.classList.remove('highlight');
   void target.offsetWidth;
   target.classList.add('highlight');
-  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
 }
 
 function init() {

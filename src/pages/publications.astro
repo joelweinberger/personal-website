@@ -15,7 +15,19 @@ import {
   generateBibtex,
   sortByYear,
   getPaperId,
+  safeHref,
 } from '../lib/publications';
+
+/**
+ * Separator between two author names in a list. For 3+ authors, the last
+ * separator is ", and " (Oxford comma); for 2 authors it's " and " with no
+ * preceding comma. Matches the homepage's formatAuthorsWithPrefix output.
+ */
+function authorSeparator(index: number, total: number): string {
+  if (index === 0) return '';
+  if (index === total - 1) return total > 2 ? ', and ' : ' and ';
+  return ', ';
+}
 
 const sortedPapers = sortByYear(papers);
 const sortedTechs = sortByYear(techs);
@@ -46,21 +58,26 @@ const totalPubs = papers.length + techs.length;
       </div>
 
       <div class="publications-list">
-        {sortedPapers.map(paper => (
+        {sortedPapers.map(paper => {
+          const pdfUrl = getPdfUrl(paper);
+          const pdfIsExternal = paper.pdf.startsWith('http');
+          const slidesUrl = getSlidesUrl(paper);
+          const projectUrl = getProjectUrl(paper);
+          return (
           <article class="publication-card" id={getPaperId(paper)} data-year={getYear(paper)} data-type="refereed">
             <div class="pub-header">
               <div>
                 <h3 class="publication-title">
-                  <a href={getPdfUrl(paper)}>{paper.title}</a>
+                  <a href={safeHref(pdfUrl)} rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>{paper.title}</a>
                 </h3>
                 <p class="publication-authors">
                   {paper.authors.map((authorId, i) => (
                     <>
-                      {i > 0 && (i === paper.authors.length - 1 ? ' and ' : ', ')}
+                      {authorSeparator(i, paper.authors.length)}
                       {authorId === 'jww' ? (
                         <span class="self">{getAuthorName(authorId)}</span>
                       ) : getAuthorLink(authorId) ? (
-                        <a href={getAuthorLink(authorId)} rel="noopener noreferrer">{getAuthorName(authorId)}</a>
+                        <a href={safeHref(getAuthorLink(authorId))} rel="noopener noreferrer">{getAuthorName(authorId)}</a>
                       ) : (
                         <span>{getAuthorName(authorId)}</span>
                       )}
@@ -72,24 +89,24 @@ const totalPubs = papers.length + techs.length;
               <span class="pub-year">{getYear(paper)}</span>
             </div>
             <div class="publication-actions">
-              <a href={getPdfUrl(paper)} class="pub-action primary">PDF</a>
+              <a href={safeHref(pdfUrl)} class="pub-action primary" rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>PDF</a>
               {paper.abstract && (
                 <button class="pub-action" data-toggle="abstract" aria-expanded="false">Abstract</button>
               )}
               {!paper.nobibtex && paper.proceedings && (
                 <button class="pub-action" data-toggle="bibtex" aria-expanded="false">BibTeX</button>
               )}
-              {getSlidesUrl(paper) && (
-                <a href={getSlidesUrl(paper)} class="pub-action" rel="noopener noreferrer">Slides</a>
+              {slidesUrl && (
+                <a href={safeHref(slidesUrl)} class="pub-action" rel="noopener noreferrer">Slides</a>
               )}
               {paper.extended && (
-                <a href={`/${paper.extended}`} class="pub-action">Extended</a>
+                <a href={safeHref(`/${paper.extended}`)} class="pub-action">Extended</a>
               )}
-              {getProjectUrl(paper) && (
-                <a href={getProjectUrl(paper)} class="pub-action" rel="noopener noreferrer">Project</a>
+              {projectUrl && (
+                <a href={safeHref(projectUrl)} class="pub-action" rel="noopener noreferrer">Project</a>
               )}
               {paper.citeseer && (
-                <a href={paper.citeseer} class="pub-action" rel="noopener noreferrer">CiteSeer</a>
+                <a href={safeHref(paper.citeseer)} class="pub-action" rel="noopener noreferrer">CiteSeer</a>
               )}
             </div>
             {paper.abstract && (
@@ -107,7 +124,8 @@ const totalPubs = papers.length + techs.length;
               </div>
             )}
           </article>
-        ))}
+          );
+        })}
       </div>
     </section>
 
@@ -119,21 +137,24 @@ const totalPubs = papers.length + techs.length;
       </div>
 
       <div class="publications-list">
-        {sortedTechs.map(paper => (
+        {sortedTechs.map(paper => {
+          const pdfUrl = getPdfUrl(paper);
+          const pdfIsExternal = paper.pdf.startsWith('http');
+          return (
           <article class="publication-card" id={getPaperId(paper)} data-year={getYear(paper)} data-type="technical">
             <div class="pub-header">
               <div>
                 <h3 class="publication-title">
-                  <a href={getPdfUrl(paper)} rel={paper.pdf.startsWith('http') ? 'noopener noreferrer' : undefined}>{paper.title}</a>
+                  <a href={safeHref(pdfUrl)} rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>{paper.title}</a>
                 </h3>
                 <p class="publication-authors">
                   {paper.authors.map((authorId, i) => (
                     <>
-                      {i > 0 && (i === paper.authors.length - 1 ? ' and ' : ', ')}
+                      {authorSeparator(i, paper.authors.length)}
                       {authorId === 'jww' ? (
                         <span class="self">{getAuthorName(authorId)}</span>
                       ) : getAuthorLink(authorId) ? (
-                        <a href={getAuthorLink(authorId)} rel="noopener noreferrer">{getAuthorName(authorId)}</a>
+                        <a href={safeHref(getAuthorLink(authorId))} rel="noopener noreferrer">{getAuthorName(authorId)}</a>
                       ) : (
                         <span>{getAuthorName(authorId)}</span>
                       )}
@@ -145,7 +166,7 @@ const totalPubs = papers.length + techs.length;
               <span class="pub-year">{getYear(paper) || 'W3C'}</span>
             </div>
             <div class="publication-actions">
-              <a href={getPdfUrl(paper)} class="pub-action primary" rel={paper.pdf.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              <a href={safeHref(pdfUrl)} class="pub-action primary" rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>
                 {paper.pdf.includes('w3.org') ? 'Specification' : 'PDF'}
               </a>
               {paper.abstract && (
@@ -170,7 +191,8 @@ const totalPubs = papers.length + techs.length;
               </div>
             )}
           </article>
-        ))}
+          );
+        })}
       </div>
     </section>
   </main>
