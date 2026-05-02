@@ -7,9 +7,9 @@ import SimpleFooter from '../components/SimpleFooter.astro';
 <BaseLayout title="Calendar - Joel Weinberger" description="Joel Weinberger's public calendar">
   <PageHeader title="Calendar" />
 
-  <main class="container">
-    <section class="calendar-section">
-      <p class="calendar-intro">
+  <main class="subpage-shell">
+    <section class="prose">
+      <p>
         My public availability, embedded from Google Calendar. If the embed doesn't load, you can also
         <a href="https://calendar.google.com/calendar/u/0?cid=am9lbC53ZWluYmVyZ2VyQGdtYWlsLmNvbQ" rel="noopener noreferrer">view it directly on Google Calendar</a>.
       </p>
@@ -25,19 +25,12 @@ import SimpleFooter from '../components/SimpleFooter.astro';
 </BaseLayout>
 
 <style>
-  .calendar-section {
-    padding: var(--space-8) 0;
-  }
-
-  .calendar-intro {
-    color: var(--color-text-secondary);
-    margin: 0 0 var(--space-4);
-  }
-
   #calendar {
     width: 100%;
     height: 600px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border: 1px solid var(--paper-rule);
+    border-radius: 2px;
+    margin-top: 1rem;
+    background: #fff;
   }
 </style>
