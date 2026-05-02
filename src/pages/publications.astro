@@ -1,21 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHeader from '../components/PageHeader.astro';
-import SimpleFooter from '../components/SimpleFooter.astro';
 import {
   papers,
   techs,
   getAuthorName,
   getAuthorLink,
   getPdfUrl,
-  getSlidesUrl,
-  getProjectUrl,
   formatVenue,
   getYear,
   generateBibtex,
-  sortByYear,
   getPaperId,
   safeHref,
+  type Paper,
 } from '../lib/publications';
 
 /**
@@ -29,413 +25,104 @@ function authorSeparator(index: number, total: number): string {
   return ', ';
 }
 
-const sortedPapers = sortByYear(papers);
-const sortedTechs = sortByYear(techs);
-const totalPubs = papers.length + techs.length;
+/* Single chronological list — papers + tech reports + the SRI spec, newest first. */
+const all: Paper[] = [...papers, ...techs].sort((a, b) => {
+  return parseInt(getYear(b) || '0') - parseInt(getYear(a) || '0');
+});
 ---
 
 <BaseLayout title="Publications - Joel Weinberger" description="Research publications by Joel Weinberger on web security, browser security, and programming languages.">
-  <PageHeader title="Publications">
-    <span class="pub-count">{totalPubs} papers</span>
-  </PageHeader>
+  <div class="page pubs-page">
+    <div class="shell">
+      <div class="topbar">
+        <a href="/" class="marque">jww</a>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/publications" aria-current="page">Publications</a>
+          <a href="/resume.pdf">Résumé</a>
+          <a href="https://github.com/joelweinberger" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
 
-  <!-- FILTER BAR -->
-  <div class="container">
-    <div class="filter-bar">
-      <button class="filter-chip active" data-filter="all">All</button>
-      <button class="filter-chip" data-filter="refereed">Refereed</button>
-      <button class="filter-chip" data-filter="technical">Technical Reports</button>
-      <input type="text" class="search-input" placeholder="Search publications..." id="pub-search" aria-label="Search publications">
+      <header style="margin-bottom: clamp(2rem, 5vw, 3rem);">
+        <h1 class="pubs-h1">
+          Papers, specs &amp; <em>tech reports</em>
+        </h1>
+        <p class="pubs-intro">
+          A chronological record of work in browser security, web policy, and program verification — from grad-school proofs to deployed standards. Most pieces are co-authored; my collaborators do the heavy lifting.
+        </p>
+      </header>
+
+      <ol class="timeline">
+        {all.map(p => {
+          const pdfUrl = getPdfUrl(p);
+          const isExternal = p.pdf.startsWith('http');
+          const isSpec = p.pdf.includes('w3.org');
+          const venue = p.conference ? formatVenue(p.conference) : 'W3C Recommendation';
+          const bibtex = generateBibtex(p);
+          return (
+            <li class="tl-row">
+              <div class="year-anchor">{getYear(p)}</div>
+              <article class="tl-paper" id={getPaperId(p)}>
+                <h3 class="tl-title">
+                  <a href={safeHref(pdfUrl)} rel={isExternal ? 'noopener noreferrer' : undefined}>{p.title.replace(' (W3C Specification)', '')}</a>
+                </h3>
+                <p class="tl-meta">
+                  <span class="venue-name">{venue}</span>
+                  {p.authors.length > 1 && (
+                    <>
+                      {' · '}
+                      {p.authors.map((authorId, i) => (
+                        <>
+                          {authorSeparator(i, p.authors.length)}
+                          {authorId === 'jww' ? (
+                            <span>{getAuthorName(authorId)}</span>
+                          ) : getAuthorLink(authorId) ? (
+                            <a href={safeHref(getAuthorLink(authorId))} rel="noopener noreferrer">{getAuthorName(authorId)}</a>
+                          ) : (
+                            <span>{getAuthorName(authorId)}</span>
+                          )}
+                        </>
+                      ))}
+                    </>
+                  )}
+                </p>
+                <div class="tl-actions">
+                  <a href={safeHref(pdfUrl)} rel={isExternal ? 'noopener noreferrer' : undefined}>{isSpec ? 'Specification' : 'PDF'}</a>
+                  {p.abstract && (
+                    <button type="button" class="tl-toggle" data-toggle="abstract" aria-expanded="false">Abstract</button>
+                  )}
+                  {bibtex && (
+                    <button type="button" class="tl-toggle" data-toggle="bibtex" aria-expanded="false">BibTeX</button>
+                  )}
+                </div>
+                {p.abstract && (
+                  <p class="tl-abstract" data-panel="abstract" hidden>{p.abstract}</p>
+                )}
+                {bibtex && (
+                  <pre class="tl-bibtex" data-panel="bibtex" hidden>{bibtex}</pre>
+                )}
+              </article>
+            </li>
+          );
+        })}
+      </ol>
+
+      <footer class="colophon">
+        <nav class="colophon-links">
+          <a href="/">Home</a>
+          <a href="mailto:jww@joelweinberger.us">Email</a>
+          <a href="https://github.com/joelweinberger" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/joelweinberger" rel="noopener noreferrer">LinkedIn</a>
+        </nav>
+        <p class="colophon-credit">
+          <a href="https://github.com/joelweinberger/personal-website" rel="noopener noreferrer">Source on GitHub</a>
+        </p>
+      </footer>
     </div>
   </div>
-
-  <main class="container">
-    <!-- REFEREED PUBLICATIONS -->
-    <section class="publications-section" data-section="refereed">
-      <div class="section-label">
-        <h2>Refereed Publications</h2>
-        <span class="section-line"></span>
-      </div>
-
-      <div class="publications-list">
-        {sortedPapers.map(paper => {
-          const pdfUrl = getPdfUrl(paper);
-          const pdfIsExternal = paper.pdf.startsWith('http');
-          const slidesUrl = getSlidesUrl(paper);
-          const projectUrl = getProjectUrl(paper);
-          return (
-          <article class="publication-card" id={getPaperId(paper)} data-year={getYear(paper)} data-type="refereed">
-            <div class="pub-header">
-              <div>
-                <h3 class="publication-title">
-                  <a href={safeHref(pdfUrl)} rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>{paper.title}</a>
-                </h3>
-                <p class="publication-authors">
-                  {paper.authors.map((authorId, i) => (
-                    <>
-                      {authorSeparator(i, paper.authors.length)}
-                      {authorId === 'jww' ? (
-                        <span class="self">{getAuthorName(authorId)}</span>
-                      ) : getAuthorLink(authorId) ? (
-                        <a href={safeHref(getAuthorLink(authorId))} rel="noopener noreferrer">{getAuthorName(authorId)}</a>
-                      ) : (
-                        <span>{getAuthorName(authorId)}</span>
-                      )}
-                    </>
-                  ))}
-                </p>
-                <p class="publication-venue">{formatVenue(paper.conference || '')}</p>
-              </div>
-              <span class="pub-year">{getYear(paper)}</span>
-            </div>
-            <div class="publication-actions">
-              <a href={safeHref(pdfUrl)} class="pub-action primary" rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>PDF</a>
-              {paper.abstract && (
-                <button class="pub-action" data-toggle="abstract" aria-expanded="false">Abstract</button>
-              )}
-              {!paper.nobibtex && paper.proceedings && (
-                <button class="pub-action" data-toggle="bibtex" aria-expanded="false">BibTeX</button>
-              )}
-              {slidesUrl && (
-                <a href={safeHref(slidesUrl)} class="pub-action" rel="noopener noreferrer">Slides</a>
-              )}
-              {paper.extended && (
-                <a href={safeHref(`/${paper.extended}`)} class="pub-action">Extended</a>
-              )}
-              {projectUrl && (
-                <a href={safeHref(projectUrl)} class="pub-action" rel="noopener noreferrer">Project</a>
-              )}
-              {paper.citeseer && (
-                <a href={safeHref(paper.citeseer)} class="pub-action" rel="noopener noreferrer">CiteSeer</a>
-              )}
-            </div>
-            {paper.abstract && (
-              <div class="collapsible-content abstract-wrapper" aria-hidden="true">
-                <div class="collapsible-inner">
-                  <div class="abstract-box">{paper.abstract}</div>
-                </div>
-              </div>
-            )}
-            {!paper.nobibtex && paper.proceedings && (
-              <div class="collapsible-content bibtex-wrapper" aria-hidden="true">
-                <div class="collapsible-inner">
-                  <div class="bibtex-box"><code>{generateBibtex(paper)}</code></div>
-                </div>
-              </div>
-            )}
-          </article>
-          );
-        })}
-      </div>
-    </section>
-
-    <!-- TECHNICAL REPORTS -->
-    <section class="publications-section" data-section="technical">
-      <div class="section-label">
-        <h2>Technical Reports & Specifications</h2>
-        <span class="section-line"></span>
-      </div>
-
-      <div class="publications-list">
-        {sortedTechs.map(paper => {
-          const pdfUrl = getPdfUrl(paper);
-          const pdfIsExternal = paper.pdf.startsWith('http');
-          return (
-          <article class="publication-card" id={getPaperId(paper)} data-year={getYear(paper)} data-type="technical">
-            <div class="pub-header">
-              <div>
-                <h3 class="publication-title">
-                  <a href={safeHref(pdfUrl)} rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>{paper.title}</a>
-                </h3>
-                <p class="publication-authors">
-                  {paper.authors.map((authorId, i) => (
-                    <>
-                      {authorSeparator(i, paper.authors.length)}
-                      {authorId === 'jww' ? (
-                        <span class="self">{getAuthorName(authorId)}</span>
-                      ) : getAuthorLink(authorId) ? (
-                        <a href={safeHref(getAuthorLink(authorId))} rel="noopener noreferrer">{getAuthorName(authorId)}</a>
-                      ) : (
-                        <span>{getAuthorName(authorId)}</span>
-                      )}
-                    </>
-                  ))}
-                </p>
-                <p class="publication-venue">{paper.conference || 'W3C Recommendation'}</p>
-              </div>
-              <span class="pub-year">{getYear(paper) || 'W3C'}</span>
-            </div>
-            <div class="publication-actions">
-              <a href={safeHref(pdfUrl)} class="pub-action primary" rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>
-                {paper.pdf.includes('w3.org') ? 'Specification' : 'PDF'}
-              </a>
-              {paper.abstract && (
-                <button class="pub-action" data-toggle="abstract" aria-expanded="false">Abstract</button>
-              )}
-              {!paper.nobibtex && paper.proceedings && (
-                <button class="pub-action" data-toggle="bibtex" aria-expanded="false">BibTeX</button>
-              )}
-            </div>
-            {paper.abstract && (
-              <div class="collapsible-content abstract-wrapper" aria-hidden="true">
-                <div class="collapsible-inner">
-                  <div class="abstract-box">{paper.abstract}</div>
-                </div>
-              </div>
-            )}
-            {!paper.nobibtex && paper.proceedings && (
-              <div class="collapsible-content bibtex-wrapper" aria-hidden="true">
-                <div class="collapsible-inner">
-                  <div class="bibtex-box"><code>{generateBibtex(paper)}</code></div>
-                </div>
-              </div>
-            )}
-          </article>
-          );
-        })}
-      </div>
-    </section>
-  </main>
-
-  <SimpleFooter />
 
   <script>
     import '../scripts/publications-page';
   </script>
 </BaseLayout>
-
-<style>
-  /* Page-specific rules for /publications (moved out of global.css
-     since they aren't used elsewhere). */
-
-  .pub-count {
-    background: var(--color-bg-accent);
-    color: var(--color-accent-primary);
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-full);
-    font-size: var(--text-xs);
-    font-weight: 600;
-  }
-
-  /* Filter bar */
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-3);
-    padding: var(--space-6) 0;
-    border-bottom: 1px solid var(--color-border-subtle);
-  }
-
-  .filter-chip {
-    padding: var(--space-2) var(--space-4);
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    font-family: inherit;
-  }
-
-  .filter-chip:hover,
-  .filter-chip.active {
-    background: var(--color-accent-primary);
-    border-color: var(--color-accent-primary);
-    color: white;
-  }
-
-  .search-input {
-    flex: 1;
-    min-width: 200px;
-    padding: var(--space-2) var(--space-4);
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
-    color: var(--color-text-primary);
-    font-family: inherit;
-  }
-
-  .search-input::placeholder {
-    color: var(--color-text-tertiary);
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px var(--color-bg-accent);
-  }
-
-  /* Publications section layout */
-  .publications-section {
-    padding: var(--space-8) 0;
-  }
-
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin-bottom: var(--space-6);
-  }
-
-  .section-label h2 {
-    margin: 0;
-    font-size: var(--text-lg);
-    font-weight: 600;
-    color: var(--color-text-primary);
-  }
-
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--color-border);
-  }
-
-  /* Per-card pieces that only show up in the full (non-compact) layout */
-  .pub-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--space-4);
-  }
-
-  .pub-year {
-    flex-shrink: 0;
-    padding: var(--space-1) var(--space-3);
-    background: var(--color-bg-tertiary);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--color-text-tertiary);
-  }
-
-  .publication-authors {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-  }
-
-  .publication-authors a {
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    border-bottom: 1px dashed var(--color-border);
-  }
-
-  .publication-authors a:hover {
-    color: var(--color-accent-primary);
-    border-bottom-color: var(--color-accent-primary);
-  }
-
-  .publication-authors .self {
-    font-weight: 600;
-    color: var(--color-text-primary);
-  }
-
-  .publication-venue {
-    margin: 0 0 var(--space-3);
-    font-size: var(--text-sm);
-    font-style: italic;
-    color: var(--color-text-tertiary);
-  }
-
-  .publication-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-top: var(--space-3);
-  }
-
-  .pub-action {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-2) var(--space-4);
-    min-height: 36px;
-    background: var(--color-bg-tertiary);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    transition: all var(--transition-fast);
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-  }
-
-  .pub-action:hover {
-    background: var(--color-bg-accent);
-    color: var(--color-accent-primary);
-  }
-
-  .pub-action.primary {
-    background: var(--color-accent-primary);
-    color: white;
-  }
-
-  .pub-action.primary:hover {
-    background: var(--color-accent-hover);
-  }
-
-  /* Collapsible abstract / bibtex */
-  .collapsible-content {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows var(--transition-slow);
-  }
-
-  .collapsible-content.open {
-    grid-template-rows: 1fr;
-  }
-
-  .collapsible-inner {
-    overflow: hidden;
-  }
-
-  .abstract-box,
-  .bibtex-box {
-    margin-top: var(--space-4);
-    padding: var(--space-4);
-    background: var(--color-bg-tertiary);
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    text-align: left;
-  }
-
-  .bibtex-box {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    white-space: pre-wrap;
-    word-break: break-all;
-  }
-
-  .bibtex-box code {
-    display: block;
-  }
-
-  @media (max-width: 640px) {
-    .pub-header {
-      flex-direction: column-reverse;
-      align-items: center;
-      text-align: center;
-      gap: var(--space-2);
-    }
-
-    .pub-year {
-      align-self: center;
-    }
-
-    .publication-authors,
-    .publication-venue {
-      text-align: center;
-    }
-
-    .section-label {
-      justify-content: center;
-    }
-  }
-</style>
