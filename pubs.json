@@ -214,6 +214,7 @@
 	  "title": "Subresource Integrity (W3C Specification)",
 	  "pdf": "https://www.w3.org/TR/SRI/",
 	  "authors": [ "devdatta", "freddyb", "francoism", "jww" ],
+	  "year": "2016",
 	  "nobibtex": true
 	}
   ]
