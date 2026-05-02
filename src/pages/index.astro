@@ -5,162 +5,136 @@ import {
   getSriSpec,
   getPdfUrl,
   formatAuthorsWithPrefix,
-  getShortVenue,
-  getSlidesUrl,
-  getPaperId,
+  getCompactVenue,
+  getYear,
   safeHref,
 } from '../lib/publications';
 
-const featuredPapers = getFeaturedPapers();
-const sriPub = getSriSpec();
+/* Featured papers + the SRI spec, sorted newest first. The W3C SRI Recommendation
+   is dated 2016 in pubs.json so it lands at the top of the highlight list. */
+const featured = getFeaturedPapers();
+const sri = getSriSpec();
+const highlights = [...featured, ...(sri ? [sri] : [])].sort((a, b) => {
+  return parseInt(getYear(b) || '0') - parseInt(getYear(a) || '0');
+});
 ---
 
 <BaseLayout title="Joel Weinberger">
-  <!-- HERO SECTION -->
-  <header class="hero">
-    <div class="container">
-      <div class="hero-title">
-        <h1>Joel Weinberger</h1>
+  <div class="page">
+    <div class="shell">
+      <div class="topbar">
+        <a href="/" class="marque">jww</a>
+        <nav>
+          <a href="/" aria-current="page">Home</a>
+          <a href="/publications">Publications</a>
+          <a href="/resume.pdf">Résumé</a>
+          <a href="https://github.com/joelweinberger" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+
+      <header class="hero">
+        <div class="hero-text">
+          <h1><span class="given">Joel</span><em>Weinberger</em></h1>
+          <p class="hero-lede">
+            Security engineer in Los Angeles. I focus on the security of how we build systems — web platform security, supply-chain security, and developer security.
+          </p>
+        </div>
         <img
           src="/img/joel-weinberger-headshot.jpg"
           alt="Joel Weinberger"
-          class="profile-image"
-          width="100"
-          height="125"
+          class="headshot"
+          width="140"
+          height="175"
         />
-      </div>
+      </header>
 
-      <nav class="quick-nav">
-        <a href="/publications" class="nav-link">Publications</a>
-        <a href="/resume.pdf" class="nav-link">Resume</a>
-        <a href="https://github.com/joelweinberger" class="nav-link" rel="noopener noreferrer">GitHub</a>
-      </nav>
+      <section class="section" id="about">
+        <div class="section-label">
+          <h2>About</h2>
+          <span class="meta">Bio</span>
+        </div>
+        <div class="prose">
+          <p>
+            Currently, I work on security engineering at <a href="https://www.anthropic.com" rel="noopener noreferrer">Anthropic</a>. Previously, I led security engineering at <a href="https://www.lightspark.com/" rel="noopener noreferrer">Lightspark</a> and managed supply-chain security at <a href="https://www.snap.com" rel="noopener noreferrer">Snap</a>. Before that, I was on the <a href="https://www.chromium.org/Home/chromium-security" rel="noopener noreferrer">Chrome Security</a> team at Google.
+          </p>
+          <p>
+            I hold a Ph.D. from <a href="https://www.berkeley.edu/" rel="noopener noreferrer">UC Berkeley</a>, where I worked with <a href="https://www.cs.berkeley.edu/~dawnsong/" rel="noopener noreferrer">Dawn Song</a> on web application security — making the web safer through better security policies and analysis tools. Our group's work lives at <a href="https://webblaze.cs.berkeley.edu/" rel="noopener noreferrer">WebBlaze</a>.
+          </p>
+          <p>
+            Earlier still, B.S. and M.S. from <a href="https://www.brown.edu" rel="noopener noreferrer">Brown University</a>, with stops at Sun Microsystems and Microsoft Research along the way.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <div class="section-label prominent">
+          <h2>Publications</h2>
+        </div>
+
+        <ul class="pub-list">
+          {highlights.map(p => {
+            const pdfUrl = getPdfUrl(p);
+            const isExternal = p.pdf.startsWith('http');
+            const venue = p.conference ? getCompactVenue(p.conference) : 'W3C Recommendation';
+            const coauthors = formatAuthorsWithPrefix(p.authors);
+            return (
+              <li class="pub">
+                <div class="pub-year">{getYear(p)}</div>
+                <div class="pub-body">
+                  <h3 class="pub-title">
+                    <a href={safeHref(pdfUrl)} rel={isExternal ? 'noopener noreferrer' : undefined}>{p.title.replace(' (W3C Specification)', '')}</a>
+                    <span class="pub-venue-inline">{venue}</span>
+                  </h3>
+                  {coauthors && <p class="pub-meta">{coauthors}</p>}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+
+        <a class="see-more" href="/publications">All publications</a>
+      </section>
+
+      <section class="section" id="outside">
+        <div class="section-label">
+          <h2>Outside work</h2>
+          <span class="meta">Personal</span>
+        </div>
+        <div class="prose">
+          <p>
+            Most of my time outside work is spent with my three kids and wonderful wife. I run to decompress, and I <a href="https://www.mammothmountain.com" rel="noopener noreferrer">ski</a>, snowboard, and surf whenever possible (bless SoCal weather and geography). I still <a href="https://www.touchstoneclimbing.com" rel="noopener noreferrer">rock climb</a> occasionally, though not as much as I'd like — and I am a nearly life-long tap dancer.
+          </p>
+          <p>
+            My main entertainment is <a href="https://www.goodreads.com/user/show/3465980-joel-weinberger" rel="noopener noreferrer">reading</a> and a bit of video gaming. As a historical drop, you can view a <a href="/wedding">retrospective on my wedding</a>.
+          </p>
+          <p style="font-size: 0.92rem; color: var(--ink-faint);">
+            For nostalgia: my <a href="/brown-cs-website/index.html">old Brown CS homepage</a> from a previous internet.
+          </p>
+        </div>
+      </section>
+
+      <footer class="colophon">
+        <a href="https://www.newarknj.gov/" class="newark-link" rel="noopener noreferrer">
+          <img
+            src="/img/greetings from newark.jpg"
+            alt="Greetings from Newark, NJ!"
+            class="newark-img-plain"
+            width="160"
+            loading="lazy"
+          />
+        </a>
+
+        <nav class="colophon-links">
+          <a href="mailto:jww@joelweinberger.us">Email</a>
+          <a href="https://github.com/joelweinberger" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/joelweinberger" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://twitter.com/metromoxie" rel="noopener noreferrer">Twitter</a>
+          <a href="/calendar">Calendar</a>
+        </nav>
+        <p class="colophon-credit">
+          <a href="https://github.com/joelweinberger/personal-website" rel="noopener noreferrer">Source on GitHub</a>
+        </p>
+      </footer>
     </div>
-  </header>
-
-  <main class="container">
-    <!-- ABOUT SECTION -->
-    <section class="section">
-      <header class="section-header">
-        <h2 class="section-title">About</h2>
-      </header>
-
-      <div class="bio-content">
-        <p>
-          I work on security engineering at <a href="https://www.anthropic.com" rel="noopener noreferrer">Anthropic</a>.
-          Previously, I led security engineering at <a href="https://www.lightspark.com/" rel="noopener noreferrer">Lightspark</a>
-          and managed supply chain security at <a href="https://www.snap.com" rel="noopener noreferrer">Snap</a>. Before that, I was on
-          the <a href="https://www.chromium.org/Home/chromium-security" rel="noopener noreferrer">Chrome Security</a> team at Google.
-        </p>
-        <p>
-          I hold a Ph.D. from <a href="https://www.berkeley.edu/" rel="noopener noreferrer">UC Berkeley</a>, where I worked with
-          <a href="https://www.cs.berkeley.edu/~dawnsong/" rel="noopener noreferrer">Dawn Song</a> on web application security.
-          My research focused on making the web safer through better security policies and analysis tools.
-          You can find our group's work at <a href="https://webblaze.cs.berkeley.edu/" rel="noopener noreferrer">WebBlaze</a>.
-        </p>
-        <p>
-          I earned my B.S. and M.S. from <a href="https://www.brown.edu" rel="noopener noreferrer">Brown University</a>,
-          and spent time at Sun Microsystems and Microsoft Research along the way. I live and work in Los Angeles, CA. 
-        </p>
-      </div>
-
-      <p class="legacy-note">
-        For nostalgia: my <a href="/brown-cs-website/index.html">old Brown CS homepage</a>
-      </p>
-    </section>
-
-    <!-- PUBLICATION HIGHLIGHTS -->
-    <section class="section">
-      <header class="section-header">
-        <h2 class="section-title">Publication Highlights</h2>
-      </header>
-
-      <div class="publications-list compact">
-        {featuredPapers.map(paper => {
-          const coauthors = formatAuthorsWithPrefix(paper.authors);
-          const pdfUrl = getPdfUrl(paper);
-          const pdfIsExternal = paper.pdf.startsWith('http');
-          return (
-            <article class="publication-card">
-              <h3 class="publication-title">
-                <a href={safeHref(pdfUrl)} rel={pdfIsExternal ? 'noopener noreferrer' : undefined}>{paper.title}</a>
-              </h3>
-              <p class="publication-meta">
-                {coauthors && <>{coauthors} &middot; </>}
-                {getShortVenue(paper.conference || '')}
-                &middot; <a href={`/publications#${getPaperId(paper)}`} class="details-link">Details &rarr;</a>
-              </p>
-            </article>
-          );
-        })}
-
-        {sriPub && (() => {
-          const coauthors = formatAuthorsWithPrefix(sriPub.authors);
-          return (
-            <article class="publication-card">
-              <h3 class="publication-title">
-                <a href={safeHref(sriPub.pdf)} rel="noopener noreferrer">{sriPub.title.replace(' (W3C Specification)', '')}</a>
-              </h3>
-              <p class="publication-meta">
-                {coauthors && <>{coauthors} &middot; </>}
-                W3C Recommendation
-                &middot; <a href={`/publications#${getPaperId(sriPub)}`} class="details-link">Details &rarr;</a>
-              </p>
-            </article>
-          );
-        })()}
-      </div>
-
-      <p class="see-all-link">
-        <a href="/publications">See all publications →</a>
-      </p>
-    </section>
-
-    <!-- PERSONAL SECTION -->
-    <section class="section">
-      <header class="section-header">
-        <h2 class="section-title">Outside Work</h2>
-      </header>
-
-      <div class="bio-content">
-        <p>
-          Most of my time outside work is spent with my three kids and wonderful wife.
-          I run to decompress, and I <a href="https://www.mammothmountain.com" rel="noopener noreferrer">ski</a>, snowboard, and surf whenever possible (bless SoCal weather and geography).
-          I still <a href="https://www.touchstoneclimbing.com" rel="noopener noreferrer">rock climb</a> occasionally,
-          though not as much as I'd like, and I am a nearly life long tap dancer.
-        </p>
-        <p>
-          My main entertainment is <a href="https://www.goodreads.com/user/show/3465980-joel-weinberger" rel="noopener noreferrer">reading</a> and a bit of video gaming.
-        </p>
-        <p>
-          As an historical drop, you can view a <a href="/wedding">retrospective on my wedding</a>.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <a href="https://www.newarknj.gov/" class="newark-link" rel="noopener noreferrer">
-        <img
-          src="/img/greetings from newark.jpg"
-          alt="Greetings from Newark, NJ!"
-          class="newark-postcard"
-          width="180"
-          loading="lazy"
-        />
-      </a>
-      <nav class="footer-links">
-        <a href="mailto:jww@joelweinberger.us" class="footer-link">Email</a>
-        <a href="https://github.com/joelweinberger" class="footer-link" rel="noopener noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/joelweinberger" class="footer-link" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://twitter.com/metromoxie" class="footer-link" rel="noopener noreferrer">Twitter</a>
-        <a href="/calendar" class="footer-link">Calendar</a>
-      </nav>
-      <p class="footer-credit">
-        <a href="https://github.com/joelweinberger/personal-website" rel="noopener noreferrer">Source on GitHub</a>
-      </p>
-    </div>
-  </footer>
+  </div>
 </BaseLayout>

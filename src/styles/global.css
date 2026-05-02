@@ -288,22 +288,20 @@ p { margin: 0 0 1.1em; }
   font-weight: 500;
   margin: 0 0 0.15rem;
   letter-spacing: -0.003em;
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-  flex-wrap: wrap;
 }
 .pub-title a { color: var(--ink); background: none; padding: 0; }
 .pub-title a:hover { color: var(--accent); }
 
 .pub-venue-inline {
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: 0.08em;
   font-family: var(--mono);
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .pub-meta {

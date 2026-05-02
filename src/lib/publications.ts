@@ -151,6 +151,22 @@ export function getShortVenue(conference: string): string {
 }
 
 /**
+ * Compact venue tag for the homepage's inline pill — short enough to sit on
+ * the same line as the paper title. Prefers a parenthesized acronym
+ * (e.g. "ESORICS", "HotSec") plus the 2-digit year; falls back to
+ * `getShortVenue` for venues that don't carry an abbreviation.
+ */
+export function getCompactVenue(conference: string): string {
+  if (!conference) return '';
+  const stripped = conference.replace(/^In Proc\. of /, '');
+  const yearMatch = stripped.match(/\d{4}/);
+  const yearShort = yearMatch ? `'${yearMatch[0].slice(2)}` : '';
+  const acronym = stripped.match(/\(([A-Z][A-Za-z0-9]{1,12})\)/);
+  if (acronym) return yearShort ? `${acronym[1]} ${yearShort}` : acronym[1];
+  return getShortVenue(conference).replace(/(\d{4})$/, "'$1").replace(/'(\d{2})(\d{2})$/, "'$2");
+}
+
+/**
  * Get paper year, returns empty string if not available
  */
 export function getYear(paper: Paper): string {
