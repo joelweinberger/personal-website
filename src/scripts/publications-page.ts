@@ -41,9 +41,10 @@ function rowMatches(row: HTMLElement): boolean {
 }
 
 function applyVisibility() {
+  const all = rows();
   let firstVisible: HTMLElement | null = null;
   let visible = 0;
-  rows().forEach(row => {
+  all.forEach(row => {
     const ok = rowMatches(row);
     row.toggleAttribute('hidden', !ok);
     row.classList.remove('is-first');
@@ -54,29 +55,23 @@ function applyVisibility() {
   });
   firstVisible?.classList.add('is-first');
 
-  const empty = document.querySelector<HTMLElement>('.pub-empty');
+  const empty = document.querySelector<HTMLElement>('.empty-state');
   if (empty) empty.toggleAttribute('hidden', visible > 0);
-}
 
-function setCounts() {
-  const all = rows();
-  const counts = {
-    all: all.length,
-    refereed: all.filter(r => r.dataset.type === 'refereed').length,
-    technical: all.filter(r => r.dataset.type === 'technical').length,
-  };
-  document.querySelectorAll<HTMLElement>('[data-count]').forEach(el => {
-    const k = el.dataset.count as keyof typeof counts | undefined;
-    if (k && k in counts) el.textContent = String(counts[k]);
-  });
+  const count = document.querySelector<HTMLElement>('.filter-count');
+  if (count) {
+    count.textContent = visible === all.length
+      ? `${all.length} publication${all.length === 1 ? '' : 's'}`
+      : `${visible} of ${all.length}`;
+  }
 }
 
 function setFilter(f: Filter) {
   state.filter = f;
-  document.querySelectorAll<HTMLElement>('.chip').forEach(chip => {
-    const active = chip.dataset.filter === f;
-    chip.classList.toggle('is-active', active);
-    chip.setAttribute('aria-checked', String(active));
+  document.querySelectorAll<HTMLElement>('.filter-link').forEach(link => {
+    const active = link.dataset.filter === f;
+    link.classList.toggle('active', active);
+    link.setAttribute('aria-checked', String(active));
   });
   applyVisibility();
 }
@@ -87,9 +82,9 @@ function setQuery(q: string) {
 }
 
 function initFilters() {
-  document.querySelectorAll<HTMLElement>('.chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const v = chip.dataset.filter;
+  document.querySelectorAll<HTMLElement>('.filter-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const v = link.dataset.filter;
       if (v && isFilter(v)) setFilter(v);
     });
   });
@@ -150,7 +145,6 @@ function highlightFromHash() {
 }
 
 function init() {
-  setCounts();
   initFilters();
   initSearch();
   initToggles();
