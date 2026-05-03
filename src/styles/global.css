@@ -423,7 +423,96 @@ p { margin: 0 0 1.1em; }
   border-top: 1px solid var(--paper-rule);
   position: relative;
 }
-.tl-row:first-of-type { border-top: 1px solid var(--ink); }
+.tl-row.is-first { border-top: 1px solid var(--ink); }
+.tl-row[hidden] { display: none; }
+
+/* ============================================
+   PUB CONTROLS (filter chips + search)
+   ============================================ */
+.pub-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.5rem;
+  padding: 0.65rem 0;
+  margin: 0 0 1.5rem;
+  border-top: 1px solid var(--paper-rule);
+  border-bottom: 1px solid var(--paper-rule);
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--paper-rule);
+  border-radius: 999px;
+  padding: 0.32rem 0.85rem;
+  cursor: pointer;
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+}
+.chip:hover { color: var(--accent); border-color: var(--accent); }
+.chip.is-active {
+  color: var(--paper);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.chip-count {
+  font-feature-settings: "tnum", "lnum";
+  margin-left: 0.35rem;
+  opacity: 0.7;
+}
+.chip.is-active .chip-count { color: var(--paper); opacity: 0.85; }
+
+.search-field {
+  flex: 1 1 16rem;
+  display: flex;
+  align-items: center;
+  min-width: 12rem;
+}
+.search-field input {
+  font: inherit;
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  width: 100%;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid var(--paper-rule);
+  padding: 0.35rem 0;
+  outline: none;
+  transition: border-color var(--t-fast);
+}
+.search-field input::placeholder { color: var(--ink-faint); font-style: italic; }
+.search-field input:focus { border-bottom-color: var(--accent); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.pub-empty {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-faint);
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+@media (max-width: 540px) {
+  .pub-controls { gap: 0.6rem 1rem; }
+  .search-field { flex-basis: 100%; }
+}
 
 .year-anchor {
   font-family: var(--mono);

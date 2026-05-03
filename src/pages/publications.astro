@@ -25,10 +25,13 @@ function authorSeparator(index: number, total: number): string {
   return ', ';
 }
 
-/* Single chronological list — papers + tech reports + the SRI spec, newest first. */
-const all: Paper[] = [...papers, ...techs].sort((a, b) => {
-  return parseInt(getYear(b) || '0') - parseInt(getYear(a) || '0');
-});
+/* Single chronological list — papers + tech reports + the SRI spec, newest first.
+   `_kind` is non-persistent metadata used to drive the Refereed/Technical filter. */
+type ListedPaper = Paper & { _kind: 'refereed' | 'technical' };
+const all: ListedPaper[] = [
+  ...papers.map(p => ({ ...p, _kind: 'refereed' as const })),
+  ...techs.map(p => ({ ...p, _kind: 'technical' as const })),
+].sort((a, b) => parseInt(getYear(b) || '0') - parseInt(getYear(a) || '0'));
 ---
 
 <BaseLayout title="Publications - Joel Weinberger" description="Research publications by Joel Weinberger on web security, browser security, and programming languages.">
@@ -53,15 +56,29 @@ const all: Paper[] = [...papers, ...techs].sort((a, b) => {
         </p>
       </header>
 
+      <div class="pub-controls" role="region" aria-label="Filter and search publications">
+        <div class="filter-chips" role="radiogroup" aria-label="Filter by type">
+          <button type="button" class="chip is-active" data-filter="all" role="radio" aria-checked="true">All <span class="chip-count" data-count="all"></span></button>
+          <button type="button" class="chip" data-filter="refereed" role="radio" aria-checked="false">Refereed <span class="chip-count" data-count="refereed"></span></button>
+          <button type="button" class="chip" data-filter="technical" role="radio" aria-checked="false">Tech Reports <span class="chip-count" data-count="technical"></span></button>
+        </div>
+        <label class="search-field">
+          <span class="visually-hidden">Search publications</span>
+          <input type="search" id="pub-search" placeholder="Search title, author, venue…" autocomplete="off" />
+        </label>
+      </div>
+
+      <p class="pub-empty" hidden>No publications match.</p>
+
       <ol class="timeline">
-        {all.map(p => {
+        {all.map((p, i) => {
           const pdfUrl = getPdfUrl(p);
           const isExternal = p.pdf.startsWith('http');
           const isSpec = p.pdf.includes('w3.org');
           const venue = p.conference ? formatVenue(p.conference) : 'W3C Recommendation';
           const bibtex = generateBibtex(p);
           return (
-            <li class="tl-row">
+            <li class:list={['tl-row', i === 0 && 'is-first']} data-type={p._kind}>
               <div class="year-anchor">{getYear(p)}</div>
               <article class="tl-paper" id={getPaperId(p)}>
                 <h3 class="tl-title">
