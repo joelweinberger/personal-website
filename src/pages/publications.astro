@@ -56,19 +56,23 @@ const all: ListedPaper[] = [
         </p>
       </header>
 
-      <div class="pub-controls" role="region" aria-label="Filter and search publications">
-        <div class="filter-chips" role="radiogroup" aria-label="Filter by type">
-          <button type="button" class="chip is-active" data-filter="all" role="radio" aria-checked="true">All <span class="chip-count" data-count="all"></span></button>
-          <button type="button" class="chip" data-filter="refereed" role="radio" aria-checked="false">Refereed <span class="chip-count" data-count="refereed"></span></button>
-          <button type="button" class="chip" data-filter="technical" role="radio" aria-checked="false">Tech Reports <span class="chip-count" data-count="technical"></span></button>
+      <div class="filter-bar" role="region" aria-label="Filter and search publications">
+        <div class="filter-links" role="radiogroup" aria-label="Filter by type">
+          <button type="button" class="filter-link active" data-filter="all" role="radio" aria-checked="true">All</button>
+          <span class="filter-sep" aria-hidden="true">·</span>
+          <button type="button" class="filter-link" data-filter="refereed" role="radio" aria-checked="false">Refereed</button>
+          <span class="filter-sep" aria-hidden="true">·</span>
+          <button type="button" class="filter-link" data-filter="technical" role="radio" aria-checked="false">Technical reports</button>
         </div>
         <label class="search-field">
+          <span class="search-label" aria-hidden="true">search:</span>
           <span class="visually-hidden">Search publications</span>
-          <input type="search" id="pub-search" placeholder="Search title, author, venue…" autocomplete="off" />
+          <input type="search" id="pub-search" class="search-input" placeholder="title, author, venue…" autocomplete="off" />
         </label>
+        <p class="filter-count" aria-live="polite"></p>
       </div>
 
-      <p class="pub-empty" hidden>No publications match.</p>
+      <p class="empty-state" hidden>No publications match.</p>
 
       <ol class="timeline">
         {all.map((p, i) => {
